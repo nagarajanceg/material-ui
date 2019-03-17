@@ -1,35 +1,42 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
+import SignIn from './signIn';
 
 class Login extends Component {
-  state = {};
-  componentDidMount() {
+  state = {
+    response: {}
+  };
+  constructor() {
+    super();
     this.fetchDetails();
   }
+  // componentWillMount() {
+  //   this.fetchDetails();
+  // }
   fetchDetails = () => {
     const self = this;
     fetch('http://localhost:3100/get')
       .then(data => data.json())
       .then(res => {
-        // self.state.response = 'texttt';
         self.setState({
-          response: res[0].label
+          response: res[0]
         });
         console.log(res[0]);
       });
   };
   render() {
-    // return <div>login component</div>;
-    let buttonText;
-    if (this.state.response !== undefined) {
-      buttonText = this.state.response;
-    } else {
-      buttonText = 'default State';
-    }
     return (
-      <Button variant="contained" color="primary">
-        {buttonText}
-      </Button>
+      <div>
+        {/*<Navbar />*/}
+        <SignIn />
+        {/*{this.state.response.label ? (
+          <Button variant="contained" color="secondary">
+            {this.state.response.label}
+          </Button>
+        ) : (
+          ''
+        )}*/}
+      </div>
     );
   }
 }
