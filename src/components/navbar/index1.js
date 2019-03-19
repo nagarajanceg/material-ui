@@ -6,10 +6,14 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import Button from '@material-ui/core/Button';
 
 const styles = {
   root: {
     flexGrow: 4
+  },
+  grow: {
+    flexGrow: 1
   },
   menuButton: {
     marginLeft: -18,
@@ -17,12 +21,12 @@ const styles = {
   }
 };
 
-function DenseAppBar(props) {
+function ButtonAppBar(props) {
   const { classes } = props;
   return (
     <div className={classes.root}>
       <AppBar position="static">
-        <Toolbar variant="dense">
+        <Toolbar>
           <IconButton
             className={classes.menuButton}
             color="inherit"
@@ -30,17 +34,19 @@ function DenseAppBar(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" color="inherit">
-            Smart Park
+          <Typography variant="h6" color="inherit" className={classes.grow}>
+            News
           </Typography>
+          <Button color="inherit">Login</Button>
+          <Button color="inherit">second Login</Button>
         </Toolbar>
       </AppBar>
     </div>
   );
 }
 
-DenseAppBar.propTypes = {
+ButtonAppBar.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(DenseAppBar);
+export default withStyles(styles)(ButtonAppBar);
