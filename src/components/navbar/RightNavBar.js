@@ -35,7 +35,7 @@ function RightNavBar(props) {
           <TypoGraphy color="inherit" variant={item.variant}>
             <IconButton color="inherit">
 							{getIcon(item.icon)}
-              <span style={{ fontSize: '0.9rem' }}>{item.title}</span>
+              <span style={{ fontSize: '0.9rem', 'padding-left': '10px' }}>{item.title}</span>
             </IconButton>
           </TypoGraphy>
         </ListItemText>))}

@@ -31,13 +31,13 @@ class Manage extends Component {
             <Grid container spacing={24} justify="center" direction="column">
               <Grid item />
               <Grid item xs={12}>
-                <ActionItem name="Browse" id="User-data" />
+                <ActionItem name="Browse" id="user-data" label="User Data" />
               </Grid>
               <Grid item xs={12}>
-                <ActionItem name="Browse" id="Parking-data" />
+                <ActionItem name="Browse" id="parking-data" label="Parking Data" />
               </Grid>
               <Grid item xs={12}>
-                <ActionItem name="Browse" id="Assignment" />
+                <ActionItem name="Browse" id="assignment" label="Assignment" />
               </Grid>
               <Grid item />
               <Grid item />
