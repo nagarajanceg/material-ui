@@ -6,6 +6,7 @@ import RightNavBar from './RightNavBar';
 import Grid from '@material-ui/core/Grid';
 import teal from '@material-ui/core/colors/teal';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import Hidden from '@material-ui/core/Hidden';
 
 const theme = createMuiTheme({
   palette: {
@@ -14,6 +15,13 @@ const theme = createMuiTheme({
     },
     secondary: {
       main: teal[400]
+    }
+  },
+  overrides: {
+    MuiTypography: {
+      title: {
+        fontSize: '1.5rem'
+      }
     }
   }
 });
@@ -24,14 +32,16 @@ class AppBarTest extends Component {
         <MuiThemeProvider theme={theme}>
           <AppBar color="primary" position="static">
             <Toolbar>
-              <Grid justify="space-between" container>
+              <Grid justify="space-between" container spacing={24}>
                 <Grid item>
-                  <TypoGraphy variant="h4" color="inherit" align="left">
+                  <TypoGraphy variant="title" color="inherit" align="left">
                     SmartPark
                   </TypoGraphy>
                 </Grid>
                 <Grid item>
-                  <RightNavBar />
+                  <Hidden smDown>
+                    <RightNavBar md={12} />
+                  </Hidden>
                 </Grid>
               </Grid>
             </Toolbar>
