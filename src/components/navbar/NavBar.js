@@ -7,6 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import teal from '@material-ui/core/colors/teal';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import Hidden from '@material-ui/core/Hidden';
+import PropTypes from 'prop-types';
 
 const theme = createMuiTheme({
   palette: {
@@ -25,22 +26,23 @@ const theme = createMuiTheme({
     }
   }
 });
-class AppBarTest extends Component {
+
+class NavBar extends Component {
   render() {
     return (
       <div>
         <MuiThemeProvider theme={theme}>
           <AppBar color="primary" position="static">
             <Toolbar>
-              <Grid justify="space-between" container spacing={24}>
+              <Grid justify="space-between" alignItems="center" container spacing={24}>
                 <Grid item>
                   <TypoGraphy variant="title" color="inherit" align="left">
-                    SmartPark
+                    Smart Park
                   </TypoGraphy>
                 </Grid>
                 <Grid item>
                   <Hidden smDown>
-                    <RightNavBar md={12} />
+                    <RightNavBar {...this.props} md={12} />
                   </Hidden>
                 </Grid>
               </Grid>
@@ -52,4 +54,8 @@ class AppBarTest extends Component {
   }
 }
 
-export default AppBarTest;
+RightNavBar.propTypes = {
+	navItems: PropTypes.array,
+};
+
+export default NavBar;
