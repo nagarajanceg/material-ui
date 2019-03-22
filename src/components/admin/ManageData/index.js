@@ -27,41 +27,38 @@ class Manage extends Component {
     return (
       <div>
         <MuiThemeProvider theme={theme}>
-          <form>
-            <Grid container spacing={24} justify="center" direction="column">
-              <Grid item />
-              <Grid item xs={12}>
-                <ActionItem name="Browse" id="user-data" label="User Data" />
-              </Grid>
-              <Grid item xs={12}>
-                <ActionItem name="Browse" id="parking-data" label="Parking Data" />
-              </Grid>
-              <Grid item xs={12}>
-                <ActionItem name="Browse" id="assignment" label="Assignment" />
-              </Grid>
-              <Grid item />
-              <Grid item />
-              <Grid item xs={12}>
-                <Grid
-                  container
-                  justify="center"
-                  alignItems="center"
-                  spacing={24}
-                >
-                  <Grid item>
-                    <Button variant="contained" color="primary" size="medium">
-                      Download <span style={{ padding: 3 }} /> <CloudDownload />
-                    </Button>
-                  </Grid>
-                  <Grid item>
-                    <Button variant="contained" color="primary" size="medium">
-                      submit <span style={{ padding: 3 }} /> <Send />
-                    </Button>
-                  </Grid>
+          <Grid container spacing={24} justify="center" direction="column">
+            <Grid item />
+            <Grid item xs={12}>
+              <ActionItem name="Browse" id="user-data" label="User Data" />
+            </Grid>
+            <Grid item xs={12}>
+              <ActionItem
+                name="Browse"
+                id="parking-data"
+                label="Parking Data"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <ActionItem name="Browse" id="assignment" label="Assignment" />
+            </Grid>
+            <Grid item />
+            <Grid item />
+            <Grid item xs={12}>
+              <Grid container justify="center" alignItems="center" spacing={24}>
+                <Grid item>
+                  <Button variant="contained" color="primary" size="medium">
+                    Download <span style={{ padding: 3 }} /> <CloudDownload />
+                  </Button>
+                </Grid>
+                <Grid item>
+                  <Button variant="contained" color="primary" size="medium">
+                    submit <span style={{ padding: 3 }} /> <Send />
+                  </Button>
                 </Grid>
               </Grid>
             </Grid>
-          </form>
+          </Grid>
         </MuiThemeProvider>
       </div>
     );
