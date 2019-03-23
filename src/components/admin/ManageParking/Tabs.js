@@ -16,6 +16,9 @@ const styles = theme => ({
   },
   padding: {
     padding: `0 ${theme.spacing.unit * 3}px`
+  },
+  tabContainer: {
+    width: '100%'
   }
 });
 
@@ -41,9 +44,9 @@ class TabSection extends Component {
 
   render() {
     const { value } = this.state;
-    // const { classes } = this.props;
+    const { classes } = this.props;
     return (
-      <Paper>
+      <Paper className={classes.tabContainer}>
         <Tabs
           value={this.state.value}
           onChange={this.handleChange}

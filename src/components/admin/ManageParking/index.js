@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import { TextField, Grid, MenuItem, withStyles } from '@material-ui/core';
-import teal from '@material-ui/core/colors/teal';
+import { pink, teal } from '@material-ui/core/colors';
 import { Search } from '@material-ui/icons';
 import classNames from 'classnames';
 import Tabs from './Tabs';
@@ -13,7 +13,7 @@ const theme = createMuiTheme({
       main: teal[400]
     },
     secondary: {
-      main: teal[400]
+			main: pink[300]
     }
   }
 });
@@ -22,17 +22,14 @@ const styles = () => ({
   gridFlex: {
     display: 'flex'
   },
-  searchField: {
-    'flex-basis': '70%'
-  },
   flexEnd: {
     'justify-content': 'flex-end'
   }
 });
 const Content = styled('div')({
-  maxWidth: 1000,
   padding: theme.spacing.unit * 4,
-  margin: 'auto'
+  margin: '0 auto',
+  width: '70%'
 });
 
 const statusValues = ['All', 'Available', 'Busy', 'Release', 'Assign'];
@@ -48,20 +45,23 @@ class ManageParking extends Component {
     this.setState({ [name]: event.target.value });
   };
   render() {
-    const { classes } = this.props;
+		const generateGrid = count => {
+			const elements = [];
+			for (var i=0; i<count; i++) {
+				elements.push(<Grid item xs={12} />);
+			}
+			return elements;
+		};
+		const {classes} = this.props;
     return (
       <React.Fragment>
         <Content>
           <MuiThemeProvider theme={theme}>
             <Grid container spacing={24} alignItems="flex-end" direction="row">
-              <Grid
-                item
-                xs={1}
-                className={classNames(classes.gridFlex, classes.flexEnd)}
-              >
-                <Search color="primary" />
-              </Grid>
-              <Grid item xs={11} className={classNames(classes.gridFlex)}>
+							<Grid item xs={1} className={classNames(classes.gridFlex, classes.flexEnd)}>
+								<Search color="primary" />
+							</Grid>
+              <Grid item xs={10} className={classNames(classes.gridFlex)}>
                 <TextField
                   id="park-status"
                   select
@@ -80,11 +80,9 @@ class ManageParking extends Component {
                   ))}
                 </TextField>
               </Grid>
-              <Grid item xs={12} />
-              <Grid item xs={1} />
-              <Grid item xs={11}>
-                <Tabs />
-              </Grid>
+							<Grid item xs={1} />
+							{generateGrid(2)}
+							<Tabs />
             </Grid>
           </MuiThemeProvider>
         </Content>
