@@ -24,7 +24,7 @@ export const parkingData = {
 					new Date()
 			},
 			{
-				'parkingId': '1234',
+				'parkingId': '456',
 				'orgname': 'benz',
 				'branchName': 'spain',
 				'floor': '2',
@@ -49,7 +49,7 @@ export const parkingData = {
 	'Gate2':
 		[
 			{
-				'parkingId': '123',
+				'parkingId': '789',
 				'orgname': 'benz',
 				'branchName': 'spain',
 				'floor': '3',

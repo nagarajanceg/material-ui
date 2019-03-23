@@ -57,7 +57,10 @@ class TabSection extends Component {
 					{items && Object.keys(items).map(key => <Tab value={key} label={<TabBadge name={key} />} />)}
         </Tabs>
 				<TabContainer>
-				{items[value] && items[value].map(data => <div>{data.parkingId}</div>)}</TabContainer>
+          {items[value] && items[value].map(data =>
+            <div>{data.parkingId}</div>
+          )}
+        </TabContainer>
       </Paper>
     );
   }
