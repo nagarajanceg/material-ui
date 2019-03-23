@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
-import { TextField, Grid, MenuItem } from '@material-ui/core';
+import { TextField, Grid, MenuItem, withStyles } from '@material-ui/core';
 import teal from '@material-ui/core/colors/teal';
 import { Search } from '@material-ui/icons';
-import InputAdornment from '@material-ui/core/InputAdornment';
+import classNames from 'classnames';
 
 const theme = createMuiTheme({
   palette: {
@@ -18,7 +18,20 @@ const theme = createMuiTheme({
     }
   }
 });
-const statusValues = ['Available', 'Busy', 'Release', 'Assign'];
+
+const styles = () => ({
+	gridFlex: {
+		'display': 'flex'
+	},
+  searchField: {
+		'flex-basis': '70%'
+  },
+	flexEnd: {
+		'justify-content': 'flex-end'
+	}
+});
+
+const statusValues = ['All', 'Available', 'Busy', 'Release', 'Assign'];
 class ManageParking extends Component {
   state = {
     status: ''
@@ -30,30 +43,27 @@ class ManageParking extends Component {
     this.setState({ [name]: event.target.value });
   };
   render() {
+		const {classes} = this.props;
     return (
       <div>
         <MuiThemeProvider theme={theme}>
           <Grid container spacing={24} alignItems="flex-end" direction="row">
-            <Grid item xs={12} md={12}>
+						<Grid item xs={12} />
+						<Grid item xs={12} />
+            <Grid item xs={2} className={classNames(classes.gridFlex, classes.flexEnd)}>
+							<Search color="primary" />
+            </Grid>
+            <Grid item xs={10} className={classNames(classes.gridFlex, classes.searchField)}>
               <TextField
                 id="park-status"
                 select
                 label="Status"
                 value={this.state.status}
-                margin="normal"
-                variant="filled"
                 onChange={this.handleChange('status')}
                 SelectProps={{
                   MenuProps: {}
                 }}
                 fullWidth
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <Search color="primary" />
-                    </InputAdornment>
-                  )
-                }}
               >
                 {statusValues.map(option => (
                   <MenuItem key={option} value={option}>
@@ -69,4 +79,4 @@ class ManageParking extends Component {
   }
 }
 
-export default ManageParking;
+export default withStyles(styles)(ManageParking);

@@ -14,6 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import teal from '@material-ui/core/colors/teal';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import Redirect from 'react-router-dom/es/Redirect';
 const themes = createMuiTheme({
   palette: {
     primary: {
@@ -60,7 +61,9 @@ const styles = theme => ({
 
 function SignIn(props) {
   const { classes } = props;
-
+	const routeChange = path => {
+		return (<Redirect to={`/${path}`} />);
+	};
   return (
     <MuiThemeProvider theme={themes}>
       <main className={classes.main}>
@@ -72,7 +75,7 @@ function SignIn(props) {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <form className={classes.form}>
+          <form className={classes.form} onSubmit={() => routeChange('manage')}>
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="email">Email Address</InputLabel>
               <Input id="email" name="email" autoComplete="email" autoFocus />

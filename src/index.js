@@ -3,14 +3,15 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { BrowserRouter } from 'react-router-dom';
-import Route from 'react-router-dom/es/Route'
-import Switch from 'react-router-dom/es/Switch'
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 const RoutedApp = () => (
 	<BrowserRouter >
 		<Switch>
-			<Route exact path="/" component={App} />
+			<Route exact path="/manageData" render={props => <App {...props} component="manageData" />} />
+			<Route exact path="/manageParking" render={props => <App {...props} component="manageParking" />} />
+			<Route exact path="/signOut" render={props => <App {...props} isLogin={true} />} />
+			<Route exact path="/login" render={props => <App {...props} isLogin={true} />}/>
 			<Route path="*" component={App} />
 		</Switch>
 	</BrowserRouter>

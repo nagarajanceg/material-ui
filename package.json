@@ -11,7 +11,8 @@
     "react-dom": "^16.8.4",
     "react-scripts": "2.1.8",
     "prop-types": "latest",
-    "react-router-dom": "latest"
+    "react-router-dom": "latest",
+    "classnames": "latest"
   },
   "devDependencies": {
     "eslint": "^3.6.1",

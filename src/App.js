@@ -2,9 +2,21 @@ import React, { Component } from 'react';
 import Login from './components/login';
 import NavBar from './components/navbar/NavBar';
 import './App.css';
-import { adminHeaderProps } from './components/navbar/config';
+import { adminHeaderProps, defaultHeaderProps } from './components/navbar/config'
 import ManageData from './components/admin/ManageData';
 import ManageParking from './components/admin/ManageParking';
+import PropTypes from 'prop-types';
+
+const getComponent = props => {
+  switch (props.component) {
+    case 'manageData':
+      return (<div><ManageData {...props} /></div>);
+		case 'manageParking':
+			return (<div><ManageParking {...props} /></div>);
+    default:
+      return null;
+  }
+};
 
 class App extends Component {
   constructor(props) {
@@ -16,15 +28,19 @@ class App extends Component {
   }
 
   render() {
+    const headerProps = this.props.isLogin ? [defaultHeaderProps] : adminHeaderProps;
     return (
       <div>
-        <NavBar navItems={adminHeaderProps} />
-        {/*<ManageData />*/}
-        <ManageParking />
-        {this.state.isAuthenticated && <Login />}
+				<NavBar navItems={headerProps} {...this.props} />
+        {!this.props.isLogin ? getComponent(this.props) : <Login /> }
       </div>
     );
   }
 }
+
+App.propTypes = {
+	isLogin: PropTypes.bool,
+	component: PropTypes.string,
+};
 
 export default App;

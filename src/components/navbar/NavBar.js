@@ -36,7 +36,7 @@ class NavBar extends Component {
             <Toolbar>
               <Grid justify="space-between" alignItems="center" container spacing={24}>
                 <Grid item>
-                  <TypoGraphy variant="title" color="inherit" align="left">Smart Park</TypoGraphy>
+                  <TypoGraphy variant="h6" color="inherit" align="left">Smart Park</TypoGraphy>
                 </Grid>
                 <Grid item>
                   <Hidden smDown>
