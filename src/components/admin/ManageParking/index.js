@@ -6,6 +6,7 @@ import { Search } from '@material-ui/icons';
 import classNames from 'classnames';
 import Tabs from './Tabs';
 import styled from '@material-ui/styles/styled';
+import { parkingData } from '../../../mocks/parkings';
 
 const theme = createMuiTheme({
   palette: {
@@ -36,7 +37,8 @@ const statusValues = ['All', 'Available', 'Busy', 'Release', 'Assign'];
 
 class ManageParking extends Component {
   state = {
-    status: ''
+    status: '',
+		items: parkingData
   };
   constructor() {
     super();
@@ -82,7 +84,7 @@ class ManageParking extends Component {
               </Grid>
 							<Grid item xs={1} />
 							{generateGrid(2)}
-							<Tabs />
+							<Tabs items={this.state.items} />
             </Grid>
           </MuiThemeProvider>
         </Content>

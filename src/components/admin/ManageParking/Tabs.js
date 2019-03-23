@@ -35,7 +35,7 @@ TabContainer.propTypes = {
 
 class TabSection extends Component {
   state = {
-    value: 0
+    value: ''
   };
 
   handleChange = (event, value) => {
@@ -43,8 +43,8 @@ class TabSection extends Component {
   };
 
   render() {
-    const { value } = this.state;
-    const { classes } = this.props;
+		const { classes, items } = this.props;
+    const value = this.state.value ? this.state.value : items && Object.keys(items)[0];
     return (
       <Paper className={classes.tabContainer}>
         <Tabs
@@ -54,16 +54,17 @@ class TabSection extends Component {
           textColor="primary"
           variant="fullWidth"
         >
-          <Tab label={<TabBadge name="Gate-1" />} />
-          <Tab label={<TabBadge name="Gate-2" />} />
-          <Tab label={<TabBadge name="Gate-3" />} />
+					{items && Object.keys(items).map(key => <Tab value={key} label={<TabBadge name={key} />} />)}
         </Tabs>
-        {value === 0 && <TabContainer>Item One</TabContainer>}
-        {value === 1 && <TabContainer>Item Two</TabContainer>}
-        {value === 2 && <TabContainer>Item Three</TabContainer>}
+				<TabContainer>
+				{items[value] && items[value].map(data => <div>{data.parkingId}</div>)}</TabContainer>
       </Paper>
     );
   }
 }
+
+TabSection.propTypes = {
+	items: PropTypes.object,
+};
 
 export default withStyles(styles)(TabSection);

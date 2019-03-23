@@ -8,6 +8,10 @@ const styles = theme => ({
   },
   padding: {
     padding: `0 ${theme.spacing.unit * 3}px`
+  },
+  badgeText: {
+    transform: 'none',
+    position: 'relative'
   }
 });
 
@@ -15,8 +19,8 @@ class TabBadge extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <Badge className={classes.padding} color="secondary" badgeContent="4open">
-        <Typography>{this.props.name}</Typography>
+      <Badge className={classes.padding} color="secondary" badgeContent="4 open">
+        <Typography className={classes.badgeText}>{this.props.name}</Typography>
       </Badge>
     );
   }
