@@ -14,6 +14,7 @@ import {
 import { Edit } from '@material-ui/icons';
 import Icon from '@material-ui/core/Icon';
 import classNames from 'classnames';
+import ParkingDialog from '../../dialogs/ParkingDialog';
 
 const styles = theme => ({
   margin: {
@@ -34,16 +35,25 @@ const styles = theme => ({
     right: '8%'
   }
 });
-const handleEdit = event => {
-  console.log('click on fab efit');
-};
 class CardView extends Component {
-  state = {};
   constructor() {
     super();
   }
+
+	state = {
+		dialogOpen: false,
+	};
+
+	handleEdit = id => {
+		this.setState({ dialogOpen: true, id });
+	};
+
+	handleClose = () => {
+		this.setState({ dialogOpen: false });
+	};
+
   render() {
-    const { classes } = this.props;
+    const { classes, parkingData } = this.props;
     const self = this;
     return (
       <Card>
@@ -54,7 +64,8 @@ class CardView extends Component {
             title="card-title"
           />
           {/*To do On click action need to be added. In that action modal pop up will open. Check the mock up once*/}
-          <div className={classes.overlay} onClick={self.handleEdit}>
+          <ParkingDialog open={this.state.dialogOpen} parkingId={parkingData.parkingId} callback={this.handleClose} />
+          <div className={classes.overlay} onClick={() => self.handleEdit(parkingData.parkingId)}>
             <Fab
               color="primary"
               aria-label="Edit"
@@ -76,7 +87,7 @@ class CardView extends Component {
               />
             </Typography>
             <Typography gutterBottom variant="h6" component="span">
-              Gate-1
+              {this.props.name}
             </Typography>
             <Typography gutterBottom variant="infoText">
               26th-March to 29th-March

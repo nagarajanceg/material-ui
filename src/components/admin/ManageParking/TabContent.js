@@ -14,7 +14,7 @@ class TabContent extends Component {
         {/*<Grid item xs={12}>*/}
         {items.map(data => (
           <Grid item xs={12} md={3}>
-            <CardView />{' '}
+            <CardView parkingData={data} name={this.props.name} />
           </Grid>
         ))}
         {/*{data.parkingId}*/}

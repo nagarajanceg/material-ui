@@ -68,7 +68,7 @@ class TabSection extends Component {
           </Tabs>
         </Paper>
         <TabContainer>
-          {items[value] && <TabContent items = {items[value]}/>}
+          {items[value] && <TabContent items={items[value]} name={value}/>}
         </TabContainer>
       </div>
     );

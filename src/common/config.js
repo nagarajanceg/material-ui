@@ -25,3 +25,5 @@ export const adminHeaderProps = [
     ...defaultHeaderProps
   }
 ];
+
+export const statusValues = ['All', 'Available', 'Busy', 'Release', 'Assign'];

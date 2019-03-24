@@ -7,6 +7,7 @@ import classNames from 'classnames';
 import Tabs from './Tabs';
 import styled from '@material-ui/styles/styled';
 import { parkingData } from '../../../mocks/parkings';
+import { statusValues } from '../../../common/config';
 
 const theme = createMuiTheme({
   palette: {
@@ -32,8 +33,6 @@ const Content = styled('div')({
   margin: 'auto',
   width: '65%'
 });
-
-const statusValues = ['All', 'Available', 'Busy', 'Release', 'Assign'];
 
 class ManageParking extends Component {
   state = {

@@ -9,7 +9,7 @@ import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import Hidden from '@material-ui/core/Hidden';
 import PropTypes from 'prop-types';
 
-const theme = createMuiTheme({
+export const theme = createMuiTheme({
   palette: {
     primary: {
       main: teal[400]
