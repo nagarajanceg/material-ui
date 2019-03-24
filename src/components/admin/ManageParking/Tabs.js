@@ -60,14 +60,15 @@ class TabSection extends Component {
             variant="fullWidth"
           >
             {items &&
-              Object.keys(items).map(key => (
-                <Tab value={key} label={<TabBadge name={key} />} />
-              ))}
+              Object.keys(items).map(key => {
+              	let slots = 0;
+              	items[key].forEach(data => slots += Number(data.slot || 0));
+                return <Tab value={key} label={<TabBadge name={key} slots={slots} />} />
+              })}
           </Tabs>
         </Paper>
         <TabContainer>
           {items[value] && <TabContent items = {items[value]}/>}
-            {/*items[value].map(data => <div>{data.parkingId}</div>)}*/}
         </TabContainer>
       </div>
     );

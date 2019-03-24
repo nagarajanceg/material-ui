@@ -17,9 +17,9 @@ const styles = theme => ({
 
 class TabBadge extends Component {
   render() {
-    const { classes } = this.props;
+    const { classes, slots } = this.props;
     return (
-      <Badge className={classes.padding} color="primary" badgeContent="4 open">
+      <Badge className={classes.padding} color="primary" badgeContent={`${slots} open`}>
         <Typography className={classes.badgeText}>{this.props.name}</Typography>
       </Badge>
     );
