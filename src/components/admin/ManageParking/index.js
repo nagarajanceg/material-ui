@@ -29,8 +29,8 @@ const styles = () => ({
 });
 const Content = styled('div')({
   padding: theme.spacing.unit * 4,
-  margin: '0 auto',
-  width: '70%'
+  margin: 'auto',
+  width: '65%'
 });
 
 const statusValues = ['All', 'Available', 'Busy', 'Release', 'Assign'];
@@ -68,7 +68,7 @@ class ManageParking extends Component {
               >
                 <Search color="primary" />
               </Grid>
-              <Grid item xs={11} className={classNames(classes.gridFlex)}>
+              <Grid item xs={10} className={classNames(classes.gridFlex)}>
                 <TextField
                   id="park-status"
                   select
@@ -87,7 +87,7 @@ class ManageParking extends Component {
                   ))}
                 </TextField>
               </Grid>
-              <Grid item xs={1} />
+							<Grid item xs={1} />
               {generateGrid(2)}
               <Tabs items={this.state.items} />
             </Grid>

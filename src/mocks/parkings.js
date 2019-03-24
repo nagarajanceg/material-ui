@@ -1,5 +1,5 @@
 export const parkingData = {
-  gate1: [
+  'Gate 1': [
     {
       parkingId: '123',
       orgname: 'benz',
@@ -96,7 +96,7 @@ export const parkingData = {
       lastAssignedDate: new Date()
     }
   ],
-  Gate2: [
+  'Gate 2': [
     {
       parkingId: '789',
       orgname: 'benz',
@@ -117,7 +117,7 @@ export const parkingData = {
       lastAssignedDate: new Date()
     }
   ],
-  Gate3: [
+  'Gate 3': [
     {
       parkingId: '789',
       orgname: 'benz',

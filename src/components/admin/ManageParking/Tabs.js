@@ -19,13 +19,14 @@ const styles = theme => ({
     padding: `0 ${theme.spacing.unit * 3}px`
   },
   tabContainer: {
-    width: '100%'
+    width: '100%',
+    margin: 'auto'
   }
 });
 
 function TabContainer(props) {
   return (
-    <Typography component="div" style={{ padding: 8 * 3 }}>
+    <Typography component="div" style={{ padding: 8 }}>
       {props.children}
     </Typography>
   );
@@ -49,24 +50,26 @@ class TabSection extends Component {
       ? this.state.value
       : items && Object.keys(items)[0];
     return (
-      <Paper className={classes.tabContainer}>
-        <Tabs
-          value={this.state.value}
-          onChange={this.handleChange}
-          indicatorColor="primary"
-          textColor="primary"
-          variant="fullWidth"
-        >
-          {items &&
-            Object.keys(items).map(key => (
-              <Tab value={key} label={<TabBadge name={key} />} />
-            ))}
-        </Tabs>
+      <div className={classes.tabContainer}>
+        <Paper>
+          <Tabs
+            value={this.state.value}
+            onChange={this.handleChange}
+            indicatorColor="primary"
+            textColor="primary"
+            variant="fullWidth"
+          >
+            {items &&
+              Object.keys(items).map(key => (
+                <Tab value={key} label={<TabBadge name={key} />} />
+              ))}
+          </Tabs>
+        </Paper>
         <TabContainer>
           {items[value] && <TabContent items = {items[value]}/>}
             {/*items[value].map(data => <div>{data.parkingId}</div>)}*/}
         </TabContainer>
-      </Paper>
+      </div>
     );
   }
 }
