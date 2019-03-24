@@ -44,6 +44,7 @@ class CardView extends Component {
   }
   render() {
     const { classes } = this.props;
+    const self = this;
     return (
       <Card>
         <CardActionArea>
@@ -52,12 +53,13 @@ class CardView extends Component {
             image="images/benz-park-4.jpg"
             title="card-title"
           />
-          <div className={classes.overlay}>
+          {/*To do On click action need to be added. In that action modal pop up will open. Check the mock up once*/}
+          <div className={classes.overlay} onClick={self.handleEdit}>
             <Fab
               color="primary"
               aria-label="Edit"
               component="button"
-              onClick={this.handleEdit}
+              size="small"
             >
               <Icon>
                 <Edit />
