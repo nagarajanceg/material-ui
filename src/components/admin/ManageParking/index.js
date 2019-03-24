@@ -14,7 +14,7 @@ const theme = createMuiTheme({
       main: teal[400]
     },
     secondary: {
-			main: pink[300]
+      main: pink[300]
     }
   }
 });
@@ -38,7 +38,7 @@ const statusValues = ['All', 'Available', 'Busy', 'Release', 'Assign'];
 class ManageParking extends Component {
   state = {
     status: '',
-		items: parkingData
+    items: parkingData
   };
   constructor() {
     super();
@@ -47,23 +47,28 @@ class ManageParking extends Component {
     this.setState({ [name]: event.target.value });
   };
   render() {
-		const generateGrid = count => {
-			const elements = [];
-			for (var i=0; i<count; i++) {
-				elements.push(<Grid item xs={12} />);
-			}
-			return elements;
-		};
-		const {classes} = this.props;
+    const generateGrid = count => {
+      const elements = [];
+      for (var i = 0; i < count; i++) {
+        elements.push(<Grid item xs={1} />);
+        elements.push(<Grid item xs={11} />);
+      }
+      return elements;
+    };
+    const { classes } = this.props;
     return (
       <React.Fragment>
         <Content>
           <MuiThemeProvider theme={theme}>
             <Grid container spacing={24} alignItems="flex-end" direction="row">
-							<Grid item xs={1} className={classNames(classes.gridFlex, classes.flexEnd)}>
-								<Search color="primary" />
-							</Grid>
-              <Grid item xs={10} className={classNames(classes.gridFlex)}>
+              <Grid
+                item
+                xs={1}
+                className={classNames(classes.gridFlex, classes.flexEnd)}
+              >
+                <Search color="primary" />
+              </Grid>
+              <Grid item xs={11} className={classNames(classes.gridFlex)}>
                 <TextField
                   id="park-status"
                   select
@@ -82,9 +87,9 @@ class ManageParking extends Component {
                   ))}
                 </TextField>
               </Grid>
-							<Grid item xs={1} />
-							{generateGrid(2)}
-							<Tabs items={this.state.items} />
+              <Grid item xs={1} />
+              {generateGrid(2)}
+              <Tabs items={this.state.items} />
             </Grid>
           </MuiThemeProvider>
         </Content>

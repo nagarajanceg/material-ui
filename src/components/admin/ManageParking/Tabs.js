@@ -9,6 +9,7 @@ import {
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import TabBadge from './Badge';
+import TabContent from './TabContent';
 
 const styles = theme => ({
   margin: {
@@ -43,8 +44,10 @@ class TabSection extends Component {
   };
 
   render() {
-		const { classes, items } = this.props;
-    const value = this.state.value ? this.state.value : items && Object.keys(items)[0];
+    const { classes, items } = this.props;
+    const value = this.state.value
+      ? this.state.value
+      : items && Object.keys(items)[0];
     return (
       <Paper className={classes.tabContainer}>
         <Tabs
@@ -54,12 +57,14 @@ class TabSection extends Component {
           textColor="primary"
           variant="fullWidth"
         >
-					{items && Object.keys(items).map(key => <Tab value={key} label={<TabBadge name={key} />} />)}
+          {items &&
+            Object.keys(items).map(key => (
+              <Tab value={key} label={<TabBadge name={key} />} />
+            ))}
         </Tabs>
-				<TabContainer>
-          {items[value] && items[value].map(data =>
-            <div>{data.parkingId}</div>
-          )}
+        <TabContainer>
+          {items[value] && <TabContent items = {items[value]}/>}
+            {/*items[value].map(data => <div>{data.parkingId}</div>)}*/}
         </TabContainer>
       </Paper>
     );
@@ -67,7 +72,7 @@ class TabSection extends Component {
 }
 
 TabSection.propTypes = {
-	items: PropTypes.object,
+  items: PropTypes.object
 };
 
 export default withStyles(styles)(TabSection);
