@@ -9,7 +9,6 @@ import {
   Typography,
   Badge,
   withStyles,
-  Button,
   Fab
 } from '@material-ui/core';
 import { Edit } from '@material-ui/icons';
@@ -28,8 +27,16 @@ const styles = theme => ({
   },
   fab: {
     margin: theme.spacing.unit
+  },
+  overlay: {
+    position: 'absolute',
+    bottom: '38%',
+    right: '8%'
   }
 });
+const handleEdit = event => {
+  console.log('click on fab efit');
+};
 class CardView extends Component {
   state = {};
   constructor() {
@@ -45,7 +52,18 @@ class CardView extends Component {
             image="images/benz-park-4.jpg"
             title="card-title"
           />
-
+          <div className={classes.overlay}>
+            <Fab
+              color="primary"
+              aria-label="Edit"
+              component="button"
+              onClick={this.handleEdit}
+            >
+              <Icon>
+                <Edit />
+              </Icon>
+            </Fab>
+          </div>
           <CardContent>
             <Typography variant="small">
               <Badge
@@ -62,13 +80,6 @@ class CardView extends Component {
               26th-March to 29th-March
             </Typography>
           </CardContent>
-          <CardActions>
-            <Fab color="primary" aria-label="Edit" className={classes.fab}>
-              <Icon>
-                <Edit />
-              </Icon>
-            </Fab>
-          </CardActions>
         </CardActionArea>
       </Card>
     );

@@ -19,7 +19,7 @@ class TabBadge extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <Badge className={classes.padding} color="secondary" badgeContent="4 open">
+      <Badge className={classes.padding} color="primary" badgeContent="4 open">
         <Typography className={classes.badgeText}>{this.props.name}</Typography>
       </Badge>
     );
