@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
 import {
-  FormControl,
-  Input,
-  InputLabel,
   Button,
   TextField,
   withStyles
@@ -23,6 +20,9 @@ const styles = theme => ({
 	},
 	gridRight: {
 		'flex-basis': '45%'
+	},
+	fileInput: {
+		cursor: 'pointer'
 	}
 });
 
@@ -72,7 +72,8 @@ class ActionItem extends Component {
 				</Grid>
 				<Grid item xs={7} className={classes.gridRight}>
 					<TextField fullWidth={true} onClick={triggerFileSelect} id={`file-edit-${this.props.id}`}
-										 label={this.props.label} value={this.state[`${this.props.id}-fileName`]}/>
+										 label={this.props.label} value={this.state[`${this.props.id}-fileName`]}
+										 inputProps={{ className: classes.fileInput, readOnly: true }} />
 					{/*<Input id={props.id} type="file" placeholder={props.name} />*/}
 				</Grid>
 				{/*</FormControl>*/}

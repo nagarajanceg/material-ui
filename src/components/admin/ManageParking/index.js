@@ -1,33 +1,14 @@
 import React, { Component } from 'react';
-import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import { MuiThemeProvider } from '@material-ui/core/styles';
 import { TextField, Grid, MenuItem, withStyles } from '@material-ui/core';
-import { pink, teal } from '@material-ui/core/colors';
 import { Search } from '@material-ui/icons';
 import classNames from 'classnames';
 import Tabs from './Tabs';
 import styled from '@material-ui/styles/styled';
 import { parkingData } from '../../../mocks/parkings';
-import { statusValues } from '../../../common/config';
+import { statusValues } from '../../common/config';
+import { generateGrid, primaryStyles as styles, primaryTheme as theme } from '../../common/componentUtils';
 
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: teal[400]
-    },
-    secondary: {
-      main: pink[300]
-    }
-  }
-});
-
-const styles = () => ({
-  gridFlex: {
-    display: 'flex'
-  },
-  flexEnd: {
-    'justify-content': 'flex-end'
-  }
-});
 const Content = styled('div')({
   padding: theme.spacing.unit * 4,
   margin: 'auto',
@@ -46,14 +27,6 @@ class ManageParking extends Component {
     this.setState({ [name]: event.target.value });
   };
   render() {
-    const generateGrid = count => {
-      const elements = [];
-      for (var i = 0; i < count; i++) {
-        elements.push(<Grid item xs={1} />);
-        elements.push(<Grid item xs={11} />);
-      }
-      return elements;
-    };
     const { classes } = this.props;
     return (
       <React.Fragment>

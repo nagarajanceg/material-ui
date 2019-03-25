@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Login from './components/login';
 import NavBar from './components/navbar/NavBar';
 import './App.css';
-import { adminHeaderProps, defaultHeaderProps } from './common/config';
+import { adminHeaderProps, defaultHeaderProps } from './components/common/config';
 import ManageData from './components/admin/ManageData';
 import ManageParking from './components/admin/ManageParking';
 import PropTypes from 'prop-types';

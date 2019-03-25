@@ -1,7 +1,6 @@
 import React from 'react';
 import {
 	Button,
-  TextField,
   DialogActions,
   DialogContent,
   DialogContentText,
@@ -9,9 +8,20 @@ import {
 	Dialog,
 	withStyles,
 } from '@material-ui/core';
+import AssignParking from '../admin/ManageParking/AssignParking';
+import MuiThemeProvider from '@material-ui/core/es/styles/MuiThemeProvider';
+import { primaryTheme } from '../common/componentUtils';
+import Send from '@material-ui/icons/Send';
 
 const styles = theme => ({
-	title: {
+	dialogPaper: {
+		width: '100%'
+	},
+	dialogTitle: {
+		borderBottom: `1px solid ${theme.palette.divider}`
+	},
+	submitLabel: {
+		'padding-right': '10px'
 	}
 });
 
@@ -20,25 +30,25 @@ class ParkingDialog extends React.Component {
 		const { classes } = this.props;
 		return (
 			<div>
-				<Dialog
-					open={this.props.open}
-					onClose={this.props.callback}
-				>
-					<DialogTitle  className={classes.title}>Title</DialogTitle>
-					<DialogContent>
-						<DialogContentText>
-							Body Text
-						</DialogContentText>
-						<TextField
-							fullWidth value={this.props.parkingId}
-						/>
-					</DialogContent>
-					<DialogActions>
-						<Button onClick={this.handleClose} color="primary">
-							Assign
-						</Button>
-					</DialogActions>
-				</Dialog>
+				<MuiThemeProvider theme={primaryTheme}>
+					<Dialog
+						open={this.props.open}
+						onClose={this.props.callback}
+						PaperProps={{className: classes.dialogPaper}}
+					>
+						<DialogTitle  className={classes.dialogTitle}>Assign Parking</DialogTitle>
+						<DialogContent className={classes.dialog}>
+							<DialogContentText>
+								<AssignParking />
+							</DialogContentText>
+						</DialogContent>
+						<DialogActions>
+							<Button variant="contained" color="primary" size="medium">
+								<div className={classes.submitLabel}>Assign</div><Send />
+							</Button>
+						</DialogActions>
+					</Dialog>
+				</MuiThemeProvider>
 			</div>
 		);
 	}

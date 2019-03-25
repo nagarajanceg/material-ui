@@ -5,7 +5,6 @@ import {
   Paper,
   Typography,
   withStyles,
-  Grid
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import TabBadge from './Badge';
@@ -55,7 +54,7 @@ class TabSection extends Component {
           <Tabs
             value={this.state.value}
             onChange={this.handleChange}
-            indicatorColor="primary"
+            indicatorColor="secondary"
             textColor="primary"
             variant="fullWidth"
           >
