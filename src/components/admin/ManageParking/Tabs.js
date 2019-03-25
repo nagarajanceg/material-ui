@@ -52,7 +52,7 @@ class TabSection extends Component {
       <div className={classes.tabContainer}>
         <Paper>
           <Tabs
-            value={this.state.value}
+            value={value}
             onChange={this.handleChange}
             indicatorColor="secondary"
             textColor="primary"
