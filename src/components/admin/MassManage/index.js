@@ -15,7 +15,7 @@ const theme = createMuiTheme({
     }
   }
 });
-class Manage extends Component {
+class MassManage extends Component {
   state = {};
   constructor() {
     super();
@@ -26,9 +26,16 @@ class Manage extends Component {
         <MuiThemeProvider theme={theme}>
           <Grid container spacing={24} justify="center" direction="column">
             <Grid item />
-            <FileUploader name="Browse" id="user-data" label="User Data" />
-            <FileUploader name="Browse" id="parking-data" label="Parking Data" />
-            <FileUploader name="Browse" id="assignment" label="Assignment" />
+            <FileUploader
+              name="Browse"
+              id="assign-to-release"
+              label="Assign to Release"
+            />
+            <FileUploader
+              name="Browse"
+              id="release-to-busy  "
+              label="Release to busy"
+            />
             <Grid item />
             <Grid item />
             <Grid item xs={12}>
@@ -41,4 +48,4 @@ class Manage extends Component {
   }
 }
 
-export default Manage;
+export default MassManage;

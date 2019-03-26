@@ -2,17 +2,36 @@ import React, { Component } from 'react';
 import Login from './components/login';
 import NavBar from './components/navbar/NavBar';
 import './App.css';
-import { adminHeaderProps, defaultHeaderProps } from './components/common/config';
+import {
+  adminHeaderProps,
+  defaultHeaderProps
+} from './components/common/config';
 import ManageData from './components/admin/ManageData';
 import ManageParking from './components/admin/ManageParking';
+import MassManage from './components/admin/MassManage';
 import PropTypes from 'prop-types';
 
 const getComponent = props => {
   switch (props.component) {
     case 'manageData':
-      return (<div><ManageData {...props} /></div>);
-		case 'manageParking':
-			return (<div><ManageParking {...props} /></div>);
+      return (
+        <div>
+          <ManageData {...props} />
+        </div>
+      );
+    case 'manageParking':
+      return (
+        <div>
+          <ManageParking {...props} />
+        </div>
+      );
+    case 'massManage':
+      console.log('Mass Manage calling');
+      return (
+        <div>
+          <MassManage {...props} />
+        </div>
+      );
     default:
       return null;
   }
@@ -28,19 +47,21 @@ class App extends Component {
   }
 
   render() {
-    const headerProps = this.props.isLogin ? [defaultHeaderProps] : adminHeaderProps;
+    const headerProps = this.props.isLogin
+      ? [defaultHeaderProps]
+      : adminHeaderProps;
     return (
       <div>
-				<NavBar navItems={headerProps} {...this.props} />
-        {!this.props.isLogin ? getComponent(this.props) : <Login /> }
+        <NavBar navItems={headerProps} {...this.props} />
+        {!this.props.isLogin ? getComponent(this.props) : <Login />}
       </div>
     );
   }
 }
 
 App.propTypes = {
-	isLogin: PropTypes.bool,
-	component: PropTypes.string,
+  isLogin: PropTypes.bool,
+  component: PropTypes.string
 };
 
 export default App;

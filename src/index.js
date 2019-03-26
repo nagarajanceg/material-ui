@@ -6,15 +6,36 @@ import * as serviceWorker from './serviceWorker';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 const RoutedApp = () => (
-	<BrowserRouter >
-		<Switch>
-			<Route exact path="/manageData" render={props => <App {...props} component="manageData" />} />
-			<Route exact path="/manageParking" render={props => <App {...props} component="manageParking" />} />
-			<Route exact path="/signOut" render={props => <App {...props} isLogin={true} />} />
-			<Route exact path="/login" render={props => <App {...props} isLogin={true} />}/>
-			<Route path="*" component={App} />
-		</Switch>
-	</BrowserRouter>
+  <BrowserRouter>
+    <Switch>
+      <Route
+        exact
+        path="/manageData"
+        render={props => <App {...props} component="manageData" />}
+      />
+      <Route
+        exact
+        path="/manageParking"
+        render={props => <App {...props} component="manageParking" />}
+      />
+      <Route
+        exact
+        path="/massManage"
+        render={props => <App {...props} component="massManage" />}
+      />
+      <Route
+        exact
+        path="/signOut"
+        render={props => <App {...props} isLogin={true} />}
+      />
+      <Route
+        exact
+        path="/login"
+        render={props => <App {...props} isLogin={true} />}
+      />
+      <Route path="*" component={App} />
+    </Switch>
+  </BrowserRouter>
 );
 
 ReactDOM.render(<RoutedApp />, document.getElementById('root'));
