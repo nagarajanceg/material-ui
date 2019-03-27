@@ -36,7 +36,11 @@ class RightNavBar extends Component {
 	state = { selectedId: '' };
 
 	handleMenuClick = item => {
-		this.setState({ selectedId: item.id });
+		if (item.id === 'signOut') {
+			this.setState({ selectedId: '' });
+		} else {
+			this.setState({ selectedId: item.id });
+		}
 		this.routeChange(item.id)
 	}
 
