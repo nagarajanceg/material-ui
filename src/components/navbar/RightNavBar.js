@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import TypoGraphy from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
+import { List, ListItem, ListItemText, withStyles, Typography, IconButton } from '@material-ui/core';
 import {
   Widgets,
   DirectionsCar,
   Dashboard,
-  ExitToApp
+  ExitToApp,
 } from '@material-ui/icons';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
+
+const styles = theme => ({
+	menuActive: {
+		'background-color': 'rgba(0,0,0,0.1)'
+	}
+});
 
 const getIcon = iconType => {
   switch(iconType) {
@@ -32,21 +33,29 @@ class RightNavBar extends Component {
 	constuctor() {
 		this.routeChange = this.routeChange.bind(this);
 	}
+	state = { selectedId: '' };
+
+	handleMenuClick = item => {
+		this.setState({ selectedId: item.id });
+		this.routeChange(item.id)
+	}
 
 	routeChange = path => {
 		this.props.history.push(`/${path}`);
 	};
 	render() {
+		const { classes } = this.props;
 		return (
 			<List component="nav">
 				<ListItem component="div" align="right">
 					{this.props.navItems && this.props.navItems.map(item => (<ListItemText inset>
-						<TypoGraphy color="inherit" variant={item.variant}>
-							<IconButton color="inherit" onClick={() => this.routeChange(item.id)}>
+						<Typography color="inherit" variant={item.variant}>
+							<IconButton color="inherit" onClick={() => this.handleMenuClick(item)}
+													className={this.state.selectedId === item.id ? classes.menuActive : ''}>
 								{getIcon(item.icon)}
 								<span style={{fontSize: '0.9rem', 'paddingLeft': '10px'}}>{item.title}</span>
 							</IconButton>
-						</TypoGraphy>
+						</Typography>
 					</ListItemText>))}
 				</ListItem>
 			</List>
@@ -58,4 +67,4 @@ RightNavBar.propTypes = {
   navItems: PropTypes.array,
 };
 
-export default RightNavBar;
+export default withStyles(styles)(RightNavBar);

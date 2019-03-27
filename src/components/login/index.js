@@ -28,7 +28,7 @@ class Login extends Component {
     return (
       <div>
         {/*<Navbar />*/}
-        <SignIn />
+        <SignIn {...this.props} />
         {/*{this.state.response.label ? (
           <Button variant="contained" color="secondary">
             {this.state.response.label}

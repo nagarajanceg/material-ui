@@ -53,7 +53,7 @@ class App extends Component {
     return (
       <div>
         <NavBar navItems={headerProps} {...this.props} />
-        {!this.props.isLogin ? getComponent(this.props) : <Login />}
+        {!this.props.isLogin ? getComponent(this.props) : <Login {...this.props} />}
       </div>
     );
   }

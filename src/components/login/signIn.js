@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -14,7 +14,6 @@ import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import teal from '@material-ui/core/colors/teal';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
-import Redirect from 'react-router-dom/es/Redirect';
 const themes = createMuiTheme({
   palette: {
     primary: {
@@ -59,54 +58,60 @@ const styles = theme => ({
   }
 });
 
-function SignIn(props) {
-  const { classes } = props;
-	const routeChange = path => {
-		return (<Redirect to={`/${path}`} />);
+class SignIn extends Component {
+	constuctor() {
+		this.routeChange = this.routeChange.bind(this);
+	}
+
+	routeChange = path => {
+		this.props.history.push(`/${path}`);
 	};
-  return (
-    <MuiThemeProvider theme={themes}>
-      <main className={classes.main}>
-        <CssBaseline />
-        <Paper className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
-          <form className={classes.form} onSubmit={() => routeChange('manage')}>
-            <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="email">Email Address</InputLabel>
-              <Input id="email" name="email" autoComplete="email" autoFocus />
-            </FormControl>
-            <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="password">Password</InputLabel>
-              <Input
-                name="password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-              />
-            </FormControl>
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
-              Login
-            </Button>
-          </form>
-        </Paper>
-      </main>
-    </MuiThemeProvider>
-  );
+	render() {
+		const { classes } = this.props;
+		return (
+			<MuiThemeProvider theme={themes}>
+				<main className={classes.main}>
+					<CssBaseline/>
+					<Paper className={classes.paper}>
+						<Avatar className={classes.avatar}>
+							<LockOutlinedIcon/>
+						</Avatar>
+						<Typography component="h1" variant="h5">
+							Sign in
+						</Typography>
+						<form className={classes.form}>
+							<FormControl margin="normal" required fullWidth>
+								<InputLabel htmlFor="email">Email Address</InputLabel>
+								<Input id="email" name="email" autoComplete="email" autoFocus/>
+							</FormControl>
+							<FormControl margin="normal" required fullWidth>
+								<InputLabel htmlFor="password">Password</InputLabel>
+								<Input
+									name="password"
+									type="password"
+									id="password"
+									autoComplete="current-password"
+								/>
+							</FormControl>
+							<FormControlLabel
+								control={<Checkbox value="remember" color="primary"/>}
+								label="Remember me"
+							/>
+							<Button
+								fullWidth
+								variant="contained"
+								color="primary"
+								className={classes.submit}
+								onClick={() => this.routeChange('manageData')}
+							>
+								Login
+							</Button>
+						</form>
+					</Paper>
+				</main>
+			</MuiThemeProvider>
+		);
+	};
 }
 
 SignIn.propTypes = {

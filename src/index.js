@@ -33,7 +33,7 @@ const RoutedApp = () => (
         path="/login"
         render={props => <App {...props} isLogin={true} />}
       />
-      <Route path="*" component={App} />
+      <Route path="*" render={props => <App {...props} isLogin={true} />}  />
     </Switch>
   </BrowserRouter>
 );
