@@ -59,13 +59,55 @@ const styles = theme => ({
 });
 
 class SignIn extends Component {
-	constuctor() {
+	constructor(props) {
+		super(props);
 		this.routeChange = this.routeChange.bind(this);
+
+		this.state = {
+			email: '',
+			password: '',
+			submitted: false,
+			loading: false,
+			error: ''
+		};
+
+		this.handleChange = this.handleChange.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
+	}
+
+	handleChange(e) {
+		const { name, value } = e.target;
+		console.log(this);
+		this.setState({ [name]: value });
+	}
+
+	handleSubmit(e) {
+		e.preventDefault();
+
+		this.setState({ submitted: true });
+		const { email, password } = this.state;
+
+		if (!(email && password)) {
+			return;
+		}
+
+		this.setState({ loading: true });
+		this.routeChange('manageData');
+		fetch('http://localhost:3100/post')
+			.then(data => data.json())
+			.then(res => {
+				this.setState({
+					response: res[0]
+				});
+				this.routeChange('manageData');
+				console.log(res[0]);
+			});
 	}
 
 	routeChange = path => {
 		this.props.history.push(`/${path}`);
 	};
+
 	render() {
 		const { classes } = this.props;
 		return (
@@ -82,7 +124,7 @@ class SignIn extends Component {
 						<form className={classes.form}>
 							<FormControl margin="normal" required fullWidth>
 								<InputLabel htmlFor="email">Email Address</InputLabel>
-								<Input id="email" name="email" autoComplete="email" autoFocus/>
+								<Input id="email" name="email" autoComplete="email" autoFocus onChange={this.handleChange}/>
 							</FormControl>
 							<FormControl margin="normal" required fullWidth>
 								<InputLabel htmlFor="password">Password</InputLabel>
@@ -91,6 +133,7 @@ class SignIn extends Component {
 									type="password"
 									id="password"
 									autoComplete="current-password"
+									onChange={this.handleChange}
 								/>
 							</FormControl>
 							<FormControlLabel
@@ -102,7 +145,7 @@ class SignIn extends Component {
 								variant="contained"
 								color="primary"
 								className={classes.submit}
-								onClick={() => this.routeChange('manageData')}
+								onClick={this.handleSubmit}
 							>
 								Login
 							</Button>
