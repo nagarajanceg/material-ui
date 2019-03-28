@@ -51,8 +51,9 @@ class RightNavBar extends Component {
 		const { classes } = this.props;
 		let selectedId = this.state.selectedId;
 		if (!selectedId) {
-			if (this.props.navItems[0].id !== 'signOut') {
-				selectedId = this.props.navItems[0].id;
+			const path = this.props.location.pathname.substring(1);
+			if (path !== 'signOut') {
+				selectedId = path;
 			}
 		}
 		return (
