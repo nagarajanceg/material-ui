@@ -59,102 +59,111 @@ const styles = theme => ({
 });
 
 class SignIn extends Component {
-	constructor(props) {
-		super(props);
-		this.routeChange = this.routeChange.bind(this);
+  constructor(props) {
+    super(props);
+    this.routeChange = this.routeChange.bind(this);
 
-		this.state = {
-			email: '',
-			password: '',
-			submitted: false,
-			loading: false,
-			error: ''
-		};
+    this.state = {
+      email: '',
+      password: '',
+      submitted: false,
+      loading: false,
+      error: ''
+    };
 
-		this.handleChange = this.handleChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
-	}
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
 
-	handleChange(e) {
-		const { name, value } = e.target;
-		console.log(this);
-		this.setState({ [name]: value });
-	}
+  handleChange(e) {
+    const { name, value } = e.target;
+    console.log(this);
+    this.setState({ [name]: value });
+  }
 
-	handleSubmit(e) {
-		e.preventDefault();
+  handleSubmit(e) {
+    e.preventDefault();
 
-		this.setState({ submitted: true });
-		const { email, password } = this.state;
+    this.setState({ submitted: true });
+    const { email, password } = this.state;
 
-		if (!(email && password)) {
-			return;
-		}
+    if (!(email && password)) {
+      return;
+    }
 
-		this.setState({ loading: true });
-		this.routeChange('manageData');
-		fetch('http://localhost:3100/post')
-			.then(data => data.json())
-			.then(res => {
-				this.setState({
-					response: res[0]
-				});
-				this.routeChange('manageData');
-				console.log(res[0]);
-			});
-	}
+    this.setState({ loading: true });
+    this.routeChange('manageData');
+    var self = this;
+    fetch('http://localhost:3100/get')
+      .then(data => data.json())
+      .then(res => {
+        self.setState({
+          response: res[0]
+        });
+        self.routeChange('manageData');
+        self.setState({ loading: false });
+        // this.routeChange('manageData');
+        console.log(res[0]);
+      });
+  }
 
-	routeChange = path => {
-		this.props.history.push(`/${path}`);
-	};
+  routeChange = path => {
+    this.props.history.push(`/${path}`);
+  };
 
-	render() {
-		const { classes } = this.props;
-		return (
-			<MuiThemeProvider theme={themes}>
-				<main className={classes.main}>
-					<CssBaseline/>
-					<Paper className={classes.paper}>
-						<Avatar className={classes.avatar}>
-							<LockOutlinedIcon/>
-						</Avatar>
-						<Typography component="h1" variant="h5">
-							Sign in
-						</Typography>
-						<form className={classes.form}>
-							<FormControl margin="normal" required fullWidth>
-								<InputLabel htmlFor="email">Email Address</InputLabel>
-								<Input id="email" name="email" autoComplete="email" autoFocus onChange={this.handleChange}/>
-							</FormControl>
-							<FormControl margin="normal" required fullWidth>
-								<InputLabel htmlFor="password">Password</InputLabel>
-								<Input
-									name="password"
-									type="password"
-									id="password"
-									autoComplete="current-password"
-									onChange={this.handleChange}
-								/>
-							</FormControl>
-							<FormControlLabel
-								control={<Checkbox value="remember" color="primary"/>}
-								label="Remember me"
-							/>
-							<Button
-								fullWidth
-								variant="contained"
-								color="primary"
-								className={classes.submit}
-								onClick={this.handleSubmit}
-							>
-								Login
-							</Button>
-						</form>
-					</Paper>
-				</main>
-			</MuiThemeProvider>
-		);
-	};
+  render() {
+    const { classes } = this.props;
+    return (
+      <MuiThemeProvider theme={themes}>
+        <main className={classes.main}>
+          <CssBaseline />
+          <Paper className={classes.paper}>
+            <Avatar className={classes.avatar}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign in
+            </Typography>
+            <form className={classes.form}>
+              <FormControl margin="normal" required fullWidth>
+                <InputLabel htmlFor="email">Email Address</InputLabel>
+                <Input
+                  id="email"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                  onChange={this.handleChange}
+                />
+              </FormControl>
+              <FormControl margin="normal" required fullWidth>
+                <InputLabel htmlFor="password">Password</InputLabel>
+                <Input
+                  name="password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  onChange={this.handleChange}
+                />
+              </FormControl>
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="Remember me"
+              />
+              <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+                onClick={this.handleSubmit}
+              >
+                Login
+              </Button>
+            </form>
+          </Paper>
+        </main>
+      </MuiThemeProvider>
+    );
+  }
 }
 
 SignIn.propTypes = {

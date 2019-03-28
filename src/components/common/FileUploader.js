@@ -29,12 +29,41 @@ class FileUploader extends Component {
       [`${this.props.id}-fileName`]: ''
     };
   }
+  sendRequest = (file)=> {
+  return new Promise((resolve, reject) => {
+    const req = new XMLHttpRequest();
 
+    const formData = new FormData();
+    formData.append("file", file, file.name);
+
+    req.open("POST", "http://localhost:3100/file");
+    req.send(formData);
+  });
+}
   onChange = e => {
     e.persist();
     const files = e.target.files;
     if (files.length > 0) {
+      console.log('files Content', files);
       this.setState({ [`${this.props.id}-fileName`]: files[0].name });
+      //url = http://13.210.217.90:9080/api/v1/manageData
+      // fetch('http://localhost:3100/file', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'multipart/form-data',
+      //     Accept: 'application/json'
+      //   },
+      //   body: files
+      // })
+      //   .then(r => r.json())
+      //   .then(res => {
+      //     console.log('res received ==>', res);
+      //   });
+      this.sendRequest(files).then(
+        r => r.json
+      ).then(res => {
+        console.log('res received ==>', res);
+      })
     } else {
       this.setState({ [`${this.props.id}-fileName`]: '' });
     }
@@ -50,7 +79,9 @@ class FileUploader extends Component {
         <Grid container justify="center" alignItems="center" spacing={24}>
           <Grid item xs={5} justify="flex-end" className={classes.gridLeft}>
             <input
-              accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+              accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,
+              application/javascript
+              "
               id={`${this.props.id}-file-select`}
               type="file"
               ref={ref => (this[`file-sel-${this.props.id}`] = ref)}

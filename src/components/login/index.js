@@ -21,7 +21,23 @@ class Login extends Component {
         self.setState({
           response: res[0]
         });
-        console.log(res[0]);
+        console.log('my response ==', res[0]);
+      });
+    var data = {
+      id: '1223',
+      val: 'myvalue'
+    };
+    fetch('http://localhost:3100/samp1', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+      .then(r => r.json())
+      .then(res => {
+        console.log('res received ==>', res);
       });
   };
   render() {
