@@ -40,12 +40,13 @@ class FileUploader extends Component {
     req.send(formData);
   });
 }
-  onChange = e => {
+  onChange = (e, onChangeCallback) => {
     e.persist();
     const files = e.target.files;
     if (files.length > 0) {
       console.log('files Content', files);
       this.setState({ [`${this.props.id}-fileName`]: files[0].name });
+			onChangeCallback(this.props.id, files[0]);
       //url = http://13.210.217.90:9080/api/v1/manageData
       // fetch('http://localhost:3100/file', {
       //   method: 'POST',
@@ -59,11 +60,11 @@ class FileUploader extends Component {
       //   .then(res => {
       //     console.log('res received ==>', res);
       //   });
-      this.sendRequest(files[0]).then(
+      /*this.sendRequest(files[0]).then(
         r => r.json
       ).then(res => {
         console.log('res received ==>', res);
-      });
+      });*/
 			/*fetch('http://13.210.217.90:9080/echo', {mode: 'cors'})
 				.then(function(response) {
 					console.log(response);
@@ -92,7 +93,7 @@ class FileUploader extends Component {
               type="file"
               ref={ref => (this[`file-sel-${this.props.id}`] = ref)}
               className={classes.input}
-              onChange={event => this.onChange(event)}
+              onChange={event => this.onChange(event, this.props.onChange)}
             />
             <label htmlFor={`${this.props.id}-file-select`}>
               <Button

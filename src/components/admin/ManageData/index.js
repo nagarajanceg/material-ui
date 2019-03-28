@@ -16,23 +16,45 @@ const theme = createMuiTheme({
   }
 });
 class Manage extends Component {
-  state = {};
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+		this.state = {};
   }
+  setSelectedFiles = (id, file) => {
+  	const files = this.state.files || [];
+  	files.push({ id, file });
+  	this.setState({ files });
+	};
+	handleSubmit = () => {
+		const files = this.state.files;
+		if (files && files.length > 0) {
+			var data = new FormData();
+			files.forEach(fileData => {
+				data.append(fileData.id, fileData.file);
+			})
+			fetch('http://13.210.217.90:9080/api/v1/manageData', {
+				method: 'POST',
+				body: data
+			}).then(function(response) {
+					console.log(response);
+				}).catch(function(error) {
+				console.log('Request failed', error)
+			});
+		}
+	};
   render() {
     return (
       <div>
         <MuiThemeProvider theme={theme}>
           <Grid container spacing={24} justify="center" direction="column">
             <Grid item />
-            <FileUploader name="Browse" id="user-data" label="User Data" />
-            <FileUploader name="Browse" id="parking-data" label="Parking Data" />
+            <FileUploader name="Browse" id="userData" label="User Data" onChange={this.setSelectedFiles} />
+            <FileUploader name="Browse" id="parkingData" label="Parking Data" onChange={this.setSelectedFiles} />
             {/*<FileUploader name="Browse" id="assignment" label="Assignment" />*/}
             <Grid item />
             <Grid item />
             <Grid item xs={12}>
-              <FormActionUtil />
+              <FormActionUtil data={{ id: 'manageData', onSubmit: this.handleSubmit }} />
             </Grid>
           </Grid>
         </MuiThemeProvider>
