@@ -59,11 +59,17 @@ class FileUploader extends Component {
       //   .then(res => {
       //     console.log('res received ==>', res);
       //   });
-      this.sendRequest(files).then(
+      this.sendRequest(files[0]).then(
         r => r.json
       ).then(res => {
         console.log('res received ==>', res);
-      })
+      });
+			/*fetch('http://13.210.217.90:9080/echo', {mode: 'cors'})
+				.then(function(response) {
+					console.log(response);
+				}).catch(function(error) {
+				console.log('Request failed', error)
+			});*/
     } else {
       this.setState({ [`${this.props.id}-fileName`]: '' });
     }

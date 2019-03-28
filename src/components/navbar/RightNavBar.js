@@ -49,13 +49,19 @@ class RightNavBar extends Component {
 	};
 	render() {
 		const { classes } = this.props;
+		let selectedId = this.state.selectedId;
+		if (!selectedId) {
+			if (this.props.navItems[0].id !== 'signOut') {
+				selectedId = this.props.navItems[0].id;
+			}
+		}
 		return (
 			<List component="nav">
 				<ListItem component="div" align="right">
 					{this.props.navItems && this.props.navItems.map(item => (<ListItemText inset>
 						<Typography color="inherit" variant={item.variant}>
 							<IconButton color="inherit" onClick={() => this.handleMenuClick(item)}
-													className={this.state.selectedId === item.id ? classes.menuActive : ''}>
+													className={selectedId === item.id ? classes.menuActive : ''}>
 								{getIcon(item.icon)}
 								<span style={{fontSize: '0.9rem', 'paddingLeft': '10px'}}>{item.title}</span>
 							</IconButton>

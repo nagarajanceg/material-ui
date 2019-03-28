@@ -28,7 +28,7 @@ class Manage extends Component {
             <Grid item />
             <FileUploader name="Browse" id="user-data" label="User Data" />
             <FileUploader name="Browse" id="parking-data" label="Parking Data" />
-            <FileUploader name="Browse" id="assignment" label="Assignment" />
+            {/*<FileUploader name="Browse" id="assignment" label="Assignment" />*/}
             <Grid item />
             <Grid item />
             <Grid item xs={12}>
