@@ -42,7 +42,32 @@ app.post('/file', (req, res) => {
   //   });
   // });
 });
-
+app.get('/getParkings', (req, res) => {
+  var dt = {
+    'Gate-1': [
+      {
+        parkingId: '676',
+        orgname: 'benz',
+        branchName: 'spain',
+        floor: '2',
+        wing: 'right',
+        slot: '2',
+        type: 'regular / handicap',
+        category: '',
+        column1: '',
+        column2: '',
+        column3: '',
+        column4: '',
+        assignments: ['assignment1', 'assignment2'],
+        status: 'open',
+        creationDate: new Date(),
+        lastUpdatedDate: new Date(),
+        lastAssignedDate: new Date()
+      }
+    ]
+  };
+  res.json(dt);
+});
 app.listen(3100, () => {
   console.log('listen == 3100');
 });

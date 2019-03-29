@@ -4,6 +4,7 @@ import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import teal from '@material-ui/core/colors/teal';
 import FormActionUtil from '../../common/FormActionUtils';
 import FileUploader from '../../common/FileUploader';
+import {API} from '../../common/ApiPath';
 
 const theme = createMuiTheme({
   palette: {
@@ -32,7 +33,7 @@ class Manage extends Component {
 			files.forEach(fileData => {
 				data.append(fileData.id, fileData.file);
 			})
-			fetch('http://13.210.217.90:9080/api/v1/manageData', {
+			fetch(API.url+'/manageData', {
 				method: 'POST',
 				body: data
 			}).then(function(response) {

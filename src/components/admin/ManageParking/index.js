@@ -7,7 +7,12 @@ import Tabs from './Tabs';
 import styled from '@material-ui/styles/styled';
 import { parkingData } from '../../../mocks/parkings';
 import { statusValues } from '../../common/config';
-import { generateGrid, primaryStyles as styles, primaryTheme as theme } from '../../common/componentUtils';
+import {
+  generateGrid,
+  primaryStyles as styles,
+  primaryTheme as theme
+} from '../../common/componentUtils';
+import { API } from '../../common/ApiPath';
 
 const Content = styled('div')({
   padding: theme.spacing.unit * 4,
@@ -22,6 +27,17 @@ class ManageParking extends Component {
   };
   constructor() {
     super();
+  }
+  componentDidMount() {
+    var self = this;
+    fetch("http://localhost:3100" + '/getParkings')
+      .then(data => data.json())
+      .then(res => {
+        self.setState({
+          items: res
+        });
+        console.log(res);
+      });
   }
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
@@ -59,7 +75,7 @@ class ManageParking extends Component {
                   ))}
                 </TextField>
               </Grid>
-							<Grid item xs={1} />
+              <Grid item xs={1} />
               {generateGrid(2)}
               <Tabs items={this.state.items} />
             </Grid>
