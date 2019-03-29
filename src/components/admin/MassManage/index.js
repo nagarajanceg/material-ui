@@ -5,6 +5,8 @@ import teal from '@material-ui/core/colors/teal';
 import FormActionUtil from '../../common/FormActionUtils';
 import FileUploader from '../../common/FileUploader';
 import { API } from '../../common/ApiPath';
+import Snackbar from '@material-ui/core/Snackbar';
+import Fade from '@material-ui/core/Fade';
 
 const theme = createMuiTheme({
   palette: {
@@ -28,6 +30,7 @@ class MassManage extends Component {
   };
   handleSubmit = () => {
     const files = this.state.files;
+		const self = this;
     if (files && files.length > 0) {
       var data = new FormData();
       files.forEach(fileData => {
@@ -35,20 +38,35 @@ class MassManage extends Component {
       });
       fetch(API.url + '/massManage', {
         method: 'POST',
+        mode: 'no-cors',
         body: data
       })
         .then(function(response) {
+					self.setState({ notification: true, infoMsg: 'Upload successful' });
           console.log(response);
         })
         .catch(function(error) {
+					self.setState({ notification: true, infoMsg: 'Upload failed' });
           console.log('Request failed', error);
         });
     }
   };
+	handleNotificationClose = () => {
+		this.setState({ notification: false });
+	};
   render() {
     return (
       <div>
         <MuiThemeProvider theme={theme}>
+					<Snackbar
+						open={this.state.notification}
+						onClose={this.handleNotificationClose}
+						TransitionComponent={Fade}
+						ContentProps={{
+							'aria-describedby': 'message-id',
+						}}
+						message={<span id="message-id">{this.state.infoMsg}</span>}
+					/>
           <Grid container spacing={24} justify="center" direction="column">
             <Grid item />
             <FileUploader
