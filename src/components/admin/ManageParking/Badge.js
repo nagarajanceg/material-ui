@@ -6,12 +6,13 @@ const styles = theme => ({
   margin: {
     margin: theme.spacing.unit * 2
   },
-  padding: {
-    padding: `0 ${theme.spacing.unit * 3}px`
+	badge: {
+		transform: 'scale(1) translate(10%, -50%)',
+    position: 'relative'
   },
   badgeText: {
     transform: 'none',
-    position: 'relative'
+		display: 'inline-flex'
   }
 });
 
@@ -19,9 +20,10 @@ class TabBadge extends Component {
   render() {
     const { classes, slots } = this.props;
     return (
-      <Badge className={classes.padding} color="primary" badgeContent={`${slots} open`}>
-        <Typography className={classes.badgeText}>{this.props.name}</Typography>
-      </Badge>
+      <div>
+				<Typography className={classes.badgeText}>{this.props.name}</Typography>
+        <Badge classes={{ badge: classes.badge }} color="primary" badgeContent={`${slots} Parking Available`} />
+      </div>
     );
   }
 }

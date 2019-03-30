@@ -35,6 +35,17 @@ const styles = theme => ({
     right: '8%'
   }
 });
+
+const getIdentifiers = parkingData => {
+  let i = 1;
+  const identifiers = [];
+  while(parkingData[`identifier${i}`]) {
+		identifiers.push(parkingData[`identifier${i}`]);
+		i++;
+  }
+  return identifiers;
+};
+
 class CardView extends Component {
   constructor() {
     super();
@@ -54,6 +65,7 @@ class CardView extends Component {
 
   render() {
     const { classes, parkingData } = this.props;
+    const identifiers = getIdentifiers(parkingData);
     const self = this;
     return (
       <Card>
@@ -82,13 +94,15 @@ class CardView extends Component {
               <Badge
                 color="primary"
                 className={classNames(classes.padding, classes.margin)}
-                badgeContent="open"
+                badgeContent={parkingData.status}
                 component="span"
               />
             </Typography>
-            <Typography gutterBottom variant="h6" component="span">
-              {this.props.name}
-            </Typography>
+            {identifiers.map(name => (
+							<Typography gutterBottom variant="h6" component="span">
+							{name}
+							</Typography>
+            ))}
             <Typography gutterBottom variant="infoText">
               26th-March to 29th-March
             </Typography>

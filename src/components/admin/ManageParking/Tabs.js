@@ -9,6 +9,7 @@ import {
 import PropTypes from 'prop-types';
 import TabBadge from './Badge';
 import TabContent from './TabContent';
+import { openStatus } from '../../common/config';
 
 const styles = theme => ({
   margin: {
@@ -32,6 +33,16 @@ function TabContainer(props) {
 }
 TabContainer.propTypes = {
   children: PropTypes.node.isRequired
+};
+
+const getOpenSlotsCount = items => {
+	let slots = 0;
+	items.forEach(data => {
+		if (openStatus.includes(data.status)) {
+			slots += 1;
+		}
+	});
+	return slots;
 };
 
 class TabSection extends Component {
@@ -60,9 +71,7 @@ class TabSection extends Component {
           >
             {items &&
               Object.keys(items).map(key => {
-              	let slots = 0;
-              	items[key].forEach(data => slots += Number(data.slot || 0));
-                return <Tab value={key} label={<TabBadge name={key} slots={slots} />} />
+                return <Tab value={key} label={<TabBadge name={key} slots={getOpenSlotsCount(items[key])} />} />
               })}
           </Tabs>
         </Paper>

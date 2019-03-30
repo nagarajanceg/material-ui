@@ -27,3 +27,4 @@ export const adminHeaderProps = [
 ];
 
 export const statusValues = ['All', 'Available', 'Busy', 'Release', 'Assign'];
+export const openStatus = ['AVAILABLE', 'ASSIGN'];
