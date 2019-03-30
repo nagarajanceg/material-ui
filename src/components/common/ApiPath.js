@@ -1,1 +1,1 @@
-export const API = {url:"http://localhost:9080/api/v1"};
+export const API = {url:"http://13.210.217.90:9080/api/v1"};

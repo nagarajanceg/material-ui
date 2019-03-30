@@ -6,20 +6,16 @@
     "@material-ui/core": "^3.9.2",
     "@material-ui/icons": "^3.0.2",
     "@material-ui/styles": "^3.0.0-alpha.10",
+    "classnames": "latest",
+    "material-ui-pickers": "latest",
+    "date-fns": "next",
+    "@date-io/date-fns": "latest",
     "express": "^4.16.4",
+    "prop-types": "latest",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
-    "react-scripts": "2.1.8",
-    "prop-types": "latest",
     "react-router-dom": "latest",
-    "classnames": "latest"
-  },
-  "devDependencies": {
-    "eslint": "^3.6.1",
-    "eslint-config-airbnb": "^11.1.0",
-    "eslint-plugin-import": "^1.16.0",
-    "eslint-plugin-jsx-a11y": "^2.2.2",
-    "eslint-plugin-react": "^6.3.0"
+    "react-scripts": "2.1.8"
   },
   "scripts": {
     "start": "react-scripts start",
