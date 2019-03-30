@@ -38,7 +38,6 @@ class MassManage extends Component {
       });
       fetch(API.url + '/massManage', {
         method: 'POST',
-        mode: 'no-cors',
         body: data
       })
         .then(function(response) {

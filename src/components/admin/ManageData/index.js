@@ -25,8 +25,11 @@ class Manage extends Component {
   }
   setSelectedFiles = (id, file) => {
   	const files = this.state.files || [];
-  	files.push({ id, file });
-  	this.setState({ files });
+		const isFileExists = files.filter(item => item.id === id);
+		if (isFileExists && isFileExists.length === 0) {
+			files.push({ id, file });
+			this.setState({ files });
+		}
 	};
 	handleSubmit = () => {
 		const files = this.state.files;
@@ -39,7 +42,6 @@ class Manage extends Component {
 			fetch(API.url+'/manageData', {
 				method: 'POST',
 				body: data,
-				mode: 'no-cors'
 			}).then(function(response) {
 					self.setState({ notification: true, infoMsg: 'Upload successful' });
 					console.log(response);
@@ -47,6 +49,7 @@ class Manage extends Component {
 					self.setState({ notification: true, infoMsg: 'Upload failed' });
 					console.log('Request failed', error)
 			});
+			this.setState({ files: [] });
 		}
 	};
 	handleNotificationClose = () => {

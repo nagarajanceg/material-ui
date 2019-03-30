@@ -2,12 +2,13 @@ import React from 'react';
 import CloudDownload from '@material-ui/icons/CloudDownload';
 import Send from '@material-ui/icons/Send';
 import { Button, Grid } from '@material-ui/core';
+import { API } from './ApiPath'
 
 const downloadTemplate = (props) => {
   if (props.data.id === 'manageData') {
-		window.location.assign('http://13.210.217.90:9080/api/v1/getManageDataTemplate');
+		window.location.assign(`${API.url}/getManageDataTemplate`);
 	} else if (props.data.id === 'massManage') {
-		window.location.assign('http://13.210.217.90:9080/api/v1/getMassManageTemplate');
+		window.location.assign(`${API.url}/getManageDataTemplate`);
 	}
 };
 function FormActionUtils(props) {

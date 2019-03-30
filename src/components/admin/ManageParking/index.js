@@ -5,7 +5,6 @@ import { Search } from '@material-ui/icons';
 import classNames from 'classnames';
 import Tabs from './Tabs';
 import styled from '@material-ui/styles/styled';
-import { parkingData } from '../../../mocks/parkings';
 import { statusValues } from '../../common/config';
 import {
   generateGrid,
@@ -23,21 +22,23 @@ const Content = styled('div')({
 class ManageParking extends Component {
   state = {
     status: '',
-    items: parkingData
+		items: {}
   };
   constructor() {
     super();
   }
   componentDidMount() {
     var self = this;
-    fetch("http://localhost:3100" + '/getParkings')
-      .then(data => data.json())
-      .then(res => {
-        self.setState({
-          items: res
-        });
-        console.log(res);
-      });
+    fetch(`${API.url}/getParkings`, {
+			headers: {
+				Accept: 'application/json',
+			}
+    }).then(response => response.json())
+			.then(json => {
+				self.setState({
+					items: json
+				});
+			});
   }
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
