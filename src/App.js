@@ -2,14 +2,12 @@ import React, { Component } from 'react';
 import Login from './components/login';
 import NavBar from './components/navbar/NavBar';
 import './App.css';
-import {
-	getMenu,
-  defaultHeaderProps,
-} from './components/common/config';
+import { getMenu, defaultHeaderProps } from './components/common/config';
 import ManageData from './components/admin/ManageData';
 import ManageParking from './components/admin/ManageParking';
 import MassManage from './components/admin/MassManage';
 import Owner from './components/owner';
+import User from './components/User';
 import PropTypes from 'prop-types';
 
 const getComponent = props => {
@@ -36,6 +34,12 @@ const getComponent = props => {
       return (
         <div>
           <Owner {...props} />
+        </div>
+      );
+    case 'user':
+      return (
+        <div>
+          <User {...props} />
         </div>
       );
     default:

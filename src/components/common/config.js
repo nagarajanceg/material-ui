@@ -40,14 +40,33 @@ export const ownerProps = [
     ...signOutProps
   }
 ];
-
+export const userProps = [
+  {
+    title: 'User',
+    icon: 'AccountCircle',
+    variant: 'h6',
+    id: 'User'
+  },
+  {
+    title: 'Booking',
+    icon: 'Assignment',
+    variant: 'h6',
+    id: 'User',
+    dropdown: ['Current Booking', 'Past Booking']
+  },
+  {
+    ...signOutProps
+  }
+];
 export const getMenu = component => {
-	switch (component) {
-		case 'owner':
-			return ownerProps;
-		default:
-			return adminHeaderProps;
-	}
+  switch (component) {
+    case 'owner':
+      return ownerProps;
+    case 'user':
+      return userProps;
+    default:
+      return adminHeaderProps;
+  }
 };
 
 export const statusValues = ['All', 'Available', 'Busy', 'Release', 'Assign'];

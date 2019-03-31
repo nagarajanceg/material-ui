@@ -12,7 +12,8 @@ import {
   DirectionsCar,
   Dashboard,
   ExitToApp,
-  AccountCircle
+  AccountCircle,
+  Assignment
 } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 
@@ -34,6 +35,8 @@ const getIcon = iconType => {
       return <ExitToApp />;
     case 'AccountCircle':
       return <AccountCircle />;
+    case 'Assignment':
+      return <Assignment />;
     default:
       return null;
   }

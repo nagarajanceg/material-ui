@@ -3,7 +3,7 @@ import { MuiThemeProvider } from '@material-ui/core/styles';
 import { TextField, Grid, MenuItem, withStyles } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
 import classNames from 'classnames';
-import Tabs from './Tabs';
+import Tabs from '../../cardView/Tabs';
 import styled from '@material-ui/styles/styled';
 import { statusValues } from '../../common/config';
 import {
@@ -22,7 +22,7 @@ const Content = styled('div')({
 class ManageParking extends Component {
   state = {
     status: '',
-		items: {}
+    items: {}
   };
   constructor() {
     super();
@@ -30,15 +30,16 @@ class ManageParking extends Component {
   componentDidMount() {
     var self = this;
     fetch(`${API.url}/getParkings`, {
-			headers: {
-				Accept: 'application/json',
-			}
-    }).then(response => response.json())
-			.then(json => {
-				self.setState({
-					items: json
-				});
-			});
+      headers: {
+        Accept: 'application/json'
+      }
+    })
+      .then(response => response.json())
+      .then(json => {
+        self.setState({
+          items: json
+        });
+      });
   }
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
