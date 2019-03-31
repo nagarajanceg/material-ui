@@ -11,14 +11,11 @@ class TabContent extends Component {
     const { items } = this.props;
     return (
       <Grid container spacing={40} justify="flex-start" direction="row">
-        {/*<Grid item xs={12}>*/}
         {items.map(data => (
           <Grid item xs={12} md={3}>
-            <CardView parkingData={data} name={this.props.name} />
+            <CardView parkingData={data} />
           </Grid>
         ))}
-        {/*{data.parkingId}*/}
-        {/*</Grid>*/}
       </Grid>
     );
   }

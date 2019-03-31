@@ -21,53 +21,66 @@ const theme = createMuiTheme({
 class MassManage extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      disabled: false
+    };
   }
   setSelectedFiles = (id, file) => {
-		const files = this.state.files || [];
-		const isFileExists = files.filter(item => item.id === id);
-		if (isFileExists && isFileExists.length === 0) {
-			files.push({ id, file });
-			this.setState({ files });
-		}
+    const files = this.state.files || [];
+    const isFileExists = files.filter(item => item.id === id);
+    if (isFileExists && isFileExists.length === 0) {
+      files.push({ id, file });
+      this.setState({ files });
+    }
   };
   handleSubmit = () => {
     const files = this.state.files;
-		const self = this;
+    const self = this;
     if (files && files.length > 0) {
+      self.setState({ disabled: true });
       var data = new FormData();
       files.forEach(fileData => {
         data.append(fileData.id, fileData.file);
       });
       fetch(API.url + '/massManage', {
-				method: 'POST',
-				body: data,
-			}).then(function(response) {
-				self.setState({ notification: true, infoMsg: 'Upload successful' });
-				console.log(response);
-			}).catch(function(error) {
-				self.setState({ notification: true, infoMsg: 'Upload failed' });
-				console.log('Request failed', error)
-			});
-			this.setState({ files: [] });
+        method: 'POST',
+        body: data
+      })
+        .then(function(response) {
+          self.setState({
+            disabled: false,
+            notification: true,
+            infoMsg: 'Upload successful'
+          });
+          console.log(response);
+        })
+        .catch(function(error) {
+          self.setState({
+            disabled: false,
+            notification: true,
+            infoMsg: 'Upload failed'
+          });
+          console.log('Request failed', error);
+        });
+      this.setState({ files: [] });
     }
   };
-	handleNotificationClose = () => {
-		this.setState({ notification: false });
-	};
+  handleNotificationClose = () => {
+    this.setState({ notification: false });
+  };
   render() {
     return (
       <div>
         <MuiThemeProvider theme={theme}>
-					<Snackbar
-						open={this.state.notification}
-						onClose={this.handleNotificationClose}
-						TransitionComponent={Fade}
-						ContentProps={{
-							'aria-describedby': 'message-id',
-						}}
-						message={<span id="message-id">{this.state.infoMsg}</span>}
-					/>
+          <Snackbar
+            open={this.state.notification}
+            onClose={this.handleNotificationClose}
+            TransitionComponent={Fade}
+            ContentProps={{
+              'aria-describedby': 'message-id'
+            }}
+            message={<span id="message-id">{this.state.infoMsg}</span>}
+          />
           <Grid container spacing={24} justify="center" direction="column">
             <Grid item />
             <FileUploader

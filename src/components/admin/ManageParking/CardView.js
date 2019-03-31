@@ -39,9 +39,9 @@ const styles = theme => ({
 const getIdentifiers = parkingData => {
   let i = 1;
   const identifiers = [];
-  while(parkingData[`identifier${i}`]) {
-		identifiers.push(parkingData[`identifier${i}`]);
-		i++;
+  while (parkingData[`identifier${i}`]) {
+    identifiers.push(parkingData[`identifier${i}`]);
+    i++;
   }
   return identifiers;
 };
@@ -51,17 +51,17 @@ class CardView extends Component {
     super();
   }
 
-	state = {
-		dialogOpen: false,
-	};
+  state = {
+    dialogOpen: false
+  };
 
-	handleEdit = id => {
-		this.setState({ dialogOpen: true, id });
-	};
+  handleEdit = id => {
+    this.setState({ dialogOpen: true, id });
+  };
 
-	handleClose = () => {
-		this.setState({ dialogOpen: false });
-	};
+  handleClose = () => {
+    this.setState({ dialogOpen: false });
+  };
 
   render() {
     const { classes, parkingData } = this.props;
@@ -76,8 +76,15 @@ class CardView extends Component {
             title="card-title"
           />
           {/*To do On click action need to be added. In that action modal pop up will open. Check the mock up once*/}
-          <ParkingDialog open={this.state.dialogOpen} parkingId={parkingData.parkingId} callback={this.handleClose} />
-          <div className={classes.overlay} onClick={() => self.handleEdit(parkingData.parkingId)}>
+          <ParkingDialog
+            open={this.state.dialogOpen}
+            parkingId={parkingData.parkingId}
+            callback={this.handleClose}
+          />
+          <div
+            className={classes.overlay}
+            onClick={() => self.handleEdit(parkingData.parkingId)}
+          >
             <Fab
               color="primary"
               aria-label="Edit"
@@ -92,16 +99,16 @@ class CardView extends Component {
           <CardContent>
             <Typography variant="small">
               <Badge
-                color="primary"
+                color={parkingData.status === 'OPEN' ? 'primary' : 'secondary'}
                 className={classNames(classes.padding, classes.margin)}
                 badgeContent={parkingData.status}
                 component="span"
               />
             </Typography>
             {identifiers.map(name => (
-							<Typography gutterBottom variant="h6" component="span">
-							{name}
-							</Typography>
+              <Typography gutterBottom variant="h6" component="span">
+                {name}
+              </Typography>
             ))}
             <Typography gutterBottom variant="infoText">
               26th-March to 29th-March
