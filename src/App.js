@@ -9,6 +9,7 @@ import {
 import ManageData from './components/admin/ManageData';
 import ManageParking from './components/admin/ManageParking';
 import MassManage from './components/admin/MassManage';
+import Owner from './components/Owner';
 import PropTypes from 'prop-types';
 
 const getComponent = props => {
@@ -26,10 +27,16 @@ const getComponent = props => {
         </div>
       );
     case 'massManage':
-      console.log('Mass Manage calling');
       return (
         <div>
           <MassManage {...props} />
+        </div>
+      );
+    case 'owner':
+      console.log('owner screen');
+      return (
+        <div>
+          <Owner {...props} />
         </div>
       );
     default:
@@ -53,7 +60,11 @@ class App extends Component {
     return (
       <div>
         <NavBar navItems={headerProps} {...this.props} />
-        {!this.props.isLogin ? getComponent(this.props) : <Login {...this.props} />}
+        {!this.props.isLogin ? (
+          getComponent(this.props)
+        ) : (
+          <Login {...this.props} />
+        )}
       </div>
     );
   }
