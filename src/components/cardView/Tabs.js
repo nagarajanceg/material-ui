@@ -9,7 +9,7 @@ import {
 import PropTypes from 'prop-types';
 import TabBadge from './Badge';
 import TabContent from './TabContent';
-import { openStatus } from '../../common/config';
+import { openStatus } from '../common/config';
 
 const styles = theme => ({
   margin: {

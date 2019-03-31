@@ -14,7 +14,7 @@ import {
 import { Edit } from '@material-ui/icons';
 import Icon from '@material-ui/core/Icon';
 import classNames from 'classnames';
-import ParkingDialog from '../../dialogs/ParkingDialog';
+import ParkingDialog from '../dialogs/ParkingDialog';
 
 const styles = theme => ({
   margin: {
