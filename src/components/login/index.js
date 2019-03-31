@@ -21,7 +21,6 @@ class Login extends Component {
         self.setState({
           response: res[0]
         });
-        console.log('my response ==', res[0]);
       });
     var data = {
       id: '1223',

@@ -34,7 +34,6 @@ const getComponent = props => {
         </div>
       );
     case 'owner':
-      console.log('owner screen');
       return (
         <div>
           <Owner {...props} />

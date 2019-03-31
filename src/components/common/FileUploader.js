@@ -28,7 +28,7 @@ class FileUploader extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      [`${this.props.id}-fileName`]: undefined
+      [`${this.props.id}_fileName`]: undefined
     };
     this.fieldOnChange.bind(this);
   }
@@ -47,47 +47,22 @@ class FileUploader extends Component {
     var self = this;
     e.stopPropagation();
     self.setState({ [`${this.props.id}_fileName`]: undefined });
-    self[`file-sel-${this.props.id}`].current = '';
+		this.props.onClear(this.props.id);
+		self[`file-sel-${this.props.id}`].value = '';
   };
-  onChange = (e, onChangeCallback) => {
+  onChange = e => {
     e.persist();
     const files = e.target.files;
-    console.log('change file statusss');
     if (files.length > 0) {
-      console.log('files Content', files);
       this.setState({ [`${this.props.id}_fileName`]: files[0].name });
-      onChangeCallback(this.props.id, files[0]);
-      //url = http://13.210.217.90:9080/api/v1/manageData
-      // fetch('http://localhost:3100/file', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'multipart/form-data',
-      //     Accept: 'application/json'
-      //   },
-      //   body: files
-      // })
-      //   .then(r => r.json())
-      //   .then(res => {
-      //     console.log('res received ==>', res);
-      //   });
-      /*this.sendRequest(files[0]).then(
-        r => r.json
-      ).then(res => {
-        console.log('res received ==>', res);
-      });*/
-      /*fetch('http://13.210.217.90:9080/echo', {mode: 'cors'})
-				.then(function(response) {
-					console.log(response);
-				}).catch(function(error) {
-				console.log('Request failed', error)
-			});*/
+			this.props.onChange(this.props.id, files[0]);
     } else {
       this.setState({ [`${this.props.id}_fileName`]: undefined });
+			this.props.onClear(this.props.id);
     }
   };
 
   render() {
-    console.log('rending');
     const { classes } = this.props;
     const triggerFileSelect = event => {
       this[`file-sel-${this.props.id}`].click();
@@ -102,7 +77,7 @@ class FileUploader extends Component {
               type="file"
               ref={ref => (this[`file-sel-${this.props.id}`] = ref)}
               className={classes.input}
-              onChange={event => this.onChange(event, this.props.onChange)}
+              onChange={event => this.onChange(event)}
             />
             <label htmlFor={`${this.props.id}-file-select`}>
               <Button
@@ -124,16 +99,14 @@ class FileUploader extends Component {
               onClick={triggerFileSelect}
               id={`file-edit-${this.props.id}`}
               label={this.props.label}
-              value={this.state[`${this.props.id}_fileName`]}
+              value={this.state[`${this.props.id}_fileName`] || ''}
               InputProps={{
                 className: classes.fileInput,
                 readOnly: true,
                 endAdornment: (
                   <InputAdornment position="end">
-                    {this.state[`${this.props.id}_fileName`] !== undefined ? (
-                      <Clear onClick={this.fieldOnChange} />
-                    ) : (
-                      ''
+                    {this.state[`${this.props.id}_fileName`] && (
+                      <Clear onClick={e => this.fieldOnChange(e)} />
                     )}
                   </InputAdornment>
                 )

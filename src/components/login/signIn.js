@@ -77,7 +77,6 @@ class SignIn extends Component {
 
   handleChange(e) {
     const { name, value } = e.target;
-    console.log(this);
     this.setState({ [name]: value });
   }
 
@@ -103,7 +102,6 @@ class SignIn extends Component {
         self.routeChange('manageData');
         self.setState({ loading: false });
         // this.routeChange('manageData');
-        console.log(res[0]);
       });
   }
 

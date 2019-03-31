@@ -22,7 +22,8 @@ class MassManage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      disabled: false
+      disabled: false,
+			files: []
     };
   }
   setSelectedFiles = (id, file) => {
@@ -33,6 +34,11 @@ class MassManage extends Component {
       this.setState({ files });
     }
   };
+	removeSelectedFiles = (id) => {
+		const allFiles = this.state.files || [];
+		const files = allFiles.filter(item => item.id !== id);
+		this.setState({ files });
+	};
   handleSubmit = () => {
     const files = this.state.files;
     const self = this;
@@ -50,9 +56,8 @@ class MassManage extends Component {
           self.setState({
             disabled: false,
             notification: true,
-            infoMsg: 'Upload successful'
+						infoMsg: response.ok ? 'Upload successful' : 'Upload failed'
           });
-          console.log(response);
         })
         .catch(function(error) {
           self.setState({
@@ -88,12 +93,14 @@ class MassManage extends Component {
               id="assigntoRelease"
               label="Assign to Release"
               onChange={this.setSelectedFiles}
+							onClear={this.removeSelectedFiles}
             />
             <FileUploader
               name="Browse"
               id="releaseToBusy"
               label="Release to busy"
               onChange={this.setSelectedFiles}
+							onClear={this.removeSelectedFiles}
             />
             <Grid item />
             <Grid item />

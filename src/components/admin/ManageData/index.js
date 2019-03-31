@@ -22,7 +22,8 @@ class Manage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      disabled: false
+      disabled: false,
+			files: []
     };
   }
   setSelectedFiles = (id, file) => {
@@ -33,6 +34,11 @@ class Manage extends Component {
       this.setState({ files });
     }
   };
+	removeSelectedFiles = (id) => {
+		const allFiles = this.state.files || [];
+		const files = allFiles.filter(item => item.id !== id);
+    this.setState({ files });
+	};
   handleSubmit = () => {
     const files = this.state.files;
     const self = this;
@@ -52,7 +58,7 @@ class Manage extends Component {
           self.setState({
             disabled: false,
             notification: true,
-            infoMsg: 'Upload successful'
+            infoMsg: response.ok ? 'Upload successful' : 'Upload failed'
           });
           console.log(response);
         })
@@ -64,7 +70,6 @@ class Manage extends Component {
           });
           console.log('Request failed', error);
         });
-      this.setState({ files: [] });
     }
   };
   handleNotificationClose = () => {
@@ -90,12 +95,14 @@ class Manage extends Component {
               id="userData"
               label="User Data"
               onChange={this.setSelectedFiles}
+              onClear={this.removeSelectedFiles}
             />
             <FileUploader
               name="Browse"
               id="parkingData"
               label="Parking Data"
               onChange={this.setSelectedFiles}
+							onClear={this.removeSelectedFiles}
             />
             {/*<FileUploader name="Browse" id="assignment" label="Assignment" />*/}
             <Grid item />
