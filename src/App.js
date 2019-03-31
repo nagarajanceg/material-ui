@@ -4,7 +4,8 @@ import NavBar from './components/navbar/NavBar';
 import './App.css';
 import {
   adminHeaderProps,
-  defaultHeaderProps
+  defaultHeaderProps,
+  ownerProps
 } from './components/common/config';
 import ManageData from './components/admin/ManageData';
 import ManageParking from './components/admin/ManageParking';
@@ -43,7 +44,14 @@ const getComponent = props => {
       return null;
   }
 };
-
+const getMenu = props => {
+  switch (props.component) {
+    case 'owner':
+      return ownerProps;
+    default:
+      return adminHeaderProps;
+  }
+};
 class App extends Component {
   constructor(props) {
     super(props);
@@ -56,7 +64,7 @@ class App extends Component {
   render() {
     const headerProps = this.props.isLogin
       ? [defaultHeaderProps]
-      : adminHeaderProps;
+      : getMenu(this.props);
     return (
       <div>
         <NavBar navItems={headerProps} {...this.props} />
