@@ -1,4 +1,5 @@
-export const defaultHeaderProps = {
+export const defaultHeaderProps = {};
+export const signOutProps = {
   title: 'Sign Out',
   icon: 'ExitToApp',
   variant: 'h6',
@@ -25,7 +26,7 @@ export const adminHeaderProps = [
     id: 'massManage'
   },
   {
-    ...defaultHeaderProps
+    ...signOutProps
   }
 ];
 export const ownerProps = [
@@ -36,7 +37,7 @@ export const ownerProps = [
     id: 'Owner'
   },
   {
-    ...defaultHeaderProps
+    ...signOutProps
   }
 ];
 export const statusValues = ['All', 'Available', 'Busy', 'Release', 'Assign'];
