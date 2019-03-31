@@ -37,7 +37,7 @@ const styles = theme => ({
 });
 
 const getIdentifiers = parkingData => {
-  let i = 1;
+  let i = 2;
   const identifiers = [];
   while (parkingData[`identifier${i}`]) {
     identifiers.push(parkingData[`identifier${i}`]);

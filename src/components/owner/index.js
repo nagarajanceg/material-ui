@@ -23,7 +23,8 @@ class Owner extends Component {
     this.setState({ toDate: date });
   };
   render() {
-    const { classes } = this.props;
+    const { classes, location } = this.props;
+    const data = location && location.state && location.state.data;
     return (
       <div className={classNames(classes.marginLeft)}>
         <MuiThemeProvider theme={theme}>
@@ -44,7 +45,7 @@ class Owner extends Component {
               </Icon>
             </Grid>
             <Grid item xs={4} className={classNames(classes.gridFlex)}>
-              <TextField fullWidth label="Parking Gate" />
+              <TextField fullWidth label="Parking Gate" value={data && data.user_vo.parking.identifier1}/>
             </Grid>
             <Grid
               item
@@ -56,7 +57,7 @@ class Owner extends Component {
               </Icon>
             </Grid>
             <Grid item xs={4} className={classNames(classes.gridFlex)}>
-              <TextField fullWidth={true} label="Parking Slot" />
+              <TextField fullWidth={true} label="Parking Slot" value={data && data.user_vo.parking.identifier2}/>
             </Grid>
             <Grid item xs={1} />
           </Grid>

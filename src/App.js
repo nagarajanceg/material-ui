@@ -3,14 +3,13 @@ import Login from './components/login';
 import NavBar from './components/navbar/NavBar';
 import './App.css';
 import {
-  adminHeaderProps,
+	getMenu,
   defaultHeaderProps,
-  ownerProps
 } from './components/common/config';
 import ManageData from './components/admin/ManageData';
 import ManageParking from './components/admin/ManageParking';
 import MassManage from './components/admin/MassManage';
-import Owner from './components/Owner';
+import Owner from './components/owner';
 import PropTypes from 'prop-types';
 
 const getComponent = props => {
@@ -43,14 +42,7 @@ const getComponent = props => {
       return null;
   }
 };
-const getMenu = props => {
-  switch (props.component) {
-    case 'owner':
-      return ownerProps;
-    default:
-      return adminHeaderProps;
-  }
-};
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -63,7 +55,7 @@ class App extends Component {
   render() {
     const headerProps = this.props.isLogin
       ? [defaultHeaderProps]
-      : getMenu(this.props);
+      : getMenu(this.props.component);
     return (
       <div>
         <NavBar navItems={headerProps} {...this.props} />

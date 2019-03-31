@@ -34,11 +34,21 @@ export const ownerProps = [
     title: 'Owner',
     icon: 'AccountCircle',
     variant: 'h6',
-    id: 'Owner'
+    id: 'owner'
   },
   {
     ...signOutProps
   }
 ];
+
+export const getMenu = component => {
+	switch (component) {
+		case 'owner':
+			return ownerProps;
+		default:
+			return adminHeaderProps;
+	}
+};
+
 export const statusValues = ['All', 'Available', 'Busy', 'Release', 'Assign'];
 export const openStatus = ['AVAILABLE', 'ASSIGN'];
