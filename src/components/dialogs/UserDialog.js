@@ -38,7 +38,6 @@ class UserDialog extends Component {
   };
   constructor(props) {
     super(props);
-    // this.handlerChange = this.handlerChange.bind(this);
   }
   handleSubmit = () => {
     console.log('submitted data ==> ', this.state);
