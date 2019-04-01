@@ -15,6 +15,7 @@ import { Edit } from '@material-ui/icons';
 import Icon from '@material-ui/core/Icon';
 import classNames from 'classnames';
 import ParkingDialog from '../dialogs/ParkingDialog';
+import UserDialog from '../dialogs/UserDialog';
 
 const styles = theme => ({
   margin: {
@@ -64,7 +65,7 @@ class CardView extends Component {
   };
 
   render() {
-    const { classes, parkingData } = this.props;
+    const { classes, parkingData, dialog } = this.props;
     const identifiers = getIdentifiers(parkingData);
     const self = this;
     return (
@@ -75,12 +76,21 @@ class CardView extends Component {
             image="images/benz-park-4.jpg"
             title="card-title"
           />
-          {/*To do On click action need to be added. In that action modal pop up will open. Check the mock up once*/}
-          <ParkingDialog
-            open={this.state.dialogOpen}
-            parkingId={parkingData.parkingId}
-            callback={this.handleClose}
-          />
+          {dialog.assign && (
+            <ParkingDialog
+              open={this.state.dialogOpen}
+              parkingId={parkingData.parkingId}
+              callback={this.handleClose}
+              status={parkingData.status} 
+            />
+          )}
+          {dialog.user && (
+            <UserDialog
+              open={this.state.dialogOpen}
+              parkingId={parkingData.parkingId}
+              callback={this.handleClose}
+            />
+          )}
           <div
             className={classes.overlay}
             onClick={() => self.handleEdit(parkingData.parkingId)}

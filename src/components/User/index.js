@@ -18,7 +18,10 @@ const Content = styled('div')({
 
 class User extends Component {
   state = {
-    items: {}
+    items: {},
+    dialog: {
+      user: true
+    }
   };
   constructor() {
     super();
@@ -50,7 +53,7 @@ class User extends Component {
             <Grid container spacing={24} alignItems="flex-end" direction="row">
               <Grid item xs={1} />
               {generateGrid(2)}
-              <Tabs items={this.state.items} />
+              <Tabs {...this.state} />
             </Grid>
           </MuiThemeProvider>
         </Content>

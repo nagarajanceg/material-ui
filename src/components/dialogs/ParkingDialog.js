@@ -26,20 +26,22 @@ const styles = theme => ({
 });
 
 class ParkingDialog extends React.Component {
+
 	render() {
 		const { classes } = this.props;
+		const {open, callback, status} = this.props;
 		return (
 			<div>
 				<MuiThemeProvider theme={primaryTheme}>
 					<Dialog
-						open={this.props.open}
-						onClose={this.props.callback}
+						open={open}
+						onClose={callback}
 						PaperProps={{className: classes.dialogPaper}}
 					>
 						<DialogTitle  className={classes.dialogTitle}>Assign Parking</DialogTitle>
 						<DialogContent className={classes.dialog}>
 							<DialogContentText>
-								<AssignParking />
+								<AssignParking status={status}/>
 							</DialogContentText>
 						</DialogContent>
 						<DialogActions>

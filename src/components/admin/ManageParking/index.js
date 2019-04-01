@@ -22,7 +22,10 @@ const Content = styled('div')({
 class ManageParking extends Component {
   state = {
     status: '',
-    items: {}
+    items: {},
+    dialog:{
+      assign:true
+    }
   };
   constructor() {
     super();
@@ -79,7 +82,7 @@ class ManageParking extends Component {
               </Grid>
               <Grid item xs={1} />
               {generateGrid(2)}
-              <Tabs items={this.state.items} />
+              <Tabs {...this.state}/>
             </Grid>
           </MuiThemeProvider>
         </Content>

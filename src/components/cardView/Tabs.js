@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
-import {
-  Tab,
-  Tabs,
-  Paper,
-  Typography,
-  withStyles,
-} from '@material-ui/core';
+import { Tab, Tabs, Paper, Typography, withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import TabBadge from './Badge';
 import TabContent from './TabContent';
@@ -36,13 +30,13 @@ TabContainer.propTypes = {
 };
 
 const getOpenSlotsCount = items => {
-	let slots = 0;
-	items.forEach(data => {
-		if (openStatus.includes(data.status)) {
-			slots += 1;
-		}
-	});
-	return slots;
+  let slots = 0;
+  items.forEach(data => {
+    if (openStatus.includes(data.status)) {
+      slots += 1;
+    }
+  });
+  return slots;
 };
 
 class TabSection extends Component {
@@ -55,7 +49,7 @@ class TabSection extends Component {
   };
 
   render() {
-    const { classes, items } = this.props;
+    const { classes, items, dialog } = this.props;
     const value = this.state.value
       ? this.state.value
       : items && Object.keys(items)[0];
@@ -71,12 +65,22 @@ class TabSection extends Component {
           >
             {items &&
               Object.keys(items).map(key => {
-                return <Tab value={key} label={<TabBadge name={key} slots={getOpenSlotsCount(items[key])} />} />
+                return (
+                  <Tab
+                    value={key}
+                    label={
+                      <TabBadge
+                        name={key}
+                        slots={getOpenSlotsCount(items[key])}
+                      />
+                    }
+                  />
+                );
               })}
           </Tabs>
         </Paper>
         <TabContainer>
-          {items[value] && <TabContent items={items[value]} name={value}/>}
+          {items[value] && <TabContent items={items[value]} dialog={dialog} />}
         </TabContainer>
       </div>
     );
