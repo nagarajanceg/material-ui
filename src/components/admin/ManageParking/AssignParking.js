@@ -23,14 +23,10 @@ class AssignParking extends Component {
   constructor() {
     super();
   }
-  handleChange = name => event => {
-    this.setState({ [name]: event.target.value });
-  };
-  handleFromDateChange = date => {
-    this.setState({ fromDate: date });
-  };
-  handleToDateChange = date => {
-    this.setState({ toDate: date });
+  handleChange = name => e => {
+    const val = e.target ? e.target.value : e;
+    this.setState({ [name]: val });
+    this.props.handler(name, val);
   };
   render() {
     const { classes, status } = this.props;
@@ -47,7 +43,12 @@ class AssignParking extends Component {
           </Icon>
         </Grid>
         <Grid item xs={10} className={classNames(classes.gridFlex)}>
-          <TextField fullWidth label="Enter Email" />
+          <TextField
+            fullWidth
+            label="Enter Email"
+            value={this.state.email}
+            onChange={this.handleChange('email')}
+          />
         </Grid>
         <Grid item xs={1} />
         <Grid item xs={1} />
@@ -56,7 +57,7 @@ class AssignParking extends Component {
             id="parking-status"
             select
             label="Assign Status"
-            value={status}
+            value={this.state.status}
             onChange={this.handleChange('status')}
             SelectProps={{
               MenuProps: {}
@@ -64,7 +65,7 @@ class AssignParking extends Component {
             fullWidth
           >
             {/*{statusValues.filter(val => val !== 'All').map(option => (*/}
-            <MenuItem key={status} value={status}>
+            <MenuItem key={statusMapper[status]} value={statusMapper[status]}>
               {statusMapper[status]}
             </MenuItem>
             {/*))}*/}
@@ -86,7 +87,7 @@ class AssignParking extends Component {
               margin="normal"
               label="From"
               value={this.state.fromDate}
-              onChange={this.handleFromDateChange}
+              onChange={this.handleChange('fromDate')}
             />
           </MuiPickersUtilsProvider>
         </Grid>
@@ -105,7 +106,7 @@ class AssignParking extends Component {
               margin="normal"
               label="To"
               value={this.state.toDate}
-              onChange={this.handleToDateChange}
+              onChange={this.handleChange('toDate')}
             />
           </MuiPickersUtilsProvider>
         </Grid>

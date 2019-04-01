@@ -14,17 +14,18 @@ const downloadTemplate = props => {
 function FormActionUtils(props) {
   return (
     <Grid container justify="center" alignItems="center" spacing={24}>
-      {!props.data.submitAlone &&<Grid item>
-        <Button
-          variant="contained"
-          color="primary"
-          size="medium"
-          onClick={() => downloadTemplate(props)}
-        >
-          Download <span style={{ padding: 3 }} /> <CloudDownload />
-        </Button>
-      </Grid>
-      }
+      {!props.data.submitAlone && (
+        <Grid item>
+          <Button
+            variant="contained"
+            color="primary"
+            size="medium"
+            onClick={() => downloadTemplate(props)}
+          >
+            Download <span style={{ padding: 3 }} /> <CloudDownload />
+          </Button>
+        </Grid>
+      )}
       <Grid item>
         <Button
           variant="contained"
@@ -33,7 +34,8 @@ function FormActionUtils(props) {
           size="medium"
           onClick={props.data.onSubmit}
         >
-          submit <span style={{ padding: 3 }} /> <Send />
+          {props.data.buttonName ? props.data.buttonName : 'submit'}{' '}
+          <span style={{ padding: 3 }} /> <Send />
         </Button>
       </Grid>
     </Grid>

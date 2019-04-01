@@ -14,6 +14,7 @@ import MuiThemeProvider from '@material-ui/core/es/styles/MuiThemeProvider';
 import { primaryTheme } from '../common/componentUtils';
 import FormActionUtil from '../common/FormActionUtils';
 import Send from '@material-ui/icons/Send';
+import { API } from '../common/ApiPath';
 
 const styles = theme => ({
   dialogPaper: {
@@ -37,10 +38,31 @@ class UserDialog extends Component {
   };
   constructor(props) {
     super(props);
-    this.handlerChange = this.handlerChange.bind(this);
+    // this.handlerChange = this.handlerChange.bind(this);
   }
   handleSubmit = () => {
     console.log('submitted data ==> ', this.state);
+    const self = this;
+    self.setState({
+      disabled: true
+    });
+    //This is not yet tested. Couldn't able to hit the endpoint
+    fetch(`${API.url}/reserveParking`, {
+      method: 'PUT',
+      body: self.state
+    })
+      .then(function(response) {
+        self.setState({
+          disabled: false
+        });
+        console.log('response ==>', response);
+      })
+      .catch(function(err) {
+        self.setState({
+          disabled: false
+        });
+        console.log('error ==> ', err);
+      });
   };
   handlerChange = (name, value) => {
     this.setState({ [name]: value });
