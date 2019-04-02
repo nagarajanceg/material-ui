@@ -69,10 +69,14 @@ class CardView extends Component {
     const { classes, dialog } = this.props;
     const parkingData = this.props.parkingData || {};
     const identifiers = getIdentifiers(parkingData);
-    const fromDate = parkingData.status === 'ASSIGN' ? parkingData.assignment[0].assignments[0].from_date
-      : parkingData.releases[0].from_date;
-		const toDate = parkingData.status === 'ASSIGN' ? parkingData.assignment[0].assignments[0].to_date
-			: parkingData.releases[0].to_date;
+    const fromDate =
+      parkingData.status === 'ASSIGN'
+        ? parkingData.assignments[0].from_date
+        : parkingData.releases[0].from_date;
+    const toDate =
+      parkingData.status === 'ASSIGN'
+        ? parkingData.assignments[0].to_date
+        : parkingData.releases[0].to_date;
     const self = this;
     return (
       <Card>
@@ -88,7 +92,7 @@ class CardView extends Component {
               parkingId={parkingData.parkingId}
               data={parkingData}
               callback={this.handleClose}
-              status={parkingData.status} 
+              status={parkingData.status}
             />
           )}
           {dialog.user && (
@@ -128,7 +132,9 @@ class CardView extends Component {
               </Typography>
             ))}
             <Typography gutterBottom variant="infoText">
-              { `${moment(fromDate).format("Do MMM'YY")} to ${moment(toDate).format("Do MMM'YY")}` }
+              {`${moment(fromDate).format("Do MMM'YY")} to ${moment(
+                toDate
+              ).format("Do MMM'YY")}`}
             </Typography>
           </CardContent>
         </CardActionArea>

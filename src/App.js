@@ -7,7 +7,7 @@ import ManageData from './components/admin/ManageData';
 import ManageParking from './components/admin/ManageParking';
 import MassManage from './components/admin/MassManage';
 import Owner from './components/owner';
-import User from './components/User';
+import User from './components/user';
 import PropTypes from 'prop-types';
 
 const getComponent = props => {
