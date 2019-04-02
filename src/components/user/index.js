@@ -10,6 +10,7 @@ import classNames from 'classnames';
 import Tabs from '../cardView/Tabs';
 import styled from '@material-ui/styles/styled';
 import { API } from '../common/ApiPath';
+import { getData } from '../owner'
 const Content = styled('div')({
   padding: theme.spacing.unit * 4,
   margin: 'auto',
@@ -39,13 +40,15 @@ class User extends Component {
         self.setState({
           items: json
         });
-      });
+      }).catch(error => console.log('An error occured ', error));
   }
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
   };
   render() {
     const { classes } = this.props;
+		const userData = getData(this.props);
+		const userId = userData && userData.user_vo ? userData.user_vo.user_id : '';
     return (
       <React.Fragment>
         <Content>
@@ -53,7 +56,7 @@ class User extends Component {
             <Grid container spacing={24} alignItems="flex-end" direction="row">
               <Grid item xs={1} />
               {generateGrid(2)}
-              <Tabs {...this.state} />
+              <Tabs userId={userId} {...this.state} />
             </Grid>
           </MuiThemeProvider>
         </Content>

@@ -13,7 +13,7 @@ import DateGrid from '../common/DateGrid';
 import FormActionUtil from '../common/FormActionUtils';
 import { API } from '../common/ApiPath';
 
-const getData = ({ location }) => {
+export const getData = ({ location }) => {
   let data = {};
   if (location && location.state && location.state.data) {
 		data = location.state.data;

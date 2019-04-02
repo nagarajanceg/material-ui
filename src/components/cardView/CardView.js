@@ -66,7 +66,7 @@ class CardView extends Component {
   };
 
   render() {
-    const { classes, dialog } = this.props;
+    const { classes, dialog, userId } = this.props;
     const parkingData = this.props.parkingData || {};
     const identifiers = getIdentifiers(parkingData);
     let fromDate;
@@ -110,6 +110,8 @@ class CardView extends Component {
               open={this.state.dialogOpen}
               parkingId={parkingData.parkingId}
               callback={this.handleClose}
+							data={parkingData}
+							userId={userId}
             />
           )}
           <div

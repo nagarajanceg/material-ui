@@ -8,12 +8,12 @@ class TabContent extends Component {
     super();
   }
   render() {
-    const { items, dialog } = this.props;
+    const { items, dialog, userId } = this.props;
     return (
       <Grid container spacing={40} justify="flex-start" direction="row">
         {items.map(data => (
           <Grid item xs={12} md={3}>
-            <CardView parkingData={data} dialog={dialog} />
+            <CardView userId={userId} parkingData={data} dialog={dialog} />
           </Grid>
         ))}
       </Grid>

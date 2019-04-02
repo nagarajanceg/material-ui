@@ -49,38 +49,38 @@ class TabSection extends Component {
   };
 
   render() {
-    const { classes, items, dialog } = this.props;
+    const { classes, items, dialog, userId } = this.props;
     const value = this.state.value
       ? this.state.value
       : items && Object.keys(items)[0];
     return (
       <div className={classes.tabContainer}>
         <Paper>
-          <Tabs
+					{items &&
+          (<Tabs
             value={value}
             onChange={this.handleChange}
             indicatorColor="secondary"
             textColor="primary"
             variant="fullWidth"
           >
-            {items &&
-              Object.keys(items).map(key => {
-                return (
-                  <Tab
-                    value={key}
-                    label={
-                      <TabBadge
-                        name={key}
-                        slots={getOpenSlotsCount(items[key])}
-                      />
-                    }
-                  />
-                );
-              })}
-          </Tabs>
+            {Object.keys(items).map(key => {
+              return (
+                <Tab
+                  value={key}
+                  label={
+                    <TabBadge
+                      name={key}
+                      slots={getOpenSlotsCount(items[key])}
+                    />
+                  }
+                />
+              );
+            })}
+          </Tabs>)}
         </Paper>
         <TabContainer>
-          {items[value] && <TabContent items={items[value]} dialog={dialog} />}
+          {items[value] && <TabContent userId={userId} items={items[value]} dialog={dialog} />}
         </TabContainer>
       </div>
     );

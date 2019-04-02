@@ -41,6 +41,7 @@ class UserDialog extends Component {
   handleSubmit = () => {
     console.log('submitted data ==> ', this.state);
     const self = this;
+    const { userId, parkingId, data } = self.props;
     self.setState({
       disabled: true
     });
@@ -51,7 +52,10 @@ class UserDialog extends Component {
         'Content-Type': 'application/json',
         Accept: 'application/json'
       },
-      body: JSON.stringify(self.state)
+      body: JSON.stringify({ ...self.state,
+        userId,
+        parkingId,
+        releaseId: data.releases[0].release_id})
     })
       .then(function(response) {
         self.setState({
