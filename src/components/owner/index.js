@@ -13,6 +13,13 @@ import DateGrid from '../common/DateGrid';
 import FormActionUtil from '../common/FormActionUtils';
 import { API } from '../common/ApiPath';
 
+const getData = ({ location }) => {
+  let data = {};
+  if (location && location.state && location.state.data) {
+		data = location.state.data;
+  }
+  return data;
+};
 class Owner extends Component {
   state = {
     disabled: false,
@@ -26,7 +33,9 @@ class Owner extends Component {
   handleChange = name => e => {
     const val = e.target ? e.target.value : e;
     this.setState({ [name]: val });
-    this.props.handler(name, val);
+    if (this.props.handler) {
+      this.props.handler(name, val);
+    }
   };
   handleSubmit = () => {
     console.log('submitted data in owner screen ==> ', this.state);
@@ -34,6 +43,7 @@ class Owner extends Component {
     self.setState({
       disabled: true
     });
+		const data = getData(this.props);
     //This is not yet tested. Couldn't able to hit the endpoint
     fetch(`${API.url}/releaseParking`, {
       method: 'POST',
@@ -41,7 +51,7 @@ class Owner extends Component {
         'Content-Type': 'application/json',
         Accept: 'application/json'
       },
-      body: JSON.stringify(self.state)
+      body: JSON.stringify({ ...self.state, userId: data.user_vo.user_id, parkingId: data.user_vo.parking.parkingId})
     })
       .then(function(response) {
         self.setState({
@@ -63,8 +73,8 @@ class Owner extends Component {
     this.setState({ toDate: date });
   };
   render() {
-    const { classes, location } = this.props;
-    const data = location && location.state && location.state.data;
+    const { classes } = this.props;
+		const data = getData(this.props);
     return (
       <div className={classNames(classes.marginLeft)}>
         <MuiThemeProvider theme={theme}>
@@ -88,6 +98,7 @@ class Owner extends Component {
               <TextField
                 fullWidth
                 label="Parking Gate"
+								disabled
                 value={data && data.user_vo.parking.identifier1}
               />
             </Grid>
@@ -104,6 +115,7 @@ class Owner extends Component {
               <TextField
                 fullWidth={true}
                 label="Parking Phase"
+								disabled
                 value={data && data.user_vo.parking.identifier2}
               />
             </Grid>
@@ -128,6 +140,7 @@ class Owner extends Component {
               <TextField
                 fullWidth={true}
                 label="Parking Slot"
+                disabled
                 value={data && data.user_vo.parking.identifier3}
               />
             </Grid>

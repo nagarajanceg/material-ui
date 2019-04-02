@@ -71,7 +71,7 @@ class CardView extends Component {
     const identifiers = getIdentifiers(parkingData);
     let fromDate;
     let toDate;
-    if (parkingData.status !== 'OPEN' && parkingData.status !== 'AVAILBLE') {
+    if (parkingData.status !== 'OPEN' && parkingData.status !== 'AVAILABLE') {
       fromDate =
         parkingData.status === 'ASSIGN'
           ? parkingData.assignment.assignments[0].from_date
@@ -81,9 +81,9 @@ class CardView extends Component {
           ? parkingData.assignment.assignments[0].to_date
           : parkingData.releases[0].to_date;
     } else {
-      if (parkingData.status === 'AVAILBLE') {
-        fromDate = parkingData.releases[0].from_date;
-        toDate = parkingData.releases[0].to_date;
+      if (parkingData.status === 'AVAILABLE') {
+        fromDate = parkingData.releases && parkingData.releases.length > 0 && parkingData.releases[0].from_date;
+        toDate = parkingData.releases && parkingData.releases.length > 0 && parkingData.releases[0].to_date;
       }
     }
 

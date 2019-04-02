@@ -51,7 +51,7 @@ export const userProps = [
     title: 'Booking',
     icon: 'Assignment',
     variant: 'h6',
-    id: 'User',
+    id: 'Booking',
     dropdown: ['Current Booking', 'Past Booking']
   },
   {
