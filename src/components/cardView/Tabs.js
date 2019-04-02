@@ -31,11 +31,12 @@ TabContainer.propTypes = {
 
 const getOpenSlotsCount = items => {
   let slots = 0;
-  items.forEach(data => {
-    if (openStatus.includes(data.status)) {
-      slots += 1;
-    }
-  });
+  items &&
+    items.forEach(data => {
+      if (openStatus.includes(data.status)) {
+        slots += 1;
+      }
+    });
   return slots;
 };
 
@@ -56,31 +57,41 @@ class TabSection extends Component {
     return (
       <div className={classes.tabContainer}>
         <Paper>
-					{items &&
-          (<Tabs
-            value={value}
-            onChange={this.handleChange}
-            indicatorColor="secondary"
-            textColor="primary"
-            variant="fullWidth"
-          >
-            {Object.keys(items).map(key => {
+          {items && (
+            <Tabs
+              value={value}
+              onChange={this.handleChange}
+              indicatorColor="secondary"
+              textColor="primary"
+              variant="fullWidth"
+            >
+              {Object.keys(items).map(key => {
+                return (
+                  <Tab
+                    value={key}
+                    label={
+                      <TabBadge
+                        name={key}
+                        slots={getOpenSlotsCount(items[key])}
+                      />
+                    }
+                  />
+                );
+              })}
               return (
+              {Object.keys(items).length == 0 && (
                 <Tab
-                  value={key}
-                  label={
-                    <TabBadge
-                      name={key}
-                      slots={getOpenSlotsCount(items[key])}
-                    />
-                  }
+                  value={'No Parking Available'}
+                  label={<TabBadge name={'No Parking Available'} />}
                 />
-              );
-            })}
-          </Tabs>)}
+              )}
+            </Tabs>
+          )}
         </Paper>
         <TabContainer>
-          {items[value] && <TabContent userId={userId} items={items[value]} dialog={dialog} />}
+          {items[value] && (
+            <TabContent userId={userId} items={items[value]} dialog={dialog} />
+          )}
         </TabContainer>
       </div>
     );

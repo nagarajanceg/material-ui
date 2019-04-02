@@ -23,8 +23,8 @@ class ManageParking extends Component {
   state = {
     status: '',
     items: {},
-    dialog:{
-      assign:true
+    dialog: {
+      assign: true
     }
   };
   constructor() {
@@ -37,12 +37,21 @@ class ManageParking extends Component {
         Accept: 'application/json'
       }
     })
-      .then(response => response.json())
+      .then(response => {
+        if (response.ok) {
+          console.log('proper response');
+          return response.json();
+        } else {
+          console.log('error data response');
+        }
+      })
       .then(json => {
+        // console.log('json body ===', json.body);
         self.setState({
           items: json
         });
-      });
+      })
+      .catch(error => console.log('error in response', error));
   }
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
@@ -82,7 +91,7 @@ class ManageParking extends Component {
               </Grid>
               <Grid item xs={1} />
               {generateGrid(2)}
-              <Tabs {...this.state}/>
+              <Tabs {...this.state} />
             </Grid>
           </MuiThemeProvider>
         </Content>

@@ -22,11 +22,13 @@ class TabBadge extends Component {
     return (
       <div>
         <Typography className={classes.badgeText}>{this.props.name}</Typography>
-        <Badge
-          classes={{ badge: classes.badge }}
-          color="primary"
-          badgeContent={`${slots} Parking Available`}
-        />
+        {slots && (
+          <Badge
+            classes={{ badge: classes.badge }}
+            color="primary"
+            badgeContent={`${slots} Parking Available`}
+          />
+        )}
       </div>
     );
   }

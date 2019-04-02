@@ -33,23 +33,27 @@ class AssignParking extends Component {
     return (
       <Grid container spacing={24} alignItems="flex-end" direction="row">
         {generateGrid(1)}
-        <Grid
-          item
-          xs={1}
-          className={classNames(classes.gridFlex, classes.flexEnd)}
-        >
-          <Icon color="primary">
-            <Email />
-          </Icon>
-        </Grid>
-        <Grid item xs={10} className={classNames(classes.gridFlex)}>
-          <TextField
-            fullWidth
-            label="Enter Email"
-            value={this.state.email}
-            onChange={this.handleChange('email')}
-          />
-        </Grid>
+        {status !== 'ASSIGN' && (
+          <Grid
+            item
+            xs={1}
+            className={classNames(classes.gridFlex, classes.flexEnd)}
+          >
+            <Icon color="primary">
+              <Email />
+            </Icon>
+          </Grid>
+        )}
+        {status !== 'ASSIGN' && (
+          <Grid item xs={10} className={classNames(classes.gridFlex)}>
+            <TextField
+              fullWidth
+              label="Enter Email"
+              value={this.state.email}
+              onChange={this.handleChange('email')}
+            />
+          </Grid>
+        )}
         <Grid item xs={1} />
         <Grid item xs={1} />
         <Grid item xs={10} className={classNames(classes.gridFlex)}>
