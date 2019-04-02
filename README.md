@@ -7,7 +7,8 @@ In the project directory, you can run:
 ### node express server available as nodeService.js file. start the service separate terminal
 ### `npm start` or `yarn start`
 
-
+### Use the following docker command to run in docker : `docker-compose up -d --build`
+### To down the above docker use the following command : `docker-compose down`
 
 Runs the app in the development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.

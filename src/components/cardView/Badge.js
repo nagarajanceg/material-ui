@@ -26,7 +26,7 @@ class TabBadge extends Component {
           <Badge
             classes={{ badge: classes.badge }}
             color="primary"
-            badgeContent={`${slots} Parking Available`}
+            badgeContent={`${slots} Parking Found`}
           />
         )}
       </div>
