@@ -8,8 +8,7 @@ import {
   Dialog,
   withStyles
 } from '@material-ui/core';
-import BookingDetail from '../user/BookingDetail';
-import BookingInfo from '../user/BookingInfo';
+import BookingDetail from '../User/BookingDetail';
 import MuiThemeProvider from '@material-ui/core/es/styles/MuiThemeProvider';
 import { primaryTheme } from '../common/componentUtils';
 import FormActionUtil from '../common/FormActionUtils';

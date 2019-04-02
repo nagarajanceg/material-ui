@@ -16,6 +16,7 @@ import Icon from '@material-ui/core/Icon';
 import classNames from 'classnames';
 import ParkingDialog from '../dialogs/ParkingDialog';
 import UserDialog from '../dialogs/UserDialog';
+import moment from 'moment';
 
 const styles = theme => ({
   margin: {
@@ -65,8 +66,13 @@ class CardView extends Component {
   };
 
   render() {
-    const { classes, parkingData, dialog } = this.props;
+    const { classes, dialog } = this.props;
+    const parkingData = this.props.parkingData || {};
     const identifiers = getIdentifiers(parkingData);
+    const fromDate = parkingData.status === 'ASSIGN' ? parkingData.assignment[0].assignments[0].from_date
+      : parkingData.releases[0].from_date;
+		const toDate = parkingData.status === 'ASSIGN' ? parkingData.assignment[0].assignments[0].to_date
+			: parkingData.releases[0].to_date;
     const self = this;
     return (
       <Card>
@@ -80,6 +86,7 @@ class CardView extends Component {
             <ParkingDialog
               open={this.state.dialogOpen}
               parkingId={parkingData.parkingId}
+              data={parkingData}
               callback={this.handleClose}
               status={parkingData.status} 
             />
@@ -121,7 +128,7 @@ class CardView extends Component {
               </Typography>
             ))}
             <Typography gutterBottom variant="infoText">
-              26th-March to 29th-March
+              { `${moment(fromDate).format("Do MMM'YY")} to ${moment(toDate).format("Do MMM'YY")}` }
             </Typography>
           </CardContent>
         </CardActionArea>

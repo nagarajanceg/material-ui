@@ -35,18 +35,25 @@ class ParkingDialog extends React.Component {
   handleSubmit = () => {
     console.log('submit parking dialog', this.state);
     const self = this;
+    const { data } = self.props;
     self.setState({
       disabled: true
     });
+
     //This is not yet tested. Couldn't able to hit the endpoint
     fetch(`${API.url}/assignParking`, {
       method: 'put',
-      body: self.state
+			headers: {
+				'Content-Type': 'application/json',
+				Accept: 'application/json'
+			},
+      body: JSON.stringify({ ...self.state, parkingId: data.parkingId })
     })
       .then(function(response) {
         self.setState({
           disabled: false
         });
+				self.props.callback();
         console.log('response ==>', response);
       })
       .catch(function(err) {
