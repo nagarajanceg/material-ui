@@ -74,11 +74,11 @@ class CardView extends Component {
     if (parkingData.status !== 'OPEN' && parkingData.status !== 'AVAILBLE') {
       fromDate =
         parkingData.status === 'ASSIGN'
-          ? parkingData.assignment[0].assignments[0].from_date
+          ? parkingData.assignment.assignments[0].from_date
           : parkingData.releases[0].from_date;
       toDate =
         parkingData.status === 'ASSIGN'
-          ? parkingData.assignment[0].assignments[0].to_date
+          ? parkingData.assignment.assignments[0].to_date
           : parkingData.releases[0].to_date;
     } else {
       if (parkingData.status === 'AVAILBLE') {
