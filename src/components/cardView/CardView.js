@@ -82,8 +82,14 @@ class CardView extends Component {
           : parkingData.releases[0].to_date;
     } else {
       if (parkingData.status === 'AVAILABLE') {
-        fromDate = parkingData.releases && parkingData.releases.length > 0 && parkingData.releases[0].from_date;
-        toDate = parkingData.releases && parkingData.releases.length > 0 && parkingData.releases[0].to_date;
+        fromDate =
+          parkingData.releases &&
+          parkingData.releases.length > 0 &&
+          parkingData.releases[0].from_date;
+        toDate =
+          parkingData.releases &&
+          parkingData.releases.length > 0 &&
+          parkingData.releases[0].to_date;
       }
     }
 
@@ -142,9 +148,9 @@ class CardView extends Component {
               </Typography>
             ))}
             <Typography gutterBottom variant="infoText">
-              {`${moment(fromDate).format("Do MMM'YY")} to ${moment(
-                toDate
-              ).format("Do MMM'YY")}`}
+              {`${moment.unix(fromDate).format("Do MMM'YY")} to ${moment
+                .unix(toDate)
+                .format("Do MMM'YY")}`}
             </Typography>
           </CardContent>
         </CardActionArea>
