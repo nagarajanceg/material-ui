@@ -29,7 +29,7 @@ class User extends Component {
   componentDidMount() {
     var self = this;
     //${API.url}
-    fetch(`${API.url}/getParkings`, {
+    fetch(`${API.url}/getUserParkings`, {
       headers: {
         Accept: 'application/json'
       }

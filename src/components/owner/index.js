@@ -16,10 +16,12 @@ import { API } from '../common/ApiPath';
 class Owner extends Component {
   state = {
     disabled: false,
-    submitAlone: true
+    submitAlone: true,
+    fromDate: new Date(),
+    toDate: new Date()
   };
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
   }
   handleChange = name => e => {
     const val = e.target ? e.target.value : e;
@@ -35,7 +37,11 @@ class Owner extends Component {
     //This is not yet tested. Couldn't able to hit the endpoint
     fetch(`${API.url}/releaseParking`, {
       method: 'POST',
-      body: self.state
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      },
+      body: JSON.stringify(self.state)
     })
       .then(function(response) {
         self.setState({
@@ -97,7 +103,7 @@ class Owner extends Component {
             <Grid item xs={4} className={classNames(classes.gridFlex)}>
               <TextField
                 fullWidth={true}
-                label="Parking Slot"
+                label="Parking Phase"
                 value={data && data.user_vo.parking.identifier2}
               />
             </Grid>
@@ -109,6 +115,22 @@ class Owner extends Component {
           </Grid>
           <Grid container spacing={24} alignItems="center" direction="row">
             <Grid item xs={1} />
+            <Grid
+              item
+              xs={1}
+              className={classNames(classes.gridFlex, classes.flexEnd)}
+            >
+              <Icon color="primary">
+                <DirectionsCar />
+              </Icon>
+            </Grid>
+            <Grid item xs={4} className={classNames(classes.gridFlex)}>
+              <TextField
+                fullWidth={true}
+                label="Parking Slot"
+                value={data && data.user_vo.parking.identifier3}
+              />
+            </Grid>
             <Grid
               item
               xs={1}

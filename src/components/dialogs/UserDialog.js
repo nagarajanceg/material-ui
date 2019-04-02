@@ -47,7 +47,11 @@ class UserDialog extends Component {
     //This is not yet tested. Couldn't able to hit the endpoint
     fetch(`${API.url}/reserveParking`, {
       method: 'PUT',
-      body: self.state
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      },
+      body: JSON.stringify(self.state)
     })
       .then(function(response) {
         self.setState({

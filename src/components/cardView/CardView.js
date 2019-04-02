@@ -69,14 +69,24 @@ class CardView extends Component {
     const { classes, dialog } = this.props;
     const parkingData = this.props.parkingData || {};
     const identifiers = getIdentifiers(parkingData);
-    const fromDate =
-      parkingData.status === 'ASSIGN'
-        ? parkingData.assignments[0].from_date
-        : parkingData.releases[0].from_date;
-    const toDate =
-      parkingData.status === 'ASSIGN'
-        ? parkingData.assignments[0].to_date
-        : parkingData.releases[0].to_date;
+    let fromDate;
+    let toDate;
+    if (parkingData.status !== 'OPEN' && parkingData.status !== 'AVAILBLE') {
+      fromDate =
+        parkingData.status === 'ASSIGN'
+          ? parkingData.assignment[0].assignments[0].from_date
+          : parkingData.releases[0].from_date;
+      toDate =
+        parkingData.status === 'ASSIGN'
+          ? parkingData.assignment[0].assignments[0].to_date
+          : parkingData.releases[0].to_date;
+    } else {
+      if (parkingData.status === 'AVAILBLE') {
+        fromDate = parkingData.releases[0].from_date;
+        toDate = parkingData.releases[0].to_date;
+      }
+    }
+
     const self = this;
     return (
       <Card>
