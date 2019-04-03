@@ -66,13 +66,14 @@ class TabSection extends Component {
               variant="fullWidth"
             >
               {Object.keys(items).map(key => {
+                const badgeCon = getOpenSlotsCount(items[key]);
                 return (
                   <Tab
                     value={key}
                     label={
                       <TabBadge
                         name={key}
-                        slots={getOpenSlotsCount(items[key])}
+                        slots={badgeCon > 0 ? badgeCon : ''}
                       />
                     }
                   />

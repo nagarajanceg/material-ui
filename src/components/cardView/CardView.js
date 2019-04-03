@@ -4,8 +4,6 @@ import {
   CardActionArea,
   CardContent,
   CardMedia,
-  CardActions,
-  CardHeader,
   Typography,
   Badge,
   withStyles,
@@ -116,8 +114,8 @@ class CardView extends Component {
               open={this.state.dialogOpen}
               parkingId={parkingData.parkingId}
               callback={this.handleClose}
-							data={parkingData}
-							userId={userId}
+              data={parkingData}
+              userId={userId}
             />
           )}
           <div

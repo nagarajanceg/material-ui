@@ -12,11 +12,13 @@ import { DirectionsCar, Message } from '@material-ui/icons';
 import DateGrid from '../common/DateGrid';
 import FormActionUtil from '../common/FormActionUtils';
 import { API } from '../common/ApiPath';
+import Snackbar from '@material-ui/core/Snackbar';
+import Fade from '@material-ui/core/Fade';
 
 export const getData = ({ location }) => {
   let data = {};
   if (location && location.state && location.state.data) {
-		data = location.state.data;
+    data = location.state.data;
   }
   return data;
 };
@@ -43,7 +45,7 @@ class Owner extends Component {
     self.setState({
       disabled: true
     });
-		const data = getData(this.props);
+    const data = getData(this.props);
     //This is not yet tested. Couldn't able to hit the endpoint
     fetch(`${API.url}/releaseParking`, {
       method: 'POST',
@@ -51,17 +53,25 @@ class Owner extends Component {
         'Content-Type': 'application/json',
         Accept: 'application/json'
       },
-      body: JSON.stringify({ ...self.state, userId: data.user_vo.user_id, parkingId: data.user_vo.parking.parkingId})
+      body: JSON.stringify({
+        ...self.state,
+        userId: data.user_vo.user_id,
+        parkingId: data.user_vo.parking.parkingId
+      })
     })
       .then(function(response) {
         self.setState({
-          disabled: false
+          disabled: false,
+          notification: true,
+          infoMsg: response.ok ? 'Successfully Assigned' : 'Assign Error'
         });
         console.log('response ==>', response);
       })
       .catch(function(err) {
         self.setState({
-          disabled: false
+          disabled: false,
+          notification: true,
+          infoMsg: 'Assign Error'
         });
         console.log('error ==> ', err);
       });
@@ -72,12 +82,24 @@ class Owner extends Component {
   handleToDateChange = date => {
     this.setState({ toDate: date });
   };
+  handleNotificationClose = () => {
+    this.setState({ notification: false });
+  };
   render() {
     const { classes } = this.props;
-		const data = getData(this.props);
+    const data = getData(this.props);
     return (
       <div className={classNames(classes.marginLeft)}>
         <MuiThemeProvider theme={theme}>
+          <Snackbar
+            open={this.state.notification}
+            onClose={this.handleNotificationClose}
+            TransitionComponent={Fade}
+            ContentProps={{
+              'aria-describedby': 'message-id'
+            }}
+            message={<span id="message-id">{this.state.infoMsg}</span>}
+          />
           <DateGrid
             val={this.state}
             handlerFrom={this.handleFromDateChange}
@@ -98,7 +120,7 @@ class Owner extends Component {
               <TextField
                 fullWidth
                 label="Parking Gate"
-								disabled
+                disabled
                 value={data && data.user_vo.parking.identifier1}
               />
             </Grid>
@@ -115,7 +137,7 @@ class Owner extends Component {
               <TextField
                 fullWidth={true}
                 label="Parking Phase"
-								disabled
+                disabled
                 value={data && data.user_vo.parking.identifier2}
               />
             </Grid>
@@ -154,7 +176,6 @@ class Owner extends Component {
               </Icon>
             </Grid>
             <Grid item xs={4} className={classNames(classes.gridFlex)}>
-              {/*<TextField fullWidth label="Additional Information" />*/}
               <TextField
                 fullWidth
                 label="Additional Information"

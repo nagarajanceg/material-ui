@@ -46,7 +46,6 @@ class ManageParking extends Component {
         }
       })
       .then(json => {
-        // console.log('json body ===', json.body);
         self.setState({
           items: json
         });
