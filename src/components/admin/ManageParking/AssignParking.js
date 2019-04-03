@@ -7,6 +7,7 @@ import Icon from '@material-ui/core/es/Icon/Icon';
 import { Email, DateRange } from '@material-ui/icons';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, DatePicker } from 'material-ui-pickers';
+import { getParkingDate } from '../../cardView/CardView';
 
 const styles = () => ({
   ...primaryStyles,
@@ -16,13 +17,18 @@ const styles = () => ({
 });
 
 class AssignParking extends Component {
-  state = {
-    status: '',
-    fromDate: new Date()
-  };
-  constructor() {
-    super();
-  }
+	constructor(props) {
+		super(props);
+		this.state = {
+			status: '',
+			fromDate: getParkingDate(props.parkingData, 'from_date'),
+			toDate: getParkingDate(props.parkingData, 'to_date')
+		};
+	}
+	componentDidMount() {
+		this.props.handler('fromDate', this.state.fromDate);
+		this.props.handler('toDate', this.state.toDate);
+	}
   handleChange = name => e => {
     const val = e.target ? e.target.value : e;
     this.setState({ [name]: val });
@@ -110,7 +116,7 @@ class AssignParking extends Component {
             <DatePicker
               margin="normal"
               label="To"
-              value={this.state.toDate}
+							value={this.state.toDate}
               onChange={this.handleChange('toDate')}
             />
           </MuiPickersUtilsProvider>

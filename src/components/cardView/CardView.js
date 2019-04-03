@@ -15,6 +15,7 @@ import classNames from 'classnames';
 import ParkingDialog from '../dialogs/ParkingDialog';
 import UserDialog from '../dialogs/UserDialog';
 import moment from 'moment';
+import get from 'lodash/get';
 
 const styles = theme => ({
   margin: {
@@ -46,6 +47,19 @@ const getIdentifiers = parkingData => {
   return identifiers;
 };
 
+export const getParkingDate = (parkingData, dateType) => {
+  const time = new Date().getSeconds();
+  let parkingDate = new Date().getSeconds();
+	if (parkingData.status !== 'OPEN' && parkingData.status !== 'AVAILABLE') {
+	  parkingDate =  parkingData.status === 'ASSIGN'
+			? get(parkingData, `assignment.assignments[0].${dateType}`, time)
+			: get(parkingData, `releases[0].${dateType}`, time);
+	} else if (parkingData.status === 'AVAILABLE') {
+	  parkingDate = get(parkingData, `releases[0].${dateType}`, time);
+	}
+	return moment.unix(parkingDate);
+};
+
 class CardView extends Component {
   constructor() {
     super();
@@ -60,6 +74,7 @@ class CardView extends Component {
   };
 
   handleClose = () => {
+		this.props.onSuccess();
     this.setState({ dialogOpen: false });
   };
 
@@ -67,29 +82,8 @@ class CardView extends Component {
     const { classes, dialog, userId } = this.props;
     const parkingData = this.props.parkingData || {};
     const identifiers = getIdentifiers(parkingData);
-    let fromDate;
-    let toDate;
-    if (parkingData.status !== 'OPEN' && parkingData.status !== 'AVAILABLE') {
-      fromDate =
-        parkingData.status === 'ASSIGN'
-          ? parkingData.assignment.assignments[0].from_date
-          : parkingData.releases[0].from_date;
-      toDate =
-        parkingData.status === 'ASSIGN'
-          ? parkingData.assignment.assignments[0].to_date
-          : parkingData.releases[0].to_date;
-    } else {
-      if (parkingData.status === 'AVAILABLE') {
-        fromDate =
-          parkingData.releases &&
-          parkingData.releases.length > 0 &&
-          parkingData.releases[0].from_date;
-        toDate =
-          parkingData.releases &&
-          parkingData.releases.length > 0 &&
-          parkingData.releases[0].to_date;
-      }
-    }
+    const fromDate = getParkingDate(parkingData, 'from_date');
+    const toDate = getParkingDate(parkingData, 'to_date');
 
     const self = this;
     return (
@@ -104,7 +98,7 @@ class CardView extends Component {
             <ParkingDialog
               open={this.state.dialogOpen}
               parkingId={parkingData.parkingId}
-              data={parkingData}
+							parkingData={parkingData}
               callback={this.handleClose}
               status={parkingData.status}
             />
@@ -148,9 +142,7 @@ class CardView extends Component {
               </Typography>
             ))}
             <Typography gutterBottom variant="infoText">
-              {`${moment.unix(fromDate).format("Do MMM'YY")} to ${moment
-                .unix(toDate)
-                .format("Do MMM'YY")}`}
+              {`${fromDate.format("Do MMM'YY")} to ${toDate.format("Do MMM'YY")}`}
             </Typography>
           </CardContent>
         </CardActionArea>

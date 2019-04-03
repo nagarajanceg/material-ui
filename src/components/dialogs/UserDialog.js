@@ -12,8 +12,10 @@ import BookingDetail from '../user/BookingDetail';
 import MuiThemeProvider from '@material-ui/core/es/styles/MuiThemeProvider';
 import { primaryTheme } from '../common/componentUtils';
 import FormActionUtil from '../common/FormActionUtils';
-import Send from '@material-ui/icons/Send';
 import { API } from '../common/ApiPath';
+import get from 'lodash/get';
+import Fade from '@material-ui/core/Fade/index';
+import Snackbar from '@material-ui/core/Snackbar';
 
 const styles = theme => ({
   dialogPaper: {
@@ -55,12 +57,15 @@ class UserDialog extends Component {
       body: JSON.stringify({ ...self.state,
         userId,
         parkingId,
-        releaseId: data.releases[0].release_id})
+        releaseId: get(data, 'releases[0].release_id')})
     })
       .then(function(response) {
         self.setState({
-          disabled: false
+          disabled: false,
+					notification: true,
+					infoMsg: response.ok ? 'Successfully Assigned' : 'Assign Error'
         });
+				self.props.callback();
         console.log('response ==>', response);
       })
       .catch(function(err) {
@@ -70,6 +75,9 @@ class UserDialog extends Component {
         console.log('error ==> ', err);
       });
   };
+	handleNotificationClose = () => {
+		this.setState({ notification: false });
+	};
   handlerChange = (name, value) => {
     this.setState({ [name]: value });
   };
@@ -78,6 +86,15 @@ class UserDialog extends Component {
     return (
       <div>
         <MuiThemeProvider theme={primaryTheme}>
+					<Snackbar
+						open={this.state.notification}
+						onClose={this.handleNotificationClose}
+						TransitionComponent={Fade}
+						ContentProps={{
+							'aria-describedby': 'message-id'
+						}}
+						message={<span id="message-id">{this.state.infoMsg}</span>}
+					/>
           <Dialog
             open={this.props.open}
             onClose={this.props.callback}

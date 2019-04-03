@@ -14,6 +14,7 @@ import FormActionUtil from '../common/FormActionUtils';
 import { API } from '../common/ApiPath';
 import Snackbar from '@material-ui/core/Snackbar';
 import Fade from '@material-ui/core/Fade';
+import get from 'lodash/get';
 
 export const getData = ({ location }) => {
   let data = {};
@@ -55,8 +56,8 @@ class Owner extends Component {
       },
       body: JSON.stringify({
         ...self.state,
-        userId: data.user_vo.user_id,
-        parkingId: data.user_vo.parking.parkingId
+        userId: get(data, 'user_vo.user_id'),
+        parkingId: get(data, 'user_vo.parking.parkingId')
       })
     })
       .then(function(response) {
@@ -121,7 +122,7 @@ class Owner extends Component {
                 fullWidth
                 label="Parking Gate"
                 disabled
-                value={data && data.user_vo.parking.identifier1}
+                value={get(data, 'user_vo.parking.identifier1')}
               />
             </Grid>
             <Grid
@@ -138,7 +139,7 @@ class Owner extends Component {
                 fullWidth={true}
                 label="Parking Phase"
                 disabled
-                value={data && data.user_vo.parking.identifier2}
+                value={get(data, 'user_vo.parking.identifier2')}
               />
             </Grid>
             <Grid item xs={1} />
@@ -163,7 +164,7 @@ class Owner extends Component {
                 fullWidth={true}
                 label="Parking Slot"
                 disabled
-                value={data && data.user_vo.parking.identifier3}
+                value={get(data, 'user_vo.parking.identifier3')}
               />
             </Grid>
             <Grid

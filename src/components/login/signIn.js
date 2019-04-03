@@ -16,6 +16,7 @@ import teal from '@material-ui/core/colors/teal';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import { API } from '../common/ApiPath'
 import { getMenu } from '../common/config';
+import get from 'lodash/get';
 
 const themes = createMuiTheme({
   palette: {

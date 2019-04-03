@@ -16,7 +16,8 @@
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "react-router-dom": "latest",
-    "react-scripts": "2.1.8"
+    "react-scripts": "2.1.8",
+    "lodash": "latest"
   },
   "scripts": {
     "start": "react-scripts start",

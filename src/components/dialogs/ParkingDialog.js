@@ -38,7 +38,7 @@ class ParkingDialog extends React.Component {
   handleSubmit = () => {
     console.log('submit parking dialog', this.state);
     const self = this;
-    const { data } = self.props;
+    const { parkingData } = self.props;
     self.setState({
       disabled: true
     });
@@ -50,7 +50,7 @@ class ParkingDialog extends React.Component {
         'Content-Type': 'application/json',
         Accept: 'application/json'
       },
-      body: JSON.stringify({ ...self.state, parkingId: data.parkingId })
+      body: JSON.stringify({ ...self.state, parkingId: parkingData.parkingId })
     })
       .then(function(response) {
         self.setState({
@@ -78,7 +78,7 @@ class ParkingDialog extends React.Component {
   };
   render() {
     const { classes } = this.props;
-    const { open, callback, status } = this.props;
+    const { open, callback, status, parkingData } = this.props;
     return (
       <div>
         <MuiThemeProvider theme={primaryTheme}>
@@ -102,7 +102,7 @@ class ParkingDialog extends React.Component {
             </DialogTitle>
             <DialogContent className={classes.dialog}>
               <DialogContentText>
-                <AssignParking status={status} handler={this.handlerChange} />
+                <AssignParking parkingData={parkingData} status={status} handler={this.handlerChange} />
               </DialogContentText>
             </DialogContent>
             <DialogActions>

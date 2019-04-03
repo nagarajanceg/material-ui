@@ -12,6 +12,7 @@ import {
   primaryTheme as theme
 } from '../../common/componentUtils';
 import { API } from '../../common/ApiPath';
+import { fetchResource } from '../../common/ApiHelper'
 
 const Content = styled('div')({
   padding: theme.spacing.unit * 4,
@@ -32,26 +33,11 @@ class ManageParking extends Component {
   }
   componentDidMount() {
     var self = this;
-    fetch(`${API.url}/getParkings`, {
-      headers: {
-        Accept: 'application/json'
-      }
-    })
-      .then(response => {
-        if (response.ok) {
-          console.log('proper response');
-          return response.json();
-        } else {
-          console.log('error data response');
-        }
-      })
-      .then(json => {
-        self.setState({
-          items: json
-        });
-      })
-      .catch(error => console.log('error in response', error));
+    fetchResource(`${API.url}/getParkings`, null, self.onSuccess);
   }
+	onSuccess = items => {
+		this.setState({ items });
+	};
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
   };

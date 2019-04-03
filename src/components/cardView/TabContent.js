@@ -13,7 +13,7 @@ class TabContent extends Component {
       <Grid container spacing={40} justify="flex-start" direction="row">
         {items.map(data => (
           <Grid item xs={12} md={3}>
-            <CardView userId={userId} parkingData={data} dialog={dialog} />
+            <CardView onSuccess={this.props.onSuccess} userId={userId} parkingData={data} dialog={dialog} />
           </Grid>
         ))}
       </Grid>

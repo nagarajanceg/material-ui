@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import TabBadge from './Badge';
 import TabContent from './TabContent';
 import { openStatus } from '../common/config';
+import { fetchResource } from '../common/ApiHelper'
+import { API } from '../common/ApiPath'
 
 const styles = theme => ({
   margin: {
@@ -40,19 +42,47 @@ const getOpenSlotsCount = items => {
   return slots;
 };
 
+const getSelectedTab = (key, items) => {
+	if (items) {
+		if (items[key]) {
+			return key;
+		} else if (Object.keys(items).length > 0) {
+			return Object.keys(items)[0];
+		}
+	}
+	return key;
+}
+
 class TabSection extends Component {
   state = {
-    value: ''
+    value: '',
+		items: [],
+    updated: false
   };
 
   handleChange = (event, value) => {
     this.setState({ value });
   };
 
+	componentDidMount() {
+		this.setState({ items: [], updated: false });
+	}
+
+	onSuccess = () => {
+		const path = this.props.dialog.user ? `${API.url}/getUserParkings` : `${API.url}/getParkings`;
+		fetchResource(path, null, this.updateItems);
+	};
+
+	updateItems = items => {
+		this.setState({ items, updated: true });
+		this.forceUpdate();
+	};
+
   render() {
-    const { classes, items, dialog, userId } = this.props;
+    const { classes, dialog, userId } = this.props;
+    const items = this.state.updated ? this.state.items : this.props.items;
     const value = this.state.value
-      ? this.state.value
+      ? getSelectedTab(this.state.value, items)
       : items && Object.keys(items)[0];
     return (
       <div className={classes.tabContainer}>
@@ -91,7 +121,7 @@ class TabSection extends Component {
         </Paper>
         <TabContainer>
           {items[value] && (
-            <TabContent userId={userId} items={items[value]} dialog={dialog} />
+            <TabContent userId={userId} items={items[value]} dialog={dialog} onSuccess={this.onSuccess} />
           )}
         </TabContainer>
       </div>
