@@ -70,7 +70,9 @@ class UserDialog extends Component {
       })
       .catch(function(err) {
         self.setState({
-          disabled: false
+          disabled: false,
+          notification: true,
+          infoMsg: 'Assign Error'
         });
         console.log('error ==> ', err);
       });

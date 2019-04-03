@@ -33,7 +33,9 @@ const styles = theme => ({
 class ParkingDialog extends React.Component {
   state = {
     submitAlone: true,
-    disabled: false
+    disabled: false,
+    fromDate: new Date(),
+    toDate: new Date()
   };
   handleSubmit = () => {
     console.log('submit parking dialog', this.state);
@@ -58,8 +60,8 @@ class ParkingDialog extends React.Component {
           notification: true,
           infoMsg: response.ok ? 'Successfully Assigned' : 'Assign Error'
         });
-        self.props.callback();
-        console.log('response ==>', response);
+        //show success message and refresh tab only if response os ok , otherwise display error
+        self.props.callback({ reload: response.ok });
       })
       .catch(function(err) {
         self.setState({
