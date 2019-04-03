@@ -39,7 +39,6 @@ class ManageParking extends Component {
     })
       .then(response => {
         if (response.ok) {
-          console.log('proper response');
           return response.json();
         } else {
           console.log('error data response');

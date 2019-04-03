@@ -59,8 +59,12 @@ class CardView extends Component {
     this.setState({ dialogOpen: true, id });
   };
 
-  handleClose = () => {
+  handleClose = data => {
     this.setState({ dialogOpen: false });
+    //Reload the page after closing the dialog after 4s to hold notification
+    if (data !== undefined && data.reload === true) {
+      setTimeout(window.location.reload(), 4000);
+    }
   };
 
   render() {

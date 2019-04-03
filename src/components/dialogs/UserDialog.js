@@ -14,6 +14,8 @@ import { primaryTheme } from '../common/componentUtils';
 import FormActionUtil from '../common/FormActionUtils';
 import Send from '@material-ui/icons/Send';
 import { API } from '../common/ApiPath';
+import Snackbar from '@material-ui/core/Snackbar';
+import Fade from '@material-ui/core/Fade';
 
 const styles = theme => ({
   dialogPaper: {
@@ -52,20 +54,27 @@ class UserDialog extends Component {
         'Content-Type': 'application/json',
         Accept: 'application/json'
       },
-      body: JSON.stringify({ ...self.state,
+      body: JSON.stringify({
+        ...self.state,
         userId,
         parkingId,
-        releaseId: data.releases[0].release_id})
+        releaseId: data.releases[0].release_id
+      })
     })
       .then(function(response) {
         self.setState({
-          disabled: false
+          disabled: false,
+          notification: true,
+          infoMsg: response.ok ? 'Successfully Assigned' : 'Assign Error'
         });
-        console.log('response ==>', response);
+        //show success message and refresh tab only if response os ok , otherwise display error
+        self.props.callback({ reload: response.ok });
       })
       .catch(function(err) {
         self.setState({
-          disabled: false
+          disabled: false,
+          notification: true,
+          infoMsg: 'Assign Error'
         });
         console.log('error ==> ', err);
       });
@@ -78,6 +87,15 @@ class UserDialog extends Component {
     return (
       <div>
         <MuiThemeProvider theme={primaryTheme}>
+          <Snackbar
+            open={this.state.notification}
+            onClose={this.handleNotificationClose}
+            TransitionComponent={Fade}
+            ContentProps={{
+              'aria-describedby': 'message-id'
+            }}
+            message={<span id="message-id">{this.state.infoMsg}</span>}
+          />
           <Dialog
             open={this.props.open}
             onClose={this.props.callback}
