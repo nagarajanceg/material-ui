@@ -79,7 +79,7 @@ class TabSection extends Component {
                 );
               })}
               return (
-              {Object.keys(items).length == 0 && (
+              {Object.keys(items).length === 0 && (
                 <Tab
                   value={'No Parking Available'}
                   label={<TabBadge name={'No Parking Available'} />}

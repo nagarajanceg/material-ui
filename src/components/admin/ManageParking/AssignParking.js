@@ -33,6 +33,7 @@ class AssignParking extends Component {
     return (
       <Grid container spacing={24} alignItems="flex-end" direction="row">
         {generateGrid(1)}
+
         {status !== 'ASSIGN' && (
           <Grid
             item
@@ -54,7 +55,7 @@ class AssignParking extends Component {
             />
           </Grid>
         )}
-        <Grid item xs={1} />
+        {status !== 'ASSIGN' && <Grid item xs={1} />}
         <Grid item xs={1} />
         <Grid item xs={10} className={classNames(classes.gridFlex)}>
           <TextField
