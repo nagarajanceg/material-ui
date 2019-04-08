@@ -34,6 +34,12 @@ const styles = theme => ({
     position: 'absolute',
     bottom: '38%',
     right: '8%'
+  },
+  card: {
+    '&:hover': {
+      'box-shadow': '0 8px 17px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)',
+			transition: 'box-shadow .25s, -webkit-box-shadow .25s'
+    }
   }
 });
 
@@ -87,7 +93,7 @@ class CardView extends Component {
 
     const self = this;
     return (
-      <Card>
+      <Card className={classes.card}>
         <CardActionArea>
           <CardMedia
             component="img"
