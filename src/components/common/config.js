@@ -26,6 +26,12 @@ export const adminHeaderProps = [
     id: 'massManage'
   },
   {
+    title: 'Report',
+    icon: 'Assignment',
+    variant: 'h6',
+    id: 'report'
+  },
+  {
     ...signOutProps
   }
 ];
@@ -75,3 +81,4 @@ export const statusMapper = {
   ASSIGN: 'Release',
   RELEASE: 'Busy'
 };
+export const reportTypes = ['User Data', 'Transactions'];

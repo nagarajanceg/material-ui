@@ -7,6 +7,7 @@ import FileUploader from '../../common/FileUploader';
 import { API } from '../../common/ApiPath';
 import Snackbar from '@material-ui/core/Snackbar';
 import Fade from '@material-ui/core/Fade';
+import { fetchPost } from '../../common/ApiHelper';
 
 const theme = createMuiTheme({
   palette: {
@@ -23,7 +24,7 @@ class MassManage extends Component {
     super(props);
     this.state = {
       disabled: false,
-			files: []
+      files: []
     };
   }
   setSelectedFiles = (id, file) => {
@@ -34,11 +35,20 @@ class MassManage extends Component {
       this.setState({ files });
     }
   };
-	removeSelectedFiles = (id) => {
-		const allFiles = this.state.files || [];
-		const files = allFiles.filter(item => item.id !== id);
-		this.setState({ files });
-	};
+  removeSelectedFiles = id => {
+    const allFiles = this.state.files || [];
+    const files = allFiles.filter(item => item.id !== id);
+    this.setState({ files });
+  };
+  setNotificationOnResponse = (response, status) => {
+    const self = this;
+    console.log('setNotificayion');
+    self.setState({
+      disabled: false,
+      notification: true,
+      infoMsg: status ? 'Upload successful' : 'Upload failed'
+    });
+  };
   handleSubmit = () => {
     const files = this.state.files;
     const self = this;
@@ -48,25 +58,26 @@ class MassManage extends Component {
       files.forEach(fileData => {
         data.append(fileData.id, fileData.file);
       });
-      fetch(API.url + '/massManage', {
-        method: 'POST',
-        body: data
-      })
-        .then(function(response) {
-          self.setState({
-            disabled: false,
-            notification: true,
-						infoMsg: response.ok ? 'Upload successful' : 'Upload failed'
-          });
-        })
-        .catch(function(error) {
-          self.setState({
-            disabled: false,
-            notification: true,
-            infoMsg: 'Upload failed'
-          });
-          console.log('Request failed', error);
-        });
+      fetchPost(API.url + '/massManage', data, self.setNotificationOnResponse);
+      // fetch(API.url + '/massManage', {
+      //   method: 'POST',
+      //   body: data
+      // })
+      //   .then(function(response) {
+      //     self.setState({
+      //       disabled: false,
+      //       notification: true,
+      // 			infoMsg: response.ok ? 'Upload successful' : 'Upload failed'
+      //     });
+      //   })
+      //   .catch(function(error) {
+      //     self.setState({
+      //       disabled: false,
+      //       notification: true,
+      //       infoMsg: 'Upload failed'
+      //     });
+      //   console.log('Request failed', error);
+      // });
       this.setState({ files: [] });
     }
   };
@@ -93,14 +104,14 @@ class MassManage extends Component {
               id="assigntoRelease"
               label="Assign to Release"
               onChange={this.setSelectedFiles}
-							onClear={this.removeSelectedFiles}
+              onClear={this.removeSelectedFiles}
             />
             <FileUploader
               name="Browse"
               id="releaseToBusy"
               label="Release to busy"
               onChange={this.setSelectedFiles}
-							onClear={this.removeSelectedFiles}
+              onClear={this.removeSelectedFiles}
             />
             <Grid item />
             <Grid item />

@@ -8,6 +8,7 @@ import ManageParking from './components/admin/ManageParking';
 import MassManage from './components/admin/MassManage';
 import Owner from './components/owner';
 import User from './components/user';
+import Report from './components/admin/Report';
 import PropTypes from 'prop-types';
 
 const getComponent = props => {
@@ -40,6 +41,12 @@ const getComponent = props => {
       return (
         <div>
           <User {...props} />
+        </div>
+      );
+    case 'report':
+      return (
+        <div>
+          <Report {...props} />
         </div>
       );
     default:

@@ -7,6 +7,7 @@ import FileUploader from '../../common/FileUploader';
 import { API } from '../../common/ApiPath';
 import Snackbar from '@material-ui/core/Snackbar';
 import Fade from '@material-ui/core/Fade';
+import { fetchPost } from '../../common/ApiHelper';
 
 const theme = createMuiTheme({
   palette: {
@@ -23,7 +24,7 @@ class Manage extends Component {
     super(props);
     this.state = {
       disabled: false,
-			files: []
+      files: []
     };
   }
   setSelectedFiles = (id, file) => {
@@ -34,11 +35,20 @@ class Manage extends Component {
       this.setState({ files });
     }
   };
-	removeSelectedFiles = (id) => {
-		const allFiles = this.state.files || [];
-		const files = allFiles.filter(item => item.id !== id);
+  removeSelectedFiles = id => {
+    const allFiles = this.state.files || [];
+    const files = allFiles.filter(item => item.id !== id);
     this.setState({ files });
-	};
+  };
+  setNotificationOnResponse = (response, status) => {
+    const self = this;
+    console.log('setNotificayion');
+    self.setState({
+      disabled: false,
+      notification: true,
+      infoMsg: status ? 'Upload successful' : 'Upload failed'
+    });
+  };
   handleSubmit = () => {
     const files = this.state.files;
     const self = this;
@@ -50,26 +60,7 @@ class Manage extends Component {
       files.forEach(fileData => {
         data.append(fileData.id, fileData.file);
       });
-      fetch(API.url + '/manageData', {
-        method: 'POST',
-        body: data
-      })
-        .then(function(response) {
-          self.setState({
-            disabled: false,
-            notification: true,
-            infoMsg: response.ok ? 'Upload successful' : 'Upload failed'
-          });
-          console.log(response);
-        })
-        .catch(function(error) {
-          self.setState({
-            notification: true,
-            infoMsg: 'Upload failed',
-            disabled: false
-          });
-          console.log('Request failed', error);
-        });
+      fetchPost(API.url + '/manageData', data, self.setNotificationOnResponse);
     }
   };
   handleNotificationClose = () => {
@@ -102,7 +93,7 @@ class Manage extends Component {
               id="parkingData"
               label="Parking Data"
               onChange={this.setSelectedFiles}
-							onClear={this.removeSelectedFiles}
+              onClear={this.removeSelectedFiles}
             />
             {/*<FileUploader name="Browse" id="assignment" label="Assignment" />*/}
             <Grid item />

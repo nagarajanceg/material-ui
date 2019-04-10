@@ -25,6 +25,11 @@ const RoutedApp = () => (
       />
       <Route
         exact
+        path="/report"
+        render={props => <App {...props} component="report" />}
+      />
+      <Route
+        exact
         path="/signOut"
         render={props => <App {...props} isLogin={true} />}
       />
