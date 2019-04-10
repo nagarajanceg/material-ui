@@ -8,7 +8,7 @@ import {
 } from '../../common/componentUtils';
 import styled from '@material-ui/styles/styled';
 import { reportTypes, statusValues } from '../../common/config';
-// import { TextFieldUtil } from '../../common/TextFieldUtil';
+import { TextFieldUtil, TextFieldWithOption } from '../../common/TextFieldUtil';
 
 const Content = styled('div')({
   padding: theme.spacing.unit * 4,
@@ -16,88 +16,51 @@ const Content = styled('div')({
   width: '65%'
 });
 class Report extends Component {
-  state = {
-    identifier1: ''
-  };
+  state = {};
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
   };
   render() {
     const { classes } = this.props;
+    const textFieldLabels = [
+      'Parking Identifier1',
+      'Parking Identifier2',
+      'Parking Identifier3',
+      'First Name',
+      'Last Name',
+      'Email'
+    ];
     return (
       <React.Fragment>
         <Content>
           <MuiThemeProvider theme={theme}>
             <Grid container spacing={24} alignItems="flex-end" direction="row">
               <Grid item xs="6">
-                <TextField
-                  id="report-type"
-                  select
+                <TextFieldWithOption
                   label="Select Type"
-                  value={this.state.report_type}
-                  onChange={this.handleChange('report_type')}
-                  SelectProps={{
-                    MenuProps: {}
-                  }}
-                  fullWidth
-                >
-                  {reportTypes.map(option => (
-                    <MenuItem key={option} value={option}>
-                      {option}
-                    </MenuItem>
-                  ))}
-                </TextField>
+                  value={this.state.select_type}
+                  handler={this.handleChange}
+                  menuOptions={reportTypes}
+                />
               </Grid>
               <Grid item xs="6">
-                <TextField
-                  id="report-status"
-                  select
+                <TextFieldWithOption
                   label="Select Status"
-                  value={this.state.status}
-                  onChange={this.handleChange('status')}
-                  SelectProps={{
-                    MenuProps: {}
-                  }}
-                  fullWidth
-                >
-                  {statusValues.map(option => (
-                    <MenuItem key={option} value={option}>
-                      {option}
-                    </MenuItem>
-                  ))}
-                </TextField>
+                  value={this.state.select_status}
+                  handler={this.handleChange}
+                  menuOptions={statusValues}
+                />
               </Grid>
               {generateGrid(1)}
-              <Grid item xs="4">
-                <TextField
-                  id="parking_identifier1"
-                  label="Parking Identifier1"
-                  placeholder="Enter Identifier1"
-                  value={this.state.parking_identifier1}
-                  onChange={this.handleChange('parking_identifier1')}
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs="4">
-                <TextField
-                  id="parking_identifier2"
-                  label="Parking Identifier2"
-                  placeholder="Enter Identifier2"
-                  value={this.state.parking_identifier2}
-                  onChange={this.handleChange('parking_identifier2')}
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs="4">
-                <TextField
-                  id="parking_identifier3"
-                  label="Parking Identifier3"
-                  placeholder="Enter Identifier3"
-                  value={this.state.parking_identifier3}
-                  onChange={this.handleChange('parking_identifier3')}
-                  fullWidth
-                />
-              </Grid>
+              {textFieldLabels.map(label => (
+                <Grid item xs="4">
+                  <TextFieldUtil
+                    label={label}
+                    val={this.state[label.toLowerCase().replace(/ /g, '_')]}
+                    handler={this.handleChange}
+                  />
+                </Grid>
+              ))}
             </Grid>
           </MuiThemeProvider>
         </Content>
