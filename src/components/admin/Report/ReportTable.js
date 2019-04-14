@@ -8,18 +8,34 @@ import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import { withStyles } from '@material-ui/core';
 import {
-  primaryStyles as styles,
+  primaryStyles,
 } from '../../common/componentUtils';
 
+const styles = () => ({
+	...primaryStyles
+});
 
 class ReportTable extends Component {
-  state = {};
+	state = {
+		data: [],
+		page: 0,
+		rowsPerPage: 5,
+	};
+	constructor(props) {
+		super(props);
+	}
   handleChange = e => {
 
   };
+	handleChangePage = e => {
+
+	};
+	handleChangeRowsPerPage = e => {
+
+	};
   render() {
     const { classes } = this.props;
-
+		const { data, rowsPerPage, page } = this.state;
     return (
       <div>
 				<Table className={classes.table} aria-labelledby="tableTitle">
@@ -34,6 +50,21 @@ class ReportTable extends Component {
 						</TableRow>
           </TableBody>
         </Table>
+				<TablePagination
+					rowsPerPageOptions={[5, 10, 25]}
+					component="div"
+					count={data.length}
+					rowsPerPage={rowsPerPage}
+					page={page}
+					backIconButtonProps={{
+						'aria-label': 'Previous Page',
+					}}
+					nextIconButtonProps={{
+						'aria-label': 'Next Page',
+					}}
+					onChangePage={this.handleChangePage}
+					onChangeRowsPerPage={this.handleChangeRowsPerPage}
+				/>
       </div>
     );
   }
