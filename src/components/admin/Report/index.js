@@ -1,14 +1,20 @@
 import React, { Component } from 'react';
-import { TextField, Grid, MenuItem, withStyles } from '@material-ui/core';
+import { Grid, Button, withStyles } from '@material-ui/core';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import {
   generateGrid,
-  primaryStyles as styles,
+  primaryStyles,
   primaryTheme as theme
 } from '../../common/componentUtils';
 import styled from '@material-ui/styles/styled';
 import { reportTypes, statusValues } from '../../common/config';
 import { TextFieldUtil, TextFieldWithOption } from '../../common/TextFieldUtil';
+import ReportTable from './ReportTable';
+import classNames from 'classnames'
+
+const styles = () => ({
+	...primaryStyles
+});
 
 const Content = styled('div')({
   padding: theme.spacing.unit * 4,
@@ -61,7 +67,20 @@ class Report extends Component {
                   />
                 </Grid>
               ))}
-            </Grid>
+              {generateGrid(1)}
+              <Grid item xs="12" className={classNames(classes.gridFlex, classes.flexEnd)}>
+                <Button
+                  variant="contained"
+                  disabled={false}
+                  color="primary"
+                  size="medium"
+                  onClick={this.handleChange}
+                >
+                  export to excel
+                </Button>
+              </Grid>
+						</Grid>
+						<ReportTable />
           </MuiThemeProvider>
         </Content>
       </React.Fragment>

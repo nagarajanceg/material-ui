@@ -12,7 +12,7 @@ export const generateGrid = count => {
   return elements;
 };
 
-export const primaryStyles = () => ({
+export const primaryStyles = {
   gridFlex: {
     display: 'flex'
   },
@@ -22,7 +22,7 @@ export const primaryStyles = () => ({
   marginLeft: {
     marginLeft: '10rem'
   }
-});
+};
 
 export const primaryTheme = createMuiTheme({
   palette: {

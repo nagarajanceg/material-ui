@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Typography, Badge, withStyles } from '@material-ui/core';
-import PropTypes from 'prop-types';
 
 const styles = theme => ({
   margin: {
