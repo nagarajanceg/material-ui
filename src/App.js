@@ -10,6 +10,7 @@ import Owner from './components/owner';
 import User from './components/user';
 import Report from './components/admin/Report';
 import PropTypes from 'prop-types';
+import { withNamespaces } from 'react-i18next';
 
 const getComponent = props => {
   switch (props.component) {
@@ -85,4 +86,4 @@ App.propTypes = {
   component: PropTypes.string
 };
 
-export default App;
+export default withNamespaces()(App);

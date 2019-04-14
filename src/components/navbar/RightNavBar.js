@@ -16,6 +16,9 @@ import {
   Assignment
 } from '@material-ui/icons';
 import PropTypes from 'prop-types';
+import { withNamespaces } from 'react-i18next';
+import compose from 'recompose/compose';
+// import Translate from '../common/Translate';
 
 const styles = theme => ({
   menuActive: {
@@ -61,7 +64,7 @@ class RightNavBar extends Component {
     this.props.history.push(`/${path}`);
   };
   render() {
-    const { classes } = this.props;
+    const { classes, t } = this.props;
     let selectedId = this.state.selectedId;
     if (!selectedId) {
       const path = this.props.location.pathname.substring(1);
@@ -83,7 +86,7 @@ class RightNavBar extends Component {
                   >
                     {getIcon(item.icon)}
                     <span style={{ fontSize: '0.9rem', paddingLeft: '10px' }}>
-                      {item.title}
+                      {t(item.title)}
                     </span>
                   </IconButton>
                 </Typography>
@@ -99,4 +102,4 @@ RightNavBar.propTypes = {
   navItems: PropTypes.array
 };
 
-export default withStyles(styles)(RightNavBar);
+export default compose(withStyles(styles), withNamespaces())(RightNavBar);

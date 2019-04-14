@@ -8,6 +8,8 @@ import { API } from '../../common/ApiPath';
 import Snackbar from '@material-ui/core/Snackbar';
 import Fade from '@material-ui/core/Fade';
 import { fetchPost } from '../../common/ApiHelper';
+import compose from 'recompose/compose';
+import { withNamespaces } from 'react-i18next';
 
 const theme = createMuiTheme({
   palette: {
@@ -42,7 +44,6 @@ class Manage extends Component {
   };
   setNotificationOnResponse = (response, status) => {
     const self = this;
-    console.log('setNotificayion');
     self.setState({
       disabled: false,
       notification: true,
@@ -67,6 +68,7 @@ class Manage extends Component {
     this.setState({ notification: false });
   };
   render() {
+    const { t } = this.props;
     return (
       <div>
         <MuiThemeProvider theme={theme}>
@@ -84,7 +86,7 @@ class Manage extends Component {
             <FileUploader
               name="Browse"
               id="userData"
-              label="User Data"
+              label={t('user_data')}
               onChange={this.setSelectedFiles}
               onClear={this.removeSelectedFiles}
             />
@@ -114,4 +116,4 @@ class Manage extends Component {
   }
 }
 
-export default Manage;
+export default withNamespaces()(Manage);

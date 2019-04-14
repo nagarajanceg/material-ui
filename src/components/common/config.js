@@ -1,6 +1,6 @@
 export const defaultHeaderProps = {};
 export const signOutProps = {
-  title: 'Sign Out',
+  title: 'sign_out',
   icon: 'ExitToApp',
   variant: 'h6',
   id: 'signOut'
@@ -8,25 +8,25 @@ export const signOutProps = {
 
 export const adminHeaderProps = [
   {
-    title: 'Manage Data',
+    title: 'manage_data',
     icon: 'Dashboard',
     variant: 'h6',
     id: 'manageData'
   },
   {
-    title: 'Manage Parking',
+    title: 'manage_parking',
     icon: 'DirectionsCar',
     variant: 'h6',
     id: 'manageParking'
   },
   {
-    title: 'Mass Manage',
+    title: 'mass_manage',
     icon: 'Widgets',
     variant: 'h6',
     id: 'massManage'
   },
   {
-    title: 'Report',
+    title: 'report',
     icon: 'Assignment',
     variant: 'h6',
     id: 'report'
@@ -37,7 +37,7 @@ export const adminHeaderProps = [
 ];
 export const ownerProps = [
   {
-    title: 'Owner',
+    title: 'owner',
     icon: 'AccountCircle',
     variant: 'h6',
     id: 'owner'
@@ -48,13 +48,13 @@ export const ownerProps = [
 ];
 export const userProps = [
   {
-    title: 'User',
+    title: 'user',
     icon: 'AccountCircle',
     variant: 'h6',
     id: 'User'
   },
   {
-    title: 'Booking',
+    title: 'booking',
     icon: 'Assignment',
     variant: 'h6',
     id: 'Booking',
