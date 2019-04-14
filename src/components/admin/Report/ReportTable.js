@@ -17,7 +17,7 @@ const styles = () => ({
 
 class ReportTable extends Component {
 	state = {
-		data: [],
+		items: [],
 		page: 0,
 		rowsPerPage: 5,
 	};
@@ -34,8 +34,8 @@ class ReportTable extends Component {
 
 	};
   render() {
-    const { classes } = this.props;
-		const { data, rowsPerPage, page } = this.state;
+    const { classes, items } = this.props;
+		const { rowsPerPage, page } = this.state;
     return (
       <div>
 				<Table className={classes.table} aria-labelledby="tableTitle">
@@ -45,15 +45,19 @@ class ReportTable extends Component {
             </TableRow>
           </TableHead>
 					<TableBody>
-						<TableRow>
-							<TableCell align="right">value</TableCell>
-						</TableRow>
+						{items && items.length > 0 ?
+							items.map(item => (<TableRow>
+							<TableCell>{item.identifier1}</TableCell>
+						</TableRow>)) :
+							<TableRow><TableCell>No records available</TableCell></TableRow>
+						}
           </TableBody>
         </Table>
+				{items && items.length > 0 &&
 				<TablePagination
 					rowsPerPageOptions={[5, 10, 25]}
 					component="div"
-					count={data.length}
+					count={items.length}
 					rowsPerPage={rowsPerPage}
 					page={page}
 					backIconButtonProps={{
@@ -64,7 +68,8 @@ class ReportTable extends Component {
 					}}
 					onChangePage={this.handleChangePage}
 					onChangeRowsPerPage={this.handleChangeRowsPerPage}
-				/>
+					labelRowsPerPage={'Rows per page:'}
+				/>}
       </div>
     );
   }

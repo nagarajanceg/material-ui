@@ -10,7 +10,10 @@ import styled from '@material-ui/styles/styled';
 import { reportTypes, statusValues } from '../../common/config';
 import { TextFieldUtil, TextFieldWithOption } from '../../common/TextFieldUtil';
 import ReportTable from './ReportTable';
-import classNames from 'classnames'
+import classNames from 'classnames';
+import { API } from '../../common/ApiPath';
+import { fetchResource } from '../../common/ApiHelper';
+import { reportData } from '../../../mocks/report';
 
 const styles = () => ({
 	...primaryStyles
@@ -26,8 +29,16 @@ class Report extends Component {
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
   };
+	componentDidMount() {
+		var self = this;
+		fetchResource(`${API.url}/getParkings`, null, self.onSuccess);
+	}
+	onSuccess = items => {
+		this.setState({ items: reportData });
+	};
   render() {
     const { classes } = this.props;
+		const { items } = this.state;
     const textFieldLabels = [
       'Parking Identifier1',
       'Parking Identifier2',
@@ -80,7 +91,7 @@ class Report extends Component {
                 </Button>
               </Grid>
 						</Grid>
-						<ReportTable />
+						<ReportTable items={items} />
           </MuiThemeProvider>
         </Content>
       </React.Fragment>
