@@ -42,6 +42,9 @@ app.post('/file', (req, res) => {
   //   });
   // });
 });
+app.get('/getLang', (req, res) => {
+  res.json({ lang: 'en' });
+});
 app.get('/getParkings', (req, res) => {
   var dt = {
     GATEB: [

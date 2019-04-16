@@ -14,7 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import teal from '@material-ui/core/colors/teal';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
-import { API } from '../common/ApiPath'
+import { API } from '../common/ApiPath';
 import { getMenu } from '../common/config';
 import get from 'lodash/get';
 
@@ -65,7 +65,7 @@ const styles = theme => ({
 const getRouteFromUser = userType => {
   const userMenu = getMenu(userType);
   return userMenu[0].id;
-}
+};
 
 class SignIn extends Component {
   constructor(props) {
@@ -101,18 +101,24 @@ class SignIn extends Component {
 
     this.setState({ loading: true });
     var self = this;
-		fetch(`${API.url}/validateLogin`, { method: 'post', headers: {
-				'Content-Type': 'application/json',
-				Accept: 'application/json'
-			}, body: JSON.stringify({ email }) })
+    var userLang = navigator.language || navigator.userLanguage;
+    fetch(`${API.url}/validateLogin`, {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        'Country-Code': userLang
+      },
+      body: JSON.stringify({ email })
+    })
       .then(data => data.json())
       .then(res => {
         self.setState({
           response: res
         });
         if (res && res.user_vo) {
-					self.routeChange(getRouteFromUser(res.user_vo.type), res);
-				}
+          self.routeChange(getRouteFromUser(res.user_vo.type), res);
+        }
         self.setState({ loading: false });
       });
   }

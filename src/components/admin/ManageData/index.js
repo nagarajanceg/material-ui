@@ -10,6 +10,7 @@ import Fade from '@material-ui/core/Fade';
 import { fetchPost } from '../../common/ApiHelper';
 import compose from 'recompose/compose';
 import { withNamespaces } from 'react-i18next';
+import detectBrowserLanguage from 'detect-browser-language';
 
 const theme = createMuiTheme({
   palette: {
@@ -69,6 +70,7 @@ class Manage extends Component {
   };
   render() {
     const { t } = this.props;
+    console.log('browser language ==> ', detectBrowserLanguage());
     return (
       <div>
         <MuiThemeProvider theme={theme}>

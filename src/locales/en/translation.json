@@ -8,5 +8,10 @@
   "booking": "Booking",
   "current_booking": "Current Booking",
   "past_booking": "Past Booking",
-  "owner": "Owner"
+  "owner": "Owner",
+
+  "user_data": "User Data",
+  "browse": "Browse",
+  "download": "Download",
+  "submit": "submit"
 }
