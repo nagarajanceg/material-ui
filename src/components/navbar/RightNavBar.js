@@ -18,7 +18,6 @@ import {
 import PropTypes from 'prop-types';
 import { withNamespaces } from 'react-i18next';
 import compose from 'recompose/compose';
-// import Translate from '../common/Translate';
 
 const styles = theme => ({
   menuActive: {

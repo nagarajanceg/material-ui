@@ -3,6 +3,7 @@ import CloudDownload from '@material-ui/icons/CloudDownload';
 import Send from '@material-ui/icons/Send';
 import { Button, Grid } from '@material-ui/core';
 import { API } from './ApiPath';
+import { withNamespaces } from 'react-i18next';
 
 const downloadTemplate = props => {
   if (props.data.id === 'manageData') {
@@ -12,6 +13,7 @@ const downloadTemplate = props => {
   }
 };
 function FormActionUtils(props) {
+  const { t } = props;
   return (
     <Grid container justify="center" alignItems="center" spacing={24}>
       {!props.data.submitAlone && (
@@ -22,7 +24,7 @@ function FormActionUtils(props) {
             size="medium"
             onClick={() => downloadTemplate(props)}
           >
-            Download <span style={{ padding: 3 }} /> <CloudDownload />
+            {t('download')} <span style={{ padding: 3 }} /> <CloudDownload />
           </Button>
         </Grid>
       )}
@@ -34,11 +36,15 @@ function FormActionUtils(props) {
           size="medium"
           onClick={props.data.onSubmit}
         >
-          {props.data.buttonName ? props.data.buttonName : 'submit'}{' '}
+          {props.data.buttonName ? (
+            t('props.data.buttonName')
+          ) : (
+            t('submit')
+          )}{' '}
           <span style={{ padding: 3 }} /> <Send />
         </Button>
       </Grid>
     </Grid>
   );
 }
-export default FormActionUtils;
+export default withNamespaces()(FormActionUtils);

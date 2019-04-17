@@ -75,7 +75,7 @@ export const getMenu = component => {
   }
 };
 
-export const statusValues = ['All', 'Available', 'Busy', 'Release', 'Assign'];
+export const statusValues = ['all', 'available', 'busy', 'release', 'assign'];
 export const openStatus = ['AVAILABLE', 'ASSIGN', 'RELEASE'];
 export const statusMapper = {
   ASSIGN: 'Release',

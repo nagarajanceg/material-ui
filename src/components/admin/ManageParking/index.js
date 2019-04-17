@@ -12,7 +12,9 @@ import {
   primaryTheme as theme
 } from '../../common/componentUtils';
 import { API } from '../../common/ApiPath';
-import { fetchResource } from '../../common/ApiHelper'
+import { fetchResource } from '../../common/ApiHelper';
+import compose from 'recompose/compose';
+import { withNamespaces } from 'react-i18next';
 
 const Content = styled('div')({
   padding: theme.spacing.unit * 4,
@@ -35,14 +37,14 @@ class ManageParking extends Component {
     var self = this;
     fetchResource(`${API.url}/getParkings`, null, self.onSuccess);
   }
-	onSuccess = items => {
-		this.setState({ items });
-	};
+  onSuccess = items => {
+    this.setState({ items });
+  };
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
   };
   render() {
-    const { classes } = this.props;
+    const { classes, t } = this.props;
     return (
       <React.Fragment>
         <Content>
@@ -59,7 +61,7 @@ class ManageParking extends Component {
                 <TextField
                   id="park-status"
                   select
-                  label="Status"
+                  label={t('status')}
                   value={this.state.status}
                   onChange={this.handleChange('status')}
                   SelectProps={{
@@ -69,7 +71,7 @@ class ManageParking extends Component {
                 >
                   {statusValues.map(option => (
                     <MenuItem key={option} value={option}>
-                      {option}
+                      {t(option)}
                     </MenuItem>
                   ))}
                 </TextField>
@@ -84,4 +86,4 @@ class ManageParking extends Component {
     );
   }
 }
-export default withStyles(styles)(ManageParking);
+export default compose(withStyles(styles), withNamespaces())(ManageParking);

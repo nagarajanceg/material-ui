@@ -17,6 +17,8 @@ import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import { API } from '../common/ApiPath';
 import { getMenu } from '../common/config';
 import get from 'lodash/get';
+import { withNamespaces } from 'react-i18next';
+import compose from 'recompose/compose';
 
 const themes = createMuiTheme({
   palette: {
@@ -128,7 +130,7 @@ class SignIn extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, t } = this.props;
     return (
       <MuiThemeProvider theme={themes}>
         <main className={classes.main}>
@@ -138,11 +140,11 @@ class SignIn extends Component {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign in
+              {t('login_screen')}
             </Typography>
             <form className={classes.form}>
               <FormControl margin="normal" required fullWidth>
-                <InputLabel htmlFor="email">Email Address</InputLabel>
+                <InputLabel htmlFor="email">{t("email_id")}</InputLabel>
                 <Input
                   id="email"
                   name="email"
@@ -152,7 +154,7 @@ class SignIn extends Component {
                 />
               </FormControl>
               <FormControl margin="normal" required fullWidth>
-                <InputLabel htmlFor="password">Password</InputLabel>
+                <InputLabel htmlFor="password">{t('password')}</InputLabel>
                 <Input
                   name="password"
                   type="password"
@@ -163,7 +165,7 @@ class SignIn extends Component {
               </FormControl>
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
+                label={t('remember_me')}
               />
               <Button
                 fullWidth
@@ -172,7 +174,7 @@ class SignIn extends Component {
                 className={classes.submit}
                 onClick={this.handleSubmit}
               >
-                Login
+                {t('login')}
               </Button>
             </form>
           </Paper>
@@ -186,4 +188,4 @@ SignIn.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(SignIn);
+export default compose(withStyles(styles), withNamespaces())(SignIn);

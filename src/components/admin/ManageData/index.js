@@ -10,7 +10,6 @@ import Fade from '@material-ui/core/Fade';
 import { fetchPost } from '../../common/ApiHelper';
 import compose from 'recompose/compose';
 import { withNamespaces } from 'react-i18next';
-import detectBrowserLanguage from 'detect-browser-language';
 
 const theme = createMuiTheme({
   palette: {
@@ -70,7 +69,6 @@ class Manage extends Component {
   };
   render() {
     const { t } = this.props;
-    console.log('browser language ==> ', detectBrowserLanguage());
     return (
       <div>
         <MuiThemeProvider theme={theme}>
@@ -86,20 +84,19 @@ class Manage extends Component {
           <Grid container spacing={24} justify="center" direction="column">
             <Grid item />
             <FileUploader
-              name="Browse"
+              name="browse"
               id="userData"
-              label={t('user_data')}
+              label="user_data"
               onChange={this.setSelectedFiles}
               onClear={this.removeSelectedFiles}
             />
             <FileUploader
-              name="Browse"
+              name="browse"
               id="parkingData"
-              label="Parking Data"
+              label="parking_data"
               onChange={this.setSelectedFiles}
               onClear={this.removeSelectedFiles}
             />
-            {/*<FileUploader name="Browse" id="assignment" label="Assignment" />*/}
             <Grid item />
             <Grid item />
             <Grid item xs={12}>
