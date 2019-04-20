@@ -15,6 +15,8 @@ import { API } from '../common/ApiPath';
 import Snackbar from '@material-ui/core/Snackbar';
 import Fade from '@material-ui/core/Fade';
 import get from 'lodash/get';
+import compose from 'recompose/compose';
+import { withNamespaces } from 'react-i18next';
 
 export const getData = ({ location }) => {
   let data = {};
@@ -87,7 +89,7 @@ class Owner extends Component {
     this.setState({ notification: false });
   };
   render() {
-    const { classes } = this.props;
+    const { classes, t } = this.props;
     const data = getData(this.props);
     return (
       <div className={classNames(classes.marginLeft)}>
@@ -120,7 +122,7 @@ class Owner extends Component {
             <Grid item xs={4} className={classNames(classes.gridFlex)}>
               <TextField
                 fullWidth
-                label="Parking Gate"
+                label={t('parking_gate')}
                 disabled
                 value={get(data, 'user_vo.parking.identifier1')}
               />
@@ -137,7 +139,7 @@ class Owner extends Component {
             <Grid item xs={4} className={classNames(classes.gridFlex)}>
               <TextField
                 fullWidth={true}
-                label="Parking Phase"
+                label={t('parking_phase')}
                 disabled
                 value={get(data, 'user_vo.parking.identifier2')}
               />
@@ -162,7 +164,7 @@ class Owner extends Component {
             <Grid item xs={4} className={classNames(classes.gridFlex)}>
               <TextField
                 fullWidth={true}
-                label="Parking Slot"
+                label={t('parking_slot')}
                 disabled
                 value={get(data, 'user_vo.parking.identifier3')}
               />
@@ -179,7 +181,7 @@ class Owner extends Component {
             <Grid item xs={4} className={classNames(classes.gridFlex)}>
               <TextField
                 fullWidth
-                label="Additional Information"
+                label={t('additional_information')}
                 value={this.state.additionalInfo}
                 onChange={this.handleChange('additionalInfo')}
               />
@@ -199,4 +201,5 @@ class Owner extends Component {
   }
 }
 
-export default withStyles(styles)(Owner);
+// export default withStyles(styles)(Owner);
+export default compose(withStyles(styles), withNamespaces())(Owner);

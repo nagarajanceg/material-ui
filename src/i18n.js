@@ -14,7 +14,7 @@ function sendRequest(resources) {
       {
         resources,
         lng: language,
-        fallbackLng: 'es',
+        fallbackLng: 'en',
         keySeparator: false, // we do not use keys in form messages.welcome
 
         interpolation: {

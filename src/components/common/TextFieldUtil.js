@@ -48,5 +48,3 @@ export class TextFieldWithOption extends Component {
     );
   }
 }
-
-// export class TextFieldWithOption;

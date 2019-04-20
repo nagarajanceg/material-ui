@@ -59,25 +59,6 @@ class MassManage extends Component {
         data.append(fileData.id, fileData.file);
       });
       fetchPost(API.url + '/massManage', data, self.setNotificationOnResponse);
-      // fetch(API.url + '/massManage', {
-      //   method: 'POST',
-      //   body: data
-      // })
-      //   .then(function(response) {
-      //     self.setState({
-      //       disabled: false,
-      //       notification: true,
-      // 			infoMsg: response.ok ? 'Upload successful' : 'Upload failed'
-      //     });
-      //   })
-      //   .catch(function(error) {
-      //     self.setState({
-      //       disabled: false,
-      //       notification: true,
-      //       infoMsg: 'Upload failed'
-      //     });
-      //   console.log('Request failed', error);
-      // });
       this.setState({ files: [] });
     }
   };
@@ -100,16 +81,16 @@ class MassManage extends Component {
           <Grid container spacing={24} justify="center" direction="column">
             <Grid item />
             <FileUploader
-              name="Browse"
+              name="browse"
               id="assigntoRelease"
-              label="Assign to Release"
+              label="assign_to_release"
               onChange={this.setSelectedFiles}
               onClear={this.removeSelectedFiles}
             />
             <FileUploader
-              name="Browse"
+              name="browse"
               id="releaseToBusy"
-              label="Release to busy"
+              label="release_to_busy"
               onChange={this.setSelectedFiles}
               onClear={this.removeSelectedFiles}
             />
