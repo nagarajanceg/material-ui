@@ -43,12 +43,11 @@ const styles = theme => ({
   }
 });
 
-const getIdentifiers = parkingData => {
-  let i = 2;
+export const getIdentifiers = (parkingData, index) => {
   const identifiers = [];
-  while (parkingData[`identifier${i}`]) {
-    identifiers.push(parkingData[`identifier${i}`]);
-    i++;
+  while (parkingData[`identifier${index}`]) {
+    identifiers.push(parkingData[`identifier${index}`]);
+		index++;
   }
   return identifiers;
 };
@@ -87,7 +86,7 @@ class CardView extends Component {
   render() {
     const { classes, dialog, userId } = this.props;
     const parkingData = this.props.parkingData || {};
-    const identifiers = getIdentifiers(parkingData);
+    const identifiers = getIdentifiers(parkingData, 2);
     const fromDate = getParkingDate(parkingData, 'from_date');
     const toDate = getParkingDate(parkingData, 'to_date');
 

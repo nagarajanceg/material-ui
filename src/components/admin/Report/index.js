@@ -22,7 +22,7 @@ const styles = () => ({
 const Content = styled('div')({
   padding: theme.spacing.unit * 4,
   margin: 'auto',
-  width: '65%'
+  width: '85%'
 });
 class Report extends Component {
   state = {};
@@ -51,47 +51,49 @@ class Report extends Component {
       <React.Fragment>
         <Content>
           <MuiThemeProvider theme={theme}>
-            <Grid container spacing={24} alignItems="flex-end" direction="row">
-              <Grid item xs="6">
-                <TextFieldWithOption
-                  label="Select Type"
-                  value={this.state.select_type}
-                  handler={this.handleChange}
-                  menuOptions={reportTypes}
-                />
-              </Grid>
-              <Grid item xs="6">
-                <TextFieldWithOption
-                  label="Select Status"
-                  value={this.state.select_status}
-                  handler={this.handleChange}
-                  menuOptions={statusValues}
-                />
-              </Grid>
-              {generateGrid(1)}
-              {textFieldLabels.map(label => (
-                <Grid item xs="4">
-                  <TextFieldUtil
-                    label={label}
-                    val={this.state[label.toLowerCase().replace(/ /g, '_')]}
-                    handler={this.handleChange}
-                  />
-                </Grid>
-              ))}
-              {generateGrid(1)}
-              <Grid item xs="12" className={classNames(classes.gridFlex, classes.flexEnd)}>
-                <Button
-                  variant="contained"
-                  disabled={false}
-                  color="primary"
-                  size="medium"
-                  onClick={this.handleChange}
-                >
-                  export to excel
-                </Button>
-              </Grid>
-						</Grid>
-						<ReportTable items={items} />
+						<Content>
+							<Grid container spacing={24} alignItems="flex-end" direction="row">
+								<Grid item xs="6">
+									<TextFieldWithOption
+										label="Select Type"
+										value={this.state.select_type}
+										handler={this.handleChange}
+										menuOptions={reportTypes}
+									/>
+								</Grid>
+								<Grid item xs="6">
+									<TextFieldWithOption
+										label="Select Status"
+										value={this.state.select_status}
+										handler={this.handleChange}
+										menuOptions={statusValues}
+									/>
+								</Grid>
+								{generateGrid(1)}
+								{textFieldLabels.map(label => (
+									<Grid item xs="4">
+										<TextFieldUtil
+											label={label}
+											val={this.state[label.toLowerCase().replace(/ /g, '_')]}
+											handler={this.handleChange}
+										/>
+									</Grid>
+								))}
+								{generateGrid(1)}
+								<Grid item xs="12" className={classNames(classes.gridFlex, classes.flexEnd)}>
+									<Button
+										variant="contained"
+										disabled={false}
+										color="primary"
+										size="medium"
+										onClick={this.handleChange}
+									>
+										export to excel
+									</Button>
+								</Grid>
+							</Grid>
+						</Content>
+						<ReportTable data={items} />
           </MuiThemeProvider>
         </Content>
       </React.Fragment>

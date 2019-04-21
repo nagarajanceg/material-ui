@@ -19,7 +19,8 @@
     "react-scripts": "2.1.8",
     "lodash": "latest",
     "i18next": "^15.0.9",
-    "react-i18next": "^9.0.10"
+    "react-i18next": "^9.0.10",
+    "recompose": "latest"
   },
   "scripts": {
     "start": "react-scripts start",
