@@ -14,6 +14,8 @@ import classNames from 'classnames';
 import { API } from '../../common/ApiPath';
 import { fetchResource } from '../../common/ApiHelper';
 import { reportData } from '../../../mocks/report';
+import compose from 'recompose/compose';
+import { withNamespaces } from 'react-i18next';
 
 const styles = () => ({
 	...primaryStyles
@@ -24,8 +26,48 @@ const Content = styled('div')({
   margin: 'auto',
   width: '85%'
 });
+const reportTextFilters = [
+	'parking_identifier1',
+	'parking_identifier2',
+	'parking_identifier3',
+	'first_name',
+	'last_name',
+	'email'
+];
+const reportSelectFilters = [
+	'select_type',
+	'select_status',
+];
+const menuOptions = {
+	select_type: reportTypes,
+	select_status: statusValues
+};
+const reportFilterKeys = {
+	select_type: 'type',
+	select_status: 'status',
+	parking_identifier1: 'identifier1',
+	parking_identifier2: 'identifier2',
+	parking_identifier3: 'identifier3',
+	first_name: 'first_name',
+	last_name: 'last_name',
+	email: 'email',
+};
+const getFiltersFromState = state => {
+	const filters = {};
+	if (state) {
+		Object.keys(reportFilterKeys).forEach(key => {
+			if (state[key]) {
+				filters[reportFilterKeys[key]] = state[key];
+			}
+		});
+	}
+	return filters;
+};
 class Report extends Component {
-  state = {};
+  state = {
+		select_status: '',
+		select_type: '',
+	};
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
   };
@@ -37,44 +79,32 @@ class Report extends Component {
 		this.setState({ items: reportData });
 	};
   render() {
-    const { classes } = this.props;
+    const { classes, t } = this.props;
 		const { items } = this.state;
-    const textFieldLabels = [
-      'Parking Identifier1',
-      'Parking Identifier2',
-      'Parking Identifier3',
-      'First Name',
-      'Last Name',
-      'Email'
-    ];
     return (
       <React.Fragment>
         <Content>
           <MuiThemeProvider theme={theme}>
 						<Content>
 							<Grid container spacing={24} alignItems="flex-end" direction="row">
-								<Grid item xs="6">
-									<TextFieldWithOption
-										label="Select Type"
-										value={this.state.select_type}
-										handler={this.handleChange}
-										menuOptions={reportTypes}
-									/>
-								</Grid>
-								<Grid item xs="6">
-									<TextFieldWithOption
-										label="Select Status"
-										value={this.state.select_status}
-										handler={this.handleChange}
-										menuOptions={statusValues}
-									/>
-								</Grid>
+								{reportSelectFilters.map(name => (
+									<Grid item xs="6">
+										<TextFieldWithOption
+											id={name}
+											label={t(name)}
+											value={this.state[name]}
+											handler={this.handleChange}
+											menuOptions={menuOptions[name]}
+										/>
+									</Grid>
+								))}
 								{generateGrid(1)}
-								{textFieldLabels.map(label => (
+								{reportTextFilters.map(label => (
 									<Grid item xs="4">
 										<TextFieldUtil
-											label={label}
-											val={this.state[label.toLowerCase().replace(/ /g, '_')]}
+											id={label}
+											label={t(label)}
+											val={this.state[label]}
 											handler={this.handleChange}
 										/>
 									</Grid>
@@ -93,7 +123,7 @@ class Report extends Component {
 								</Grid>
 							</Grid>
 						</Content>
-						<ReportTable data={items} />
+						<ReportTable data={items} filters={getFiltersFromState(this.state)} />
           </MuiThemeProvider>
         </Content>
       </React.Fragment>
@@ -101,4 +131,4 @@ class Report extends Component {
   }
 }
 
-export default withStyles(styles)(Report);
+export default compose(withStyles(styles), withNamespaces())(Report);

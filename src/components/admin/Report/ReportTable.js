@@ -48,13 +48,28 @@ const headers = [
 	'action',
 ];
 
-const getFilteredItems = (data, state, props) => {
-	const { type, ...rest } = props;
-	const { sortBy, sortOn } = state;
+const getFilteredItems = (data, filters, state) => {
 	if (!data) {
 		return [];
 	}
-	return data;
+	let filteredItems = [];
+	const { sortBy, sortOn } = state;
+	if (Object.keys(filters).length > 0) {
+		data.forEach(item => {
+			let isMatchFound = true;
+			Object.keys(filters).forEach(key => {
+				if(item[key] && item[key].search(new RegExp(filters[key], "i")) < 0) {
+					isMatchFound = false;
+				}
+			});
+			if (isMatchFound) {
+				filteredItems.push(item);
+			}
+		});
+	} else {
+		filteredItems = data;
+	}
+	return filteredItems;
 };
 
 class ReportTable extends Component {
@@ -87,9 +102,9 @@ class ReportTable extends Component {
 	};
   render() {
 		const self = this;
-    const { classes, data, t } = this.props;
+    const { classes, data, filters, t } = this.props;
 		const { rowsPerPage, pageIndex } = this.state;
-		const items = getFilteredItems(data, this.state, this.props);
+		const items = getFilteredItems(data, filters, this.state);
     return (
       <div>
 				<UserDialog
