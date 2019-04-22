@@ -3,52 +3,38 @@ import { reactI18nextModule } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import translationEN from './locales/en/translation.json';
 import translationES from './locales/es/translation.json';
+import React, { Component } from 'react';
 
+//load with browser language
+let language = navigator.language || navigator.userLanguage;
 // the translations
-let language;
-function sendRequest(resources) {
-  // console.log('resources', resources);
-  i18n
-    .use(reactI18nextModule) // passes i18n down to react-i18next
-    .init(
-      {
-        resources,
-        lng: language,
-        fallbackLng: 'en',
-        keySeparator: false, // we do not use keys in form messages.welcome
+const resources = {
+  en: {
+    translation: translationEN
+  },
+  es: {
+    translation: translationES
+  }
+};
+i18n
+  .use(reactI18nextModule) // passes i18n down to react-i18next
+  .init(
+    {
+      resources,
+      lng: language,
+      fallbackLng: 'en',
+      keySeparator: false, // we do not use keys in form messages.welcome
 
-        interpolation: {
-          escapeValue: false // react already safes from xss
-        }
+      interpolation: {
+        escapeValue: false // react already safes from xss
       },
-      function() {
-        //Change the language based on the response from server
-        fetch('http://localhost:3100/getLang')
-          .then(data => data.json())
-          .then(res => {
-            // console.log(res);
-            language = res.lang;
-            i18n.changeLanguage(language, (err, t) => {
-              if (err)
-                return console.log(
-                  'something went wrong loading the language',
-                  err
-                );
-            });
-          });
+      react: {
+        wait: true,
+        nsMode: 'default'
       }
-    );
-  return i18n;
-}
-function i18() {
-  const resources = {
-    en: {
-      translation: translationEN
     },
-    es: {
-      translation: translationES
-    }
-  };
-  return sendRequest(resources);
-}
-export default i18();
+    function() {}
+  );
+export const I18n = function i18(val) {
+  return i18n;
+};
