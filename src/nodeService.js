@@ -43,7 +43,7 @@ app.post('/file', (req, res) => {
   // });
 });
 app.get('/getLang', (req, res) => {
-  res.json({ lang: 'en' });
+  res.json({ lang: 'es' });
 });
 app.get('/getParkings', (req, res) => {
   var dt = {

@@ -11,6 +11,7 @@ import User from './components/user';
 import Report from './components/admin/Report';
 import PropTypes from 'prop-types';
 import { withNamespaces } from 'react-i18next';
+import { I18n } from './i18n';
 
 const getComponent = props => {
   switch (props.component) {
@@ -63,7 +64,21 @@ class App extends Component {
       isAuthenticated: false
     };
   }
-
+  componentWillMount() {
+    // Change the language based on the response from server
+    fetch('http://localhost:3100/getLang')
+      .then(data => data.json())
+      .then(res => {
+        const i18Instance = I18n('test');
+        i18Instance.changeLanguage(res.lang, (err, t) => {
+          if (err)
+            return console.log(
+              'something went wrong loading the language',
+              err
+            );
+        });
+      });
+  }
   render() {
     const headerProps = this.props.isLogin
       ? [defaultHeaderProps]
