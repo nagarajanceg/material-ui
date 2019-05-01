@@ -61,7 +61,7 @@ class Manage extends Component {
       files.forEach(fileData => {
         data.append(fileData.id, fileData.file);
       });
-      fetchPost(API.url + '/manageData', data, self.setNotificationOnResponse);
+      fetchPost(API.url + '/manageData', data, null, self.setNotificationOnResponse);
     }
   };
   handleNotificationClose = () => {

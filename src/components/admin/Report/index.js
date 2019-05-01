@@ -12,7 +12,7 @@ import { TextFieldUtil, TextFieldWithOption } from '../../common/TextFieldUtil';
 import ReportTable from './ReportTable';
 import classNames from 'classnames';
 import { API } from '../../common/ApiPath';
-import { fetchResource } from '../../common/ApiHelper';
+import { fetchResource, fetchPost } from '../../common/ApiHelper';
 import { reportData } from '../../../mocks/report';
 import compose from 'recompose/compose';
 import { withNamespaces } from 'react-i18next';
@@ -50,7 +50,6 @@ const reportFilterKeys = {
 	parking_identifier3: 'identifier3',
 	first_name: 'first_name',
 	last_name: 'last_name',
-	email: 'email',
 };
 const getFiltersFromState = state => {
 	const filters = {};
@@ -63,20 +62,30 @@ const getFiltersFromState = state => {
 	}
 	return filters;
 };
+
+const headers = {
+	'Accept': 'application/json',
+	'Content-Type': 'application/json'
+};
 class Report extends Component {
   state = {
 		select_status: '',
 		select_type: '',
 	};
   handleChange = name => event => {
-    this.setState({ [name]: event.target.value });
+		var self = this;
+  	if (name === 'select_type') {
+			//fetchPost(`${API.url}/report`, JSON.stringify({ type: event.target.value }), headers, self.setItems);
+		} else {
+			this.setState({[name]: event.target.value});
+		}
   };
 	componentDidMount() {
 		var self = this;
-		fetchResource(`${API.url}/getParkings`, null, self.onSuccess);
+		fetchPost(`${API.url}/report`, JSON.stringify({}), headers, self.setItems);
 	}
-	onSuccess = items => {
-		this.setState({ items: reportData });
+	setItems = (items, status) => {
+		this.setState({ items: status ? items : [] });
 	};
   render() {
     const { classes, t } = this.props;

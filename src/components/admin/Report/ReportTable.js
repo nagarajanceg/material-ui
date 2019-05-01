@@ -39,7 +39,6 @@ const getSlotInfo = parkingData => {
 
 const headers = [
 	'full_name',
-	'email',
 	'parking_lot',
 	'from_date',
 	'to_date',
@@ -126,11 +125,10 @@ class ReportTable extends Component {
 					<TableBody>
 						{items && items.length > 0 ?
 							items.slice(pageIndex * rowsPerPage, pageIndex * rowsPerPage + rowsPerPage).map(item => (<TableRow>
-								<TableCell className={classes.tableCell}>{item.name}</TableCell>
-								<TableCell className={classes.tableCell}>{item.email}</TableCell>
+								<TableCell className={classes.tableCell}>{item.user_full_name}</TableCell>
 								<TableCell className={classes.tableCell}>{getSlotInfo(item)}</TableCell>
-								<TableCell className={classes.tableCell}>{`${moment.unix(item.created_ts).format("Do MMM'YY")}`}</TableCell>
-								<TableCell className={classes.tableCell}>{`${moment.unix(item.created_ts).format("Do MMM'YY")}`}</TableCell>
+								<TableCell className={classes.tableCell}>{`${moment.unix(item.from_date).format("Do MMM'YY")}`}</TableCell>
+								<TableCell className={classes.tableCell}>{`${moment.unix(item.to_date).format("Do MMM'YY")}`}</TableCell>
 								<TableCell className={classes.tableCell}>{item.assigned_to}</TableCell>
 								<TableCell className={classes.tableCell}>{item.released_to}</TableCell>
 								<TableCell className={classes.tableCell}><div

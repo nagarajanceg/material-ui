@@ -19,15 +19,21 @@ export const fetchResource = (url, headers, callback) => {
     .catch(error => console.log('error in response', error));
 };
 
-export const fetchPost = (url, data, callback) => {
-  fetch(url, { method: 'POST', body: data })
-    .then(function(response) {
-      if (response.ok) {
-        callback(response, true);
-      } else {
-        callback(response, false);
-      }
-    })
+export const fetchPost = (url, data, headers, callback) => {
+	let customHeaders = headers || {
+		'Accept': 'application/json',
+	};
+	customHeaders = { method: 'POST', body: data, headers: { ...customHeaders } };
+  fetch(url, customHeaders)
+		.then((response) => {
+			if (response.headers.get('content-type') && response.headers.get('content-type').match(/application\/json/)) {
+				return response.json();
+			}
+			return response;
+		})
+		.then((responseJSON) => {
+			callback(responseJSON, true);
+		})
     .catch(error => {
       console.log('error in post request', error);
       callback(error, false);

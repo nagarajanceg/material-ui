@@ -58,7 +58,7 @@ class MassManage extends Component {
       files.forEach(fileData => {
         data.append(fileData.id, fileData.file);
       });
-      fetchPost(API.url + '/massManage', data, self.setNotificationOnResponse);
+      fetchPost(API.url + '/massManage', data, null, self.setNotificationOnResponse);
       this.setState({ files: [] });
     }
   };
