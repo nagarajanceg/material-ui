@@ -45,32 +45,34 @@ class ParkingDialog extends React.Component {
       disabled: true
     });
 
-    //This is not yet tested. Couldn't able to hit the endpoint
     fetch(`${API.url}/assignParking`, {
       method: 'put',
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json'
       },
-      body: JSON.stringify({ ...self.state, parkingId: parkingData.parkingId })
+      body: JSON.stringify({ ...self.state, parkingId: parkingData.parkingId || parkingData.parking_id })
     })
-      .then(function(response) {
-        self.setState({
-          disabled: false,
-          notification: true,
-          infoMsg: response.ok ? 'Successfully Assigned' : 'Assign Error'
-        });
-        //show success message and refresh tab only if response os ok , otherwise display error
-        self.props.callback({ reload: response.ok });
-      })
-      .catch(function(err) {
-        self.setState({
-          disabled: false,
-          notification: true,
-          infoMsg: 'Assign Error'
-        });
-        console.log('error ==> ', err);
+    .then(function(response) {
+      self.setState({
+        disabled: false,
+        notification: true,
+        infoMsg: response.ok ? 'Successfully Assigned' : 'Assign Error'
       });
+      //show success message and refresh tab only if response os ok , otherwise display error
+      self.props.callback({ reload: response.ok });
+      if (response.ok && self.props.onSuccess) {
+        self.props.onSuccess();
+      }
+    })
+    .catch(function(err) {
+      self.setState({
+        disabled: false,
+        notification: true,
+        infoMsg: 'Assign Error'
+      });
+      console.log('error ==> ', err);
+    });
   };
   handlerChange = (name, value) => {
     this.setState({ [name]: value });

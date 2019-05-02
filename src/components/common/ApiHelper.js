@@ -1,5 +1,10 @@
 import React from 'react';
 
+export const defaultHeaders = {
+	'Accept': 'application/json',
+	'Content-Type': 'application/json'
+};
+
 export const fetchResource = (url, headers, callback) => {
   const customHeaders = headers || {
     Accept: 'application/json'
@@ -26,8 +31,12 @@ export const fetchPost = (url, data, headers, callback) => {
 	customHeaders = { method: 'POST', body: data, headers: { ...customHeaders } };
   fetch(url, customHeaders)
 		.then((response) => {
-			if (response.headers.get('content-type') && response.headers.get('content-type').match(/application\/json/)) {
-				return response.json();
+			if (response.headers.get('content-type')) {
+				if (response.headers.get('content-type').match(/application\/json/)) {
+					return response.json();
+				} else if (response.headers.get('content-type').match(/application\/vnd.ms-excel/)) {
+					return response.blob();
+				}
 			}
 			return response;
 		})

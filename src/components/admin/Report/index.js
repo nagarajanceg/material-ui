@@ -12,8 +12,7 @@ import { TextFieldUtil, TextFieldWithOption } from '../../common/TextFieldUtil';
 import ReportTable from './ReportTable';
 import classNames from 'classnames';
 import { API } from '../../common/ApiPath';
-import { fetchResource, fetchPost } from '../../common/ApiHelper';
-import { reportData } from '../../../mocks/report';
+import { fetchPost, defaultHeaders } from '../../common/ApiHelper';
 import compose from 'recompose/compose';
 import { withNamespaces } from 'react-i18next';
 
@@ -22,7 +21,7 @@ const styles = () => ({
 });
 
 const Content = styled('div')({
-  padding: theme.spacing.unit * 4,
+  padding: theme.spacing.unit * 3,
   margin: 'auto',
   width: '85%'
 });
@@ -43,13 +42,14 @@ const menuOptions = {
 	select_status: statusValues
 };
 const reportFilterKeys = {
-	select_type: 'type',
+	//select_type: 'type',
 	select_status: 'status',
 	parking_identifier1: 'identifier1',
 	parking_identifier2: 'identifier2',
 	parking_identifier3: 'identifier3',
 	first_name: 'first_name',
 	last_name: 'last_name',
+	email: 'email'
 };
 const getFiltersFromState = state => {
 	const filters = {};
@@ -63,10 +63,6 @@ const getFiltersFromState = state => {
 	return filters;
 };
 
-const headers = {
-	'Accept': 'application/json',
-	'Content-Type': 'application/json'
-};
 class Report extends Component {
   state = {
 		select_status: '',
@@ -75,14 +71,18 @@ class Report extends Component {
   handleChange = name => event => {
 		var self = this;
   	if (name === 'select_type') {
+			this.setState({[name]: event.target.value});
 			//fetchPost(`${API.url}/report`, JSON.stringify({ type: event.target.value }), headers, self.setItems);
 		} else {
 			this.setState({[name]: event.target.value});
 		}
   };
-	componentDidMount() {
+	loadItems = () => {
 		var self = this;
-		fetchPost(`${API.url}/report`, JSON.stringify({}), headers, self.setItems);
+		fetchPost(`${API.url}/report`, JSON.stringify({ type: 'user-data' }), defaultHeaders, self.setItems);
+	};
+	componentDidMount() {
+		this.loadItems();
 	}
 	setItems = (items, status) => {
 		this.setState({ items: status ? items : [] });
@@ -107,7 +107,6 @@ class Report extends Component {
 										/>
 									</Grid>
 								))}
-								{generateGrid(1)}
 								{reportTextFilters.map(label => (
 									<Grid item xs="4">
 										<TextFieldUtil
@@ -119,20 +118,9 @@ class Report extends Component {
 									</Grid>
 								))}
 								{generateGrid(1)}
-								<Grid item xs="12" className={classNames(classes.gridFlex, classes.flexEnd)}>
-									<Button
-										variant="contained"
-										disabled={false}
-										color="primary"
-										size="medium"
-										onClick={this.handleChange}
-									>
-										export to excel
-									</Button>
-								</Grid>
 							</Grid>
 						</Content>
-						<ReportTable data={items} filters={getFiltersFromState(this.state)} />
+						<ReportTable data={items} filters={getFiltersFromState(this.state)} loadItems={this.loadItems} />
           </MuiThemeProvider>
         </Content>
       </React.Fragment>

@@ -10,16 +10,17 @@
     "classnames": "latest",
     "date-fns": "next",
     "express": "^4.16.4",
+    "file-saver": "^2.0.1",
+    "i18next": "^15.0.9",
+    "lodash": "latest",
     "material-ui-pickers": "latest",
     "moment": "^2.24.0",
     "prop-types": "latest",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
+    "react-i18next": "^9.0.10",
     "react-router-dom": "latest",
     "react-scripts": "2.1.8",
-    "lodash": "latest",
-    "i18next": "^15.0.9",
-    "react-i18next": "^9.0.10",
     "recompose": "latest"
   },
   "scripts": {
@@ -31,5 +32,10 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "browserslist": [">0.2%", "not dead", "not ie <= 11", "not op_mini all"]
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }

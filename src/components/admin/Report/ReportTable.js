@@ -10,6 +10,8 @@ import { withStyles,
 	TableRow,
 	TableSortLabel,
 	Icon,
+	Grid,
+	Button
 } from '@material-ui/core';
 import {
   primaryStyles,
@@ -19,7 +21,11 @@ import { withNamespaces } from 'react-i18next';
 import { getIdentifiers } from '../../cardView/CardView';
 import moment from 'moment/moment';
 import { Edit } from '@material-ui/icons';
-import UserDialog from '../../dialogs/UserDialog'
+import ParkingDialog from '../../dialogs/ParkingDialog';
+import classNames from 'classnames';
+import { fetchPost, defaultHeaders } from '../../common/ApiHelper';
+import { API } from '../../common/ApiPath';
+import { saveAs } from 'file-saver';
 
 const styles = () => ({
 	...primaryStyles,
@@ -83,9 +89,16 @@ class ReportTable extends Component {
 	constructor(props) {
 		super(props);
 	}
-  handleChange = e => {
-
-  };
+	openFile = data => {
+		if (data) {
+			var blob = new Blob([data], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+			saveAs(blob, 'Report.xlsx');
+		}
+	};
+	exportItems = items => {
+		const parkingIds = items.map(item => item.parking_id);
+		fetchPost(`${API.url}/exportToExcel`, JSON.stringify(parkingIds), defaultHeaders, this.openFile);
+	};
 	handleClose = () => {
 		this.setState({ dialogOpen: false });
 	};
@@ -106,12 +119,26 @@ class ReportTable extends Component {
 		const items = getFilteredItems(data, filters, this.state);
     return (
       <div>
-				<UserDialog
+				<Grid container spacing={24} alignItems="flex-end" direction="row">
+					<Grid item xs="12" className={classNames(classes.gridFlex, classes.flexEnd)}>
+						<Button
+							variant="contained"
+							disabled={false}
+							color="primary"
+							size="medium"
+							onClick={() => this.exportItems(items)}
+						>
+							export to excel
+						</Button>
+					</Grid>
+				</Grid>
+				<ParkingDialog
 					open={this.state.dialogOpen}
 					parkingId={this.state.parkingId}
+					parkingData={this.state.parkingData}
 					callback={this.handleClose}
-					data={this.state.parkingData}
-					userId={this.state.userId}
+					onSuccess={this.props.loadItems}
+					status={this.state.parkingData.assigned_to ? 'ASSIGN' : 'RELEASE'}
 				/>
 				<Table className={classes.table} aria-labelledby="tableTitle">
 					<TableHead>

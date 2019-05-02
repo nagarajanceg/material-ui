@@ -8,6 +8,7 @@ import { Email, DateRange } from '@material-ui/icons';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, DatePicker } from 'material-ui-pickers';
 import { getParkingDate } from '../../cardView/CardView';
+import moment from 'moment/moment'
 
 const styles = () => ({
   ...primaryStyles,
@@ -16,13 +17,17 @@ const styles = () => ({
   }
 });
 
+const getDate = (parkingData, dateType) => {
+	return parkingData[dateType] ? moment.unix(parkingData[dateType]) : getParkingDate(parkingData, dateType);
+};
+
 class AssignParking extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			status: '',
-			fromDate: getParkingDate(props.parkingData, 'from_date'),
-			toDate: getParkingDate(props.parkingData, 'to_date')
+			fromDate: getDate(props.parkingData, 'from_date'),
+			toDate: getDate(props.parkingData, 'to_date')
 		};
 	}
 	componentDidMount() {
