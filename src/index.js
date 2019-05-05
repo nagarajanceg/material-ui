@@ -43,6 +43,16 @@ const RoutedApp = () => (
         path="/owner"
         render={props => <App {...props} component="owner" />}
       />
+			<Route
+				exact
+				path="/currentBooking"
+				render={props => <App {...props} component="currentBooking" />}
+			/>
+			<Route
+				exact
+				path="/pastBooking"
+				render={props => <App {...props} component="pastBooking" />}
+			/>
       <Route
         exact
         path="/user"

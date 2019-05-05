@@ -18,8 +18,8 @@ export class Popover extends Component {
                 <ClickAwayListener onClickAway={e => this.props.onClose(id)}>
                   <MenuList>
 										{menuOptions.map(option => (
-											<MenuItem onClick={e => this.props.onSelect(`${option.replace(' ', '')}`)}>
-												{option}
+											<MenuItem onClick={e => this.props.onSelect(option.id)}>
+												{option.label}
 											</MenuItem>
 										))}
                   </MenuList>

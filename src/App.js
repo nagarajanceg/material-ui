@@ -51,6 +51,18 @@ const getComponent = props => {
           <Report {...props} />
         </div>
       );
+		case 'currentBooking':
+			return (
+				<div>
+					<Report {...props} />
+				</div>
+			);
+		case 'pastBooking':
+			return (
+				<div>
+					<Report {...props} />
+				</div>
+			);
     default:
       return null;
   }

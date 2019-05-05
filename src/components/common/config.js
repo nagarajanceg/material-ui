@@ -48,7 +48,7 @@ export const ownerProps = [
 		variant: 'h6',
 		id: 'Booking',
     type: 'dropdown',
-		options: ['Current Booking', 'Past Booking']
+		options: [ { id: 'currentBooking', label: 'Current Booking' }, { id: 'pastBooking', label: 'Past Booking' }]
 	},
   {
     ...signOutProps
@@ -67,7 +67,7 @@ export const userProps = [
 		variant: 'h6',
 		id: 'Booking',
 		type: 'dropdown',
-		options: ['Current Booking', 'Past Booking']
+		options: [ { id: 'currentBooking', label: 'Current Booking' }, { id: 'pastBooking', label: 'Past Booking' }]
   },
   {
     ...signOutProps
