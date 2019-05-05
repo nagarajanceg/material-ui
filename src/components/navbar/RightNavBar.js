@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Icon from '@material-ui/core/es/Icon/Icon';
+import { ArrowDropDown } from '@material-ui/icons';
 import {
   List,
   ListItem,
@@ -18,6 +20,7 @@ import {
 import PropTypes from 'prop-types';
 import { withNamespaces } from 'react-i18next';
 import compose from 'recompose/compose';
+import { Popover } from '../common/Popover'
 
 const styles = theme => ({
   menuActive: {
@@ -50,14 +53,18 @@ class RightNavBar extends Component {
   }
   state = { selectedId: '' };
 
-  handleMenuClick = item => {
-    if (item.id === 'signOut') {
-      this.setState({ selectedId: '' });
+  handleMenuClick = (id, type) => {
+    this.setState({ selectedId: id === 'signOut' ? '' : id });
+    if (type === 'dropdown') {
+			this.setState(state => ({ [`${id}_open`]: !state[`${id}_open`] }));
     } else {
-      this.setState({ selectedId: item.id });
+			this.routeChange(id);
     }
-    this.routeChange(item.id);
   };
+
+	handlePopoverClose = id => {
+	  this.setState(state => ({ [`${id}_open`]: !state[`${id}_open`] }));
+	};
 
   routeChange = path => {
     this.props.history.push(`/${path}`);
@@ -80,13 +87,29 @@ class RightNavBar extends Component {
                 <Typography color="inherit" variant={item.variant}>
                   <IconButton
                     color="inherit"
-                    onClick={() => this.handleMenuClick(item)}
+										buttonRef={node => {
+											this[item.id] = node;
+										}}
+                    onClick={() => this.handleMenuClick(item.id, item.type)}
                     className={selectedId === item.id ? classes.menuActive : ''}
                   >
                     {getIcon(item.icon)}
                     <span style={{ fontSize: '0.9rem', paddingLeft: '10px' }}>
                       {t(item.title)}
                     </span>
+                    {item.type === 'dropdown' &&
+                      <React.Fragment>
+												<Icon color="white">
+                          <ArrowDropDown />
+                        </Icon>
+                        <Popover id={item.id} menuOptions={item.options}
+                               isOpen={this.state[`${item.id}_open`]}
+                               anchor={this[item.id]}
+                               onClose={this.handlePopoverClose}
+                               onSelect={this.handleMenuClick}>
+                        </Popover>
+                      </React.Fragment>
+                    }
                   </IconButton>
                 </Typography>
               </ListItemText>

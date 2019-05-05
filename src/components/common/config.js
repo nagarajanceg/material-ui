@@ -40,8 +40,16 @@ export const ownerProps = [
     title: 'owner',
     icon: 'AccountCircle',
     variant: 'h6',
-    id: 'owner'
+    id: 'owner',
   },
+	{
+		title: 'Booking',
+		icon: 'Assignment',
+		variant: 'h6',
+		id: 'Booking',
+    type: 'dropdown',
+		options: ['Current Booking', 'Past Booking']
+	},
   {
     ...signOutProps
   }
@@ -54,11 +62,12 @@ export const userProps = [
     id: 'User'
   },
   {
-    title: 'booking',
-    icon: 'Assignment',
-    variant: 'h6',
-    id: 'Booking',
-    dropdown: ['Current Booking', 'Past Booking']
+		title: 'Booking',
+		icon: 'Assignment',
+		variant: 'h6',
+		id: 'Booking',
+		type: 'dropdown',
+		options: ['Current Booking', 'Past Booking']
   },
   {
     ...signOutProps
