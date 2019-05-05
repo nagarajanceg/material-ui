@@ -4,15 +4,15 @@ import { MuiThemeProvider } from '@material-ui/core/styles';
 import {
   generateGrid,
   primaryStyles,
+	openFile,
   primaryTheme as theme
-} from '../../common/componentUtils';
+} from '../common/componentUtils';
 import styled from '@material-ui/styles/styled';
-import { reportTypes, statusValues } from '../../common/config';
-import { TextFieldUtil, TextFieldWithOption } from '../../common/TextFieldUtil';
+import { reportTypes, statusValues } from '../common/config';
+import { TextFieldUtil, TextFieldWithOption } from '../common/TextFieldUtil';
 import ReportTable from './ReportTable';
-import classNames from 'classnames';
-import { API } from '../../common/ApiPath';
-import { fetchPost, defaultHeaders } from '../../common/ApiHelper';
+import { API } from '../common/ApiPath';
+import { fetchPost, defaultHeaders } from '../common/ApiHelper';
 import compose from 'recompose/compose';
 import { withNamespaces } from 'react-i18next';
 
@@ -87,6 +87,10 @@ class Report extends Component {
 	setItems = (items, status) => {
 		this.setState({ items: status ? items : [] });
 	};
+	exportItems = items => {
+		const parkingIds = items.map(item => item.parking_id);
+		fetchPost(`${API.url}/exportToExcel`, JSON.stringify(parkingIds), defaultHeaders, openFile);
+	};
   render() {
     const { classes, t } = this.props;
 		const { items } = this.state;
@@ -120,7 +124,8 @@ class Report extends Component {
 								{generateGrid(1)}
 							</Grid>
 						</Content>
-						<ReportTable data={items} filters={getFiltersFromState(this.state)} loadItems={this.loadItems} />
+						<ReportTable data={items} filters={getFiltersFromState(this.state)}
+												 loadItems={this.loadItems} exportItems={this.exportItems} />
           </MuiThemeProvider>
         </Content>
       </React.Fragment>

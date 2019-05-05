@@ -48,7 +48,7 @@ export const ownerProps = [
 		variant: 'h6',
 		id: 'Booking',
     type: 'dropdown',
-		options: [ { id: 'currentBooking', label: 'Current Booking' }, { id: 'pastBooking', label: 'Past Booking' }]
+		options: [ { id: 'ownerBooking', label: 'Current Booking' }, { id: 'ownerPastBooking', label: 'Past Booking' }]
 	},
   {
     ...signOutProps
@@ -67,7 +67,7 @@ export const userProps = [
 		variant: 'h6',
 		id: 'Booking',
 		type: 'dropdown',
-		options: [ { id: 'currentBooking', label: 'Current Booking' }, { id: 'pastBooking', label: 'Past Booking' }]
+		options: [ { id: 'userBooking', label: 'Current Booking' }, { id: 'userPastBooking', label: 'Past Booking' }]
   },
   {
     ...signOutProps
@@ -76,8 +76,12 @@ export const userProps = [
 export const getMenu = component => {
   switch (component) {
     case 'owner':
+		case 'ownerBooking':
+		case 'ownerPastBooking':
       return ownerProps;
     case 'user':
+		case 'userBooking':
+		case 'userPastBooking':
       return userProps;
     default:
       return adminHeaderProps;

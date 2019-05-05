@@ -2,6 +2,7 @@ import React from 'react';
 import { Grid } from '@material-ui/core';
 import { pink, teal } from '@material-ui/core/colors/index';
 import { createMuiTheme } from '@material-ui/core/styles/index';
+import { saveAs } from 'file-saver';
 
 export const generateGrid = count => {
   const elements = [];
@@ -34,3 +35,20 @@ export const primaryTheme = createMuiTheme({
     }
   }
 });
+
+export const reportHeaders = [
+	'full_name',
+	'parking_lot',
+	'from_date',
+	'to_date',
+	'assigned_to',
+	'release_to',
+	'action',
+];
+
+export const openFile = data => {
+	if (data) {
+		var blob = new Blob([data], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+		saveAs(blob, 'Report.xlsx');
+	}
+};

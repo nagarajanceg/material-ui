@@ -119,6 +119,7 @@ class SignIn extends Component {
           response: res
         });
         if (res && res.user_vo) {
+					self.props.onLogin(res);
           self.routeChange(getRouteFromUser(res.user_vo.type), res);
         }
         self.setState({ loading: false });

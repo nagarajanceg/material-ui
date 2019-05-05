@@ -8,10 +8,11 @@ import ManageParking from './components/admin/ManageParking';
 import MassManage from './components/admin/MassManage';
 import Owner from './components/owner';
 import User from './components/user';
-import Report from './components/admin/Report';
+import Report from './components/Report';
 import PropTypes from 'prop-types';
 import { withNamespaces } from 'react-i18next';
 import { I18n } from './i18n';
+import CurrentBooking from './components/Report/CurrentBooking';
 
 const getComponent = props => {
   switch (props.component) {
@@ -51,13 +52,15 @@ const getComponent = props => {
           <Report {...props} />
         </div>
       );
-		case 'currentBooking':
+		case 'ownerBooking':
+		case 'userBooking':
 			return (
 				<div>
-					<Report {...props} />
+					<CurrentBooking {...props} />
 				</div>
 			);
-		case 'pastBooking':
+		case 'ownerPastBooking':
+		case 'userPastBooking':
 			return (
 				<div>
 					<Report {...props} />
@@ -91,7 +94,11 @@ class App extends Component {
         });
       });
   }
+  setUserInfo = data => {
+    this.setState({ userInfo: data });
+  };
   render() {
+		const { userInfo } = this.state;
     const headerProps = this.props.isLogin
       ? [defaultHeaderProps]
       : getMenu(this.props.component);
@@ -99,9 +106,9 @@ class App extends Component {
       <div>
         <NavBar navItems={headerProps} {...this.props} />
         {!this.props.isLogin ? (
-          getComponent(this.props)
+          getComponent({ ...this.props, userInfo })
         ) : (
-          <Login {...this.props} />
+          <Login {...this.props} onLogin={this.setUserInfo} />
         )}
       </div>
     );
