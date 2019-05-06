@@ -17,6 +17,7 @@ import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import { API } from '../common/ApiPath';
 import { getMenu } from '../common/config';
 import get from 'lodash/get';
+import { I18n } from '../../i18n';
 import { withNamespaces } from 'react-i18next';
 import compose from 'recompose/compose';
 
@@ -118,8 +119,17 @@ class SignIn extends Component {
         self.setState({
           response: res
         });
+        //Check response language and if it is there set it to I18n
+        const i18Instance = I18n();
+        i18Instance.changeLanguage('es', (err, t) => {
+          if (err)
+            return console.log(
+              'something went wrong loading the language',
+              err
+            );
+        });
         if (res && res.user_vo) {
-					self.props.onLogin(res);
+          self.props.onLogin(res);
           self.routeChange(getRouteFromUser(res.user_vo.type), res);
         }
         self.setState({ loading: false });
@@ -145,7 +155,7 @@ class SignIn extends Component {
             </Typography>
             <form className={classes.form}>
               <FormControl margin="normal" required fullWidth>
-                <InputLabel htmlFor="email">{t("email_id")}</InputLabel>
+                <InputLabel htmlFor="email">{t('email_id')}</InputLabel>
                 <Input
                   id="email"
                   name="email"

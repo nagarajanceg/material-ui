@@ -1,6 +1,5 @@
 import i18n from 'i18next';
 import { reactI18nextModule } from 'react-i18next';
-import LanguageDetector from 'i18next-browser-languagedetector';
 import translationEN from './locales/en/translation.json';
 import translationES from './locales/es/translation.json';
 import React, { Component } from 'react';
@@ -21,8 +20,8 @@ i18n
   .init(
     {
       resources,
-      lng: language,
-      fallbackLng: 'en',
+      lng: 'es',
+      fallbackLng: 'es',
       keySeparator: false, // we do not use keys in form messages.welcome
 
       interpolation: {
@@ -35,6 +34,6 @@ i18n
     },
     function() {}
   );
-export const I18n = function i18(val) {
+export const I18n = function i18() {
   return i18n;
 };

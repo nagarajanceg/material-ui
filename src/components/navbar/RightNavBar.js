@@ -17,10 +17,12 @@ import {
   AccountCircle,
   Assignment
 } from '@material-ui/icons';
-import PropTypes from 'prop-types';
+import { PropTypes, instanceOf } from 'prop-types';
 import { withNamespaces } from 'react-i18next';
 import compose from 'recompose/compose';
-import { Popover } from '../common/Popover'
+import { Popover } from '../common/Popover';
+import { withCookies, Cookies } from 'react-cookie';
+import { API } from '../common/ApiPath';
 
 const styles = theme => ({
   menuActive: {
@@ -46,25 +48,64 @@ const getIcon = iconType => {
       return null;
   }
 };
-
+const getDomain = () => {
+  return window.location.href
+    .replace('http://', '')
+    .replace('https://', '')
+    .split(/[/?#]/)[0];
+};
 class RightNavBar extends Component {
-  constuctor() {
+  static propTypes = {
+    cookies: instanceOf(Cookies).isRequired
+  };
+  constructor(props) {
+    super(props);
+    const { cookies } = this.props;
     this.routeChange = this.routeChange.bind(this);
   }
   state = { selectedId: '' };
 
   handleMenuClick = (id, type) => {
+    const { cookies } = this.props;
     this.setState({ selectedId: id === 'signOut' ? '' : id });
     if (type === 'dropdown') {
-			this.setState(state => ({ [`${id}_open`]: !state[`${id}_open`] }));
+      this.setState(state => ({ [`${id}_open`]: !state[`${id}_open`] }));
     } else {
-			this.routeChange(id);
+      if (this.state.language_open === true) {
+        console.log(
+          'choose language ==>',
+          id,
+          this.state.selectedId,
+          this.state.id
+        );
+        console.log(cookies.get('language'));
+        // cookies.remove('language');
+        if (cookies.get('language') !== id) {
+          cookies.set('language', id, [{ domain: getDomain(), path: '/' }]);
+          console.log(cookies.get('language'));
+          fetch(`${API.url}/changeLanguage`, {
+            method: 'post',
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+              'Country-Code': id
+            },
+            body: JSON.stringify({})
+          })
+            .then(data => data.json())
+            .then(res => {
+              console.log('Language Changed ');
+            });
+        }
+      } else {
+        this.routeChange(id);
+      }
     }
   };
 
-	handlePopoverClose = id => {
-	  this.setState(state => ({ [`${id}_open`]: !state[`${id}_open`] }));
-	};
+  handlePopoverClose = id => {
+    this.setState(state => ({ [`${id}_open`]: !state[`${id}_open`] }));
+  };
 
   routeChange = path => {
     this.props.history.push(`/${path}`);
@@ -87,9 +128,9 @@ class RightNavBar extends Component {
                 <Typography color="inherit" variant={item.variant}>
                   <IconButton
                     color="inherit"
-										buttonRef={node => {
-											this[item.id] = node;
-										}}
+                    buttonRef={node => {
+                      this[item.id] = node;
+                    }}
                     onClick={() => this.handleMenuClick(item.id, item.type)}
                     className={selectedId === item.id ? classes.menuActive : ''}
                   >
@@ -97,19 +138,21 @@ class RightNavBar extends Component {
                     <span style={{ fontSize: '0.9rem', paddingLeft: '10px' }}>
                       {t(item.title)}
                     </span>
-                    {item.type === 'dropdown' &&
+                    {item.type === 'dropdown' && (
                       <React.Fragment>
-												<Icon color="white">
+                        <Icon color="white">
                           <ArrowDropDown />
                         </Icon>
-                        <Popover id={item.id} menuOptions={item.options}
-                               isOpen={this.state[`${item.id}_open`]}
-                               anchor={this[item.id]}
-                               onClose={this.handlePopoverClose}
-                               onSelect={this.handleMenuClick}>
-                        </Popover>
+                        <Popover
+                          id={item.id}
+                          menuOptions={item.options}
+                          isOpen={this.state[`${item.id}_open`]}
+                          anchor={this[item.id]}
+                          onClose={this.handlePopoverClose}
+                          onSelect={this.handleMenuClick}
+                        />
                       </React.Fragment>
-                    }
+                    )}
                   </IconButton>
                 </Typography>
               </ListItemText>
@@ -124,4 +167,6 @@ RightNavBar.propTypes = {
   navItems: PropTypes.array
 };
 
-export default compose(withStyles(styles), withNamespaces())(RightNavBar);
+export default compose(withStyles(styles), withNamespaces(), withCookies)(
+  RightNavBar
+);

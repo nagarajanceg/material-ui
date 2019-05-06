@@ -32,6 +32,14 @@ export const adminHeaderProps = [
     id: 'report'
   },
   {
+    title: '',
+    icon: 'Assignment',
+    variant: 'h6',
+    id: 'language',
+    type: 'dropdown',
+    options: [{ id: 'es', label: 'espanol' }, { id: 'en', label: 'english' }]
+  },
+  {
     ...signOutProps
   }
 ];
@@ -40,16 +48,19 @@ export const ownerProps = [
     title: 'owner',
     icon: 'AccountCircle',
     variant: 'h6',
-    id: 'owner',
+    id: 'owner'
   },
-	{
-		title: 'Booking',
-		icon: 'Assignment',
-		variant: 'h6',
-		id: 'Booking',
+  {
+    title: 'booking',
+    icon: 'Assignment',
+    variant: 'h6',
+    id: 'Booking',
     type: 'dropdown',
-		options: [ { id: 'ownerBooking', label: 'Current Booking' }, { id: 'ownerPastBooking', label: 'Past Booking' }]
-	},
+    options: [
+      { id: 'ownerBooking', label: 'Current Booking' },
+      { id: 'ownerPastBooking', label: 'Past Booking' }
+    ]
+  },
   {
     ...signOutProps
   }
@@ -62,12 +73,15 @@ export const userProps = [
     id: 'User'
   },
   {
-		title: 'Booking',
-		icon: 'Assignment',
-		variant: 'h6',
-		id: 'Booking',
-		type: 'dropdown',
-		options: [ { id: 'userBooking', label: 'Current Booking' }, { id: 'userPastBooking', label: 'Past Booking' }]
+    title: 'booking',
+    icon: 'Assignment',
+    variant: 'h6',
+    id: 'Booking',
+    type: 'dropdown',
+    options: [
+      { id: 'userBooking', label: 'Current Booking' },
+      { id: 'userPastBooking', label: 'Past Booking' }
+    ]
   },
   {
     ...signOutProps
@@ -76,12 +90,12 @@ export const userProps = [
 export const getMenu = component => {
   switch (component) {
     case 'owner':
-		case 'ownerBooking':
-		case 'ownerPastBooking':
+    case 'ownerBooking':
+    case 'ownerPastBooking':
       return ownerProps;
     case 'user':
-		case 'userBooking':
-		case 'userPastBooking':
+    case 'userBooking':
+    case 'userPastBooking':
       return userProps;
     default:
       return adminHeaderProps;

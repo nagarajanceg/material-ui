@@ -13,6 +13,7 @@ import PropTypes from 'prop-types';
 import { withNamespaces } from 'react-i18next';
 import { I18n } from './i18n';
 import CurrentBooking from './components/Report/CurrentBooking';
+import { CookiesProvider } from 'react-cookie';
 
 const getComponent = props => {
   switch (props.component) {
@@ -52,20 +53,20 @@ const getComponent = props => {
           <Report {...props} />
         </div>
       );
-		case 'ownerBooking':
-		case 'userBooking':
-			return (
-				<div>
-					<CurrentBooking {...props} />
-				</div>
-			);
-		case 'ownerPastBooking':
-		case 'userPastBooking':
-			return (
-				<div>
-					<Report {...props} />
-				</div>
-			);
+    case 'ownerBooking':
+    case 'userBooking':
+      return (
+        <div>
+          <CurrentBooking {...props} />
+        </div>
+      );
+    case 'ownerPastBooking':
+    case 'userPastBooking':
+      return (
+        <div>
+          <Report {...props} />
+        </div>
+      );
     default:
       return null;
   }
@@ -81,35 +82,37 @@ class App extends Component {
   }
   componentWillMount() {
     // Change the language based on the response from server
-    fetch('http://localhost:3100/getLang')
+    fetch('http://localhost:3100/getLanguage')
       .then(data => data.json())
       .then(res => {
-        const i18Instance = I18n('test');
-        i18Instance.changeLanguage(res.lang, (err, t) => {
-          if (err)
-            return console.log(
-              'something went wrong loading the language',
-              err
-            );
-        });
+        // const i18Instance = I18n();
+        // i18Instance.changeLanguage(res.lang, (err, t) => {
+        //   if (err)
+        //     return console.log(
+        //       'something went wrong loading the language',
+        //       err
+        //     );
+        // });
       });
   }
   setUserInfo = data => {
     this.setState({ userInfo: data });
   };
   render() {
-		const { userInfo } = this.state;
+    const { userInfo } = this.state;
     const headerProps = this.props.isLogin
       ? [defaultHeaderProps]
       : getMenu(this.props.component);
     return (
       <div>
-        <NavBar navItems={headerProps} {...this.props} />
-        {!this.props.isLogin ? (
-          getComponent({ ...this.props, userInfo })
-        ) : (
-          <Login {...this.props} onLogin={this.setUserInfo} />
-        )}
+        <CookiesProvider>
+          <NavBar navItems={headerProps} {...this.props} />
+          {!this.props.isLogin ? (
+            getComponent({ ...this.props, userInfo })
+          ) : (
+            <Login {...this.props} onLogin={this.setUserInfo} />
+          )}
+        </CookiesProvider>
       </div>
     );
   }

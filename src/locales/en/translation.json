@@ -21,9 +21,9 @@
   "assign_parking": "Assign Parking",
   "enter_email": "Enter Email",
   "assign": "Assign",
-  "busy":"Busy",
-  "release":"Release",
-  "available":"Available",
+  "busy": "Busy",
+  "release": "Release",
+  "available": "Available",
 
   "status": "Status",
   "assign_to_release": "Assign To Release",
@@ -32,7 +32,7 @@
   "select_status": "Select Status",
   "transactions": "Transactions",
   "all": "All",
-  
+
   "parking_in_identifier": "Parking in identifier",
   "enter_identifier": "Enter Identifier",
   "first_name": "First Name",
