@@ -11,8 +11,8 @@ import User from './components/user';
 import Report from './components/Report';
 import PropTypes from 'prop-types';
 import { withNamespaces } from 'react-i18next';
-import { I18n } from './i18n';
 import CurrentBooking from './components/Report/CurrentBooking';
+import PastBooking from './components/Report/PastBooking';
 import { CookiesProvider } from 'react-cookie';
 
 const getComponent = props => {
@@ -64,7 +64,7 @@ const getComponent = props => {
     case 'userPastBooking':
       return (
         <div>
-          <CurrentBooking {...props} />
+          <PastBooking {...props} />
         </div>
       );
     default:

@@ -35,7 +35,7 @@ const getFiltersFromState = state => {
 	return filters;
 };
 
-class CurrentBooking extends Component {
+class PastBooking extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -97,4 +97,4 @@ class CurrentBooking extends Component {
   }
 }
 
-export default compose(withStyles(styles), withNamespaces())(CurrentBooking);
+export default compose(withStyles(styles), withNamespaces())(PastBooking);
