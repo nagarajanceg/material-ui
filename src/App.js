@@ -64,7 +64,7 @@ const getComponent = props => {
     case 'userPastBooking':
       return (
         <div>
-          <Report {...props} />
+          <CurrentBooking {...props} />
         </div>
       );
     default:
