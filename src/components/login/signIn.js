@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { PropTypes, instanceOf } from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -20,6 +20,7 @@ import get from 'lodash/get';
 import { I18n } from '../../i18n';
 import { withNamespaces } from 'react-i18next';
 import compose from 'recompose/compose';
+import { withCookies, Cookies } from 'react-cookie';
 
 const themes = createMuiTheme({
   palette: {
@@ -71,8 +72,12 @@ const getRouteFromUser = userType => {
 };
 
 class SignIn extends Component {
+  static propTypes = {
+    cookies: instanceOf(Cookies).isRequired
+  };
   constructor(props) {
     super(props);
+    const { cookies } = this.props;
     this.routeChange = this.routeChange.bind(this);
 
     this.state = {
@@ -94,7 +99,7 @@ class SignIn extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-
+    const { cookies } = this.props;
     this.setState({ submitted: true });
     const { email, password } = this.state;
 
@@ -104,13 +109,13 @@ class SignIn extends Component {
 
     this.setState({ loading: true });
     var self = this;
-    var userLang = navigator.language || navigator.userLanguage;
-    fetch(`${API.url}/validateLogin`, {
+    var userLang =
+      cookies.get('language') || navigator.language || navigator.userLanguage;
+    fetch(`${API.url}/validateLogin?lang=${userLang}`, {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',
-        Accept: 'application/json',
-        'Country-Code': userLang
+        Accept: 'application/json'
       },
       body: JSON.stringify({ email })
     })
@@ -121,7 +126,7 @@ class SignIn extends Component {
         });
         //Check response language and if it is there set it to I18n
         const i18Instance = I18n();
-        i18Instance.changeLanguage('es', (err, t) => {
+        i18Instance.changeLanguage(res.user_vo.country_code, (err, t) => {
           if (err)
             return console.log(
               'something went wrong loading the language',
@@ -129,6 +134,7 @@ class SignIn extends Component {
             );
         });
         if (res && res.user_vo) {
+          cookies.set('user_email', res.user_email);
           self.props.onLogin(res);
           self.routeChange(getRouteFromUser(res.user_vo.type), res);
         }
@@ -199,4 +205,6 @@ SignIn.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default compose(withStyles(styles), withNamespaces())(SignIn);
+export default compose(withStyles(styles), withNamespaces(), withCookies)(
+  SignIn
+);

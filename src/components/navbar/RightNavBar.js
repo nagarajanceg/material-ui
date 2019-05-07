@@ -24,6 +24,7 @@ import { Popover } from '../common/Popover';
 import { withCookies, Cookies } from 'react-cookie';
 import { API } from '../common/ApiPath';
 
+
 const styles = theme => ({
   menuActive: {
     'background-color': 'rgba(0,0,0,0.1)'
@@ -83,14 +84,14 @@ class RightNavBar extends Component {
         if (cookies.get('language') !== id) {
           cookies.set('language', id, [{ domain: getDomain(), path: '/' }]);
           console.log(cookies.get('language'));
-          fetch(`${API.url}/changeLanguage`, {
-            method: 'post',
+          const email = cookies.get('user_email');
+          fetch(`${API.url}/changeLanguage?lang=${id}&email=${email}`, {
+            method: 'get',
             headers: {
               'Content-Type': 'application/json',
               Accept: 'application/json',
               'Country-Code': id
-            },
-            body: JSON.stringify({})
+            }
           })
             .then(data => data.json())
             .then(res => {
@@ -111,7 +112,7 @@ class RightNavBar extends Component {
     this.props.history.push(`/${path}`);
   };
   render() {
-    const { classes, t } = this.props;
+    const { classes, t, cookies } = this.props;
     let selectedId = this.state.selectedId;
     if (!selectedId) {
       const path = this.props.location.pathname.substring(1);
