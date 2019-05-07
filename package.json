@@ -18,6 +18,7 @@
     "prop-types": "latest",
     "react": "^16.8.4",
     "react-cookie": "^3.1.2",
+    "react-country-flag": "^1.0.2",
     "react-dom": "^16.8.4",
     "react-i18next": "^9.0.10",
     "react-router-dom": "latest",
@@ -33,10 +34,5 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+  "browserslist": [">0.2%", "not dead", "not ie <= 11", "not op_mini all"]
 }

@@ -23,7 +23,7 @@ import compose from 'recompose/compose';
 import { Popover } from '../common/Popover';
 import { withCookies, Cookies } from 'react-cookie';
 import { API } from '../common/ApiPath';
-
+import ReactCountryFlag from 'react-country-flag';
 
 const styles = theme => ({
   menuActive: {
@@ -55,6 +55,12 @@ const getDomain = () => {
     .replace('https://', '')
     .split(/[/?#]/)[0];
 };
+const languageIcon = val => {
+  if (val == 'en') {
+    val = 'us';
+  }
+  return <ReactCountryFlag code={val} />;
+};
 class RightNavBar extends Component {
   static propTypes = {
     cookies: instanceOf(Cookies).isRequired
@@ -73,29 +79,21 @@ class RightNavBar extends Component {
       this.setState(state => ({ [`${id}_open`]: !state[`${id}_open`] }));
     } else {
       if (this.state.language_open === true) {
-        console.log(
-          'choose language ==>',
-          id,
-          this.state.selectedId,
-          this.state.id
-        );
         console.log(cookies.get('language'));
         // cookies.remove('language');
         if (cookies.get('language') !== id) {
           cookies.set('language', id, [{ domain: getDomain(), path: '/' }]);
-          console.log(cookies.get('language'));
           const email = cookies.get('user_email');
           fetch(`${API.url}/changeLanguage?lang=${id}&email=${email}`, {
             method: 'get',
             headers: {
               'Content-Type': 'application/json',
-              Accept: 'application/json',
-              'Country-Code': id
+              Accept: 'application/json'
             }
           })
             .then(data => data.json())
             .then(res => {
-              console.log('Language Changed ');
+              console.log('Language Changed ', res);
             });
         }
       } else {
@@ -135,8 +133,12 @@ class RightNavBar extends Component {
                     onClick={() => this.handleMenuClick(item.id, item.type)}
                     className={selectedId === item.id ? classes.menuActive : ''}
                   >
-                    {getIcon(item.icon)}
-                    <span style={{ fontSize: '0.9rem', paddingLeft: '10px' }}>
+                    {item.id === 'language' ? (
+                      languageIcon(cookies.get('language'))
+                    ) : (
+                      getIcon(item.icon)
+                    )}
+                    <span style={{ fontSize: '0.8rem', paddingLeft: '3px' }}>
                       {t(item.title)}
                     </span>
                     {item.type === 'dropdown' && (

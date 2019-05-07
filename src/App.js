@@ -82,18 +82,18 @@ class App extends Component {
   }
   componentWillMount() {
     // Change the language based on the response from server
-    fetch('http://localhost:3100/getLanguage')
-      .then(data => data.json())
-      .then(res => {
-        // const i18Instance = I18n();
-        // i18Instance.changeLanguage(res.lang, (err, t) => {
-        //   if (err)
-        //     return console.log(
-        //       'something went wrong loading the language',
-        //       err
-        //     );
-        // });
-      });
+    // fetch('http://localhost:3100/getLanguage')
+    //   .then(data => data.json())
+    //   .then(res => {
+    // const i18Instance = I18n();
+    // i18Instance.changeLanguage(res.lang, (err, t) => {
+    //   if (err)
+    //     return console.log(
+    //       'something went wrong loading the language',
+    //       err
+    //     );
+    // });
+    // });
   }
   setUserInfo = data => {
     this.setState({ userInfo: data });

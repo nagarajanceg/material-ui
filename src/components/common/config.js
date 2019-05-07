@@ -1,4 +1,11 @@
-export const defaultHeaderProps = {};
+export const defaultHeaderProps = {
+  title: '',
+  icon: 'Language',
+  variant: 'h6',
+  id: 'language',
+  type: 'dropdown',
+  options: [{ id: 'es', label: 'espanol' }, { id: 'en', label: 'english' }]
+};
 export const signOutProps = {
   title: 'sign_out',
   icon: 'ExitToApp',
@@ -32,12 +39,7 @@ export const adminHeaderProps = [
     id: 'report'
   },
   {
-    title: '',
-    icon: 'Assignment',
-    variant: 'h6',
-    id: 'language',
-    type: 'dropdown',
-    options: [{ id: 'es', label: 'espanol' }, { id: 'en', label: 'english' }]
+    ...defaultHeaderProps
   },
   {
     ...signOutProps
@@ -62,6 +64,9 @@ export const ownerProps = [
     ]
   },
   {
+    ...defaultHeaderProps
+  },
+  {
     ...signOutProps
   }
 ];
@@ -82,6 +87,9 @@ export const userProps = [
       { id: 'userBooking', label: 'Current Booking' },
       { id: 'userPastBooking', label: 'Past Booking' }
     ]
+  },
+  {
+    ...defaultHeaderProps
   },
   {
     ...signOutProps
