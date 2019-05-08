@@ -79,6 +79,10 @@ class RightNavBar extends Component {
   handleMenuClick = (id, type) => {
     const { cookies } = this.props;
     this.setState({ selectedId: id === 'signOut' ? '' : id });
+    if (id === 'signOut') {
+      cookies.remove('language');
+      cookies.remove('user_email');
+    }
     if (type === 'dropdown') {
       this.setState(state => ({ [`${id}_open`]: !state[`${id}_open`] }));
     } else {

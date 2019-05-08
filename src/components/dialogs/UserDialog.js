@@ -16,6 +16,8 @@ import { API } from '../common/ApiPath';
 import get from 'lodash/get';
 import Fade from '@material-ui/core/Fade/index';
 import Snackbar from '@material-ui/core/Snackbar';
+import { withNamespaces } from 'react-i18next';
+import compose from 'recompose/compose';
 
 const styles = theme => ({
   dialogPaper: {
@@ -54,18 +56,20 @@ class UserDialog extends Component {
         'Content-Type': 'application/json',
         Accept: 'application/json'
       },
-      body: JSON.stringify({ ...self.state,
+      body: JSON.stringify({
+        ...self.state,
         userId,
         parkingId,
-        releaseId: get(data, 'releases[0].release_id')})
+        releaseId: get(data, 'releases[0].release_id')
+      })
     })
       .then(function(response) {
         self.setState({
           disabled: false,
-					notification: true,
-					infoMsg: response.ok ? 'Successfully Assigned' : 'Assign Error'
+          notification: true,
+          infoMsg: response.ok ? 'Successfully Assigned' : 'Assign Error'
         });
-				self.props.callback();
+        self.props.callback();
         console.log('response ==>', response);
       })
       .catch(function(err) {
@@ -77,33 +81,33 @@ class UserDialog extends Component {
         console.log('error ==> ', err);
       });
   };
-	handleNotificationClose = () => {
-		this.setState({ notification: false });
-	};
+  handleNotificationClose = () => {
+    this.setState({ notification: false });
+  };
   handlerChange = (name, value) => {
     this.setState({ [name]: value });
   };
   render() {
-    const { classes } = this.props;
+    const { classes, t } = this.props;
     return (
       <div>
         <MuiThemeProvider theme={primaryTheme}>
-					<Snackbar
-						open={this.state.notification}
-						onClose={this.handleNotificationClose}
-						TransitionComponent={Fade}
-						ContentProps={{
-							'aria-describedby': 'message-id'
-						}}
-						message={<span id="message-id">{this.state.infoMsg}</span>}
-					/>
+          <Snackbar
+            open={this.state.notification}
+            onClose={this.handleNotificationClose}
+            TransitionComponent={Fade}
+            ContentProps={{
+              'aria-describedby': 'message-id'
+            }}
+            message={<span id="message-id">{this.state.infoMsg}</span>}
+          />
           <Dialog
             open={this.props.open}
             onClose={this.props.callback}
             PaperProps={{ className: classes.dialogPaper }}
           >
             <DialogTitle className={classes.dialogTitle}>
-              Booking details
+              {t('booking_details')}
             </DialogTitle>
             <DialogContent className={classes.dialog}>
               <DialogContentText>
@@ -127,4 +131,4 @@ class UserDialog extends Component {
   }
 }
 
-export default withStyles(styles)(UserDialog);
+export default compose(withStyles(styles), withNamespaces())(UserDialog);

@@ -134,6 +134,7 @@ class SignIn extends Component {
             );
         });
         if (res && res.user_vo) {
+          cookies.set('language', res.user_vo.country_code);
           cookies.set('user_email', res.user_email);
           self.props.onLogin(res);
           self.routeChange(getRouteFromUser(res.user_vo.type), res);

@@ -16,7 +16,8 @@ import FormActionUtil from '../common/FormActionUtils';
 import { API } from '../common/ApiPath';
 import Snackbar from '@material-ui/core/Snackbar';
 import Fade from '@material-ui/core/Fade';
-// import Notification from '../common/Notification';
+import { withNamespaces } from 'react-i18next';
+import compose from 'recompose/compose';
 
 const styles = theme => ({
   dialogPaper: {
@@ -38,7 +39,6 @@ class ParkingDialog extends React.Component {
     toDate: new Date()
   };
   handleSubmit = () => {
-    console.log('submit parking dialog', this.state);
     const self = this;
     const { parkingData } = self.props;
     self.setState({
@@ -51,28 +51,31 @@ class ParkingDialog extends React.Component {
         'Content-Type': 'application/json',
         Accept: 'application/json'
       },
-      body: JSON.stringify({ ...self.state, parkingId: parkingData.parkingId || parkingData.parking_id })
+      body: JSON.stringify({
+        ...self.state,
+        parkingId: parkingData.parkingId || parkingData.parking_id
+      })
     })
-    .then(function(response) {
-      self.setState({
-        disabled: false,
-        notification: true,
-        infoMsg: response.ok ? 'Successfully Assigned' : 'Assign Error'
+      .then(function(response) {
+        self.setState({
+          disabled: false,
+          notification: true,
+          infoMsg: response.ok ? 'Successfully Assigned' : 'Assign Error'
+        });
+        //show success message and refresh tab only if response os ok , otherwise display error
+        self.props.callback({ reload: response.ok });
+        if (response.ok && self.props.onSuccess) {
+          self.props.onSuccess();
+        }
+      })
+      .catch(function(err) {
+        self.setState({
+          disabled: false,
+          notification: true,
+          infoMsg: 'Assign Error'
+        });
+        console.log('error ==> ', err);
       });
-      //show success message and refresh tab only if response os ok , otherwise display error
-      self.props.callback({ reload: response.ok });
-      if (response.ok && self.props.onSuccess) {
-        self.props.onSuccess();
-      }
-    })
-    .catch(function(err) {
-      self.setState({
-        disabled: false,
-        notification: true,
-        infoMsg: 'Assign Error'
-      });
-      console.log('error ==> ', err);
-    });
   };
   handlerChange = (name, value) => {
     this.setState({ [name]: value });
@@ -81,12 +84,11 @@ class ParkingDialog extends React.Component {
     this.setState({ notification: false });
   };
   render() {
-    const { classes } = this.props;
+    const { classes, t } = this.props;
     const { open, callback, status, parkingData } = this.props;
     return (
       <div>
         <MuiThemeProvider theme={primaryTheme}>
-          {/*<Notification response={this.state.response} infoMsg={this.state.infoMsg} />*/}
           <Snackbar
             open={this.state.notification}
             onClose={this.handleNotificationClose}
@@ -102,11 +104,15 @@ class ParkingDialog extends React.Component {
             PaperProps={{ className: classes.dialogPaper }}
           >
             <DialogTitle className={classes.dialogTitle}>
-              Assign Parking
+              {t('assign_parking')}
             </DialogTitle>
             <DialogContent className={classes.dialog}>
               <DialogContentText>
-                <AssignParking parkingData={parkingData} status={status} handler={this.handlerChange} />
+                <AssignParking
+                  parkingData={parkingData}
+                  status={status}
+                  handler={this.handlerChange}
+                />
               </DialogContentText>
             </DialogContent>
             <DialogActions>
@@ -126,4 +132,4 @@ class ParkingDialog extends React.Component {
   }
 }
 
-export default withStyles(styles)(ParkingDialog);
+export default compose(withStyles(styles), withNamespaces())(ParkingDialog);

@@ -1,9 +1,9 @@
 {
-  "manage_data": "administrar datos",
+  "manage_data": "Administrar datos",
   "manage_parking": "Gestionar estacionamiento",
   "mass_manage": "Administracion masiva",
   "report": "Informe",
-  "sign_out": "desconectar",
+  "sign_out": "Desconectar",
   "user": "Usuario",
   "booking": "Reserva",
   "current_booking": "Reservas actual",
@@ -57,7 +57,7 @@
   "parking_number": "Número de estacionamiento",
   "additional_information": "Información Adicional",
   "parking_phase": "Fase de aparcamiento",
-
+  "booking_details": "Reserva detalles",
   "login_screen": "Pantalla de ingreso al sistema",
 
   "password": "Contraseña",
