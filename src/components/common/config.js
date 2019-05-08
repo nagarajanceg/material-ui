@@ -1,4 +1,5 @@
-export const defaultHeaderProps = {
+export const defaultHeaderProps = {};
+const languageHeaderProps = {
   title: '',
   icon: 'Language',
   variant: 'h6',
@@ -39,7 +40,7 @@ export const adminHeaderProps = [
     id: 'report'
   },
   {
-    ...defaultHeaderProps
+    ...languageHeaderProps
   },
   {
     ...signOutProps
@@ -64,7 +65,7 @@ export const ownerProps = [
     ]
   },
   {
-    ...defaultHeaderProps
+    ...languageHeaderProps
   },
   {
     ...signOutProps
@@ -89,7 +90,7 @@ export const userProps = [
     ]
   },
   {
-    ...defaultHeaderProps
+    ...languageHeaderProps
   },
   {
     ...signOutProps
