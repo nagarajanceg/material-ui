@@ -37,7 +37,7 @@ function FormActionUtils(props) {
           onClick={props.data.onSubmit}
         >
           {props.data.buttonName ? (
-            t('props.data.buttonName')
+            t(`${props.data.buttonName}`.toLowerCase())
           ) : (
             t('submit')
           )}{' '}

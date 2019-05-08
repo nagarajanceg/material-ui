@@ -13,7 +13,9 @@ import PropTypes from 'prop-types';
 import { withNamespaces } from 'react-i18next';
 import CurrentBooking from './components/Report/CurrentBooking';
 import PastBooking from './components/Report/PastBooking';
-import { CookiesProvider } from 'react-cookie';
+import { CookiesProvider, withCookies, Cookies } from 'react-cookie';
+import compose from 'recompose/compose';
+import { I18n } from './i18n';
 
 const getComponent = props => {
   switch (props.component) {
@@ -81,18 +83,16 @@ class App extends Component {
     };
   }
   componentWillMount() {
+    const { cookies } = this.props;
     // Change the language based on the response from server
     // fetch('http://localhost:3100/getLanguage')
     //   .then(data => data.json())
     //   .then(res => {
-    // const i18Instance = I18n();
-    // i18Instance.changeLanguage(res.lang, (err, t) => {
-    //   if (err)
-    //     return console.log(
-    //       'something went wrong loading the language',
-    //       err
-    //     );
-    // });
+    const i18Instance = I18n();
+    i18Instance.changeLanguage(cookies.get('language'), (err, t) => {
+      if (err)
+        return console.log('something went wrong loading the language', err);
+    });
     // });
   }
   setUserInfo = data => {
@@ -100,6 +100,7 @@ class App extends Component {
   };
   render() {
     const { userInfo } = this.state;
+
     const headerProps = this.props.isLogin
       ? [defaultHeaderProps]
       : getMenu(this.props.component);
@@ -123,4 +124,4 @@ App.propTypes = {
   component: PropTypes.string
 };
 
-export default withNamespaces()(App);
+export default compose(withNamespaces(), withCookies)(App);

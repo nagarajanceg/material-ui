@@ -28,6 +28,10 @@ import ReactCountryFlag from 'react-country-flag';
 const styles = theme => ({
   menuActive: {
     'background-color': 'rgba(0,0,0,0.1)'
+  },
+  navbar: {
+    paddingLeft: '8px',
+    paddingRight: '8px'
   }
 });
 
@@ -120,7 +124,7 @@ class RightNavBar extends Component {
     }
     return (
       <List component="nav">
-        <ListItem component="div" align="right">
+        <ListItem component="div" className={classes.navbar} align="right">
           {this.props.navItems &&
             this.props.navItems.map(item => (
               <ListItemText inset>
