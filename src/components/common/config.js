@@ -5,7 +5,7 @@ const languageHeaderProps = {
   variant: 'h6',
   id: 'language',
   type: 'dropdown',
-  options: [{ id: 'es', label: 'espanol' }, { id: 'en', label: 'english' }]
+  options: [{ id: 'es', label: 'Espanol' }, { id: 'en', label: 'English' }]
 };
 export const signOutProps = {
   title: 'sign_out',

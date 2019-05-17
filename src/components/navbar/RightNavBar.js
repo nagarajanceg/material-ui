@@ -60,7 +60,7 @@ const getDomain = () => {
     .split(/[/?#]/)[0];
 };
 const languageIcon = val => {
-  if (val == 'en') {
+  if (val !== 'es') {
     val = 'us';
   }
   return <ReactCountryFlag code={val} />;
@@ -88,7 +88,6 @@ class RightNavBar extends Component {
     } else {
       if (this.state.language_open === true) {
         console.log(cookies.get('language'));
-        // cookies.remove('language');
         if (cookies.get('language') !== id) {
           cookies.set('language', id, [{ domain: getDomain(), path: '/' }]);
           const email = cookies.get('user_email');
@@ -102,6 +101,7 @@ class RightNavBar extends Component {
             .then(data => data.json())
             .then(res => {
               console.log('Language Changed ', res);
+              window.location.reload();
             });
         }
       } else {

@@ -109,6 +109,9 @@ class SignIn extends Component {
 
     this.setState({ loading: true });
     var self = this;
+    /*Getting user browser language by default and try to set it our database
+      if they don't have any language preference. Any how we are providing two language support as of now. Suppose their browser language preference doesn't match load the site in en.
+    */
     var userLang =
       cookies.get('language') || navigator.language || navigator.userLanguage;
     fetch(`${API.url}/validateLogin?lang=${userLang}`, {
