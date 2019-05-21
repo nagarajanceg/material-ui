@@ -46,7 +46,7 @@
   "from_date": "From Date",
   "to_date": "To Date",
   "assigned_to": "Assigned To",
-  "release_to": "Release To",
+  "release_from": "Release From",
   "action": "Action",
 
   "owner_screen_labels": "Owner Screen Labels",

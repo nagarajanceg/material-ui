@@ -45,7 +45,7 @@
   "from_date": "Desde la fecha",
   "to_date": "Hasta la fecha",
   "assigned_to": "Asignado a",
-  "release_to": "Liberado a",
+  "release_from": "Liberar de",
   "action": "Acción",
 
   "owner_screen_labels": "Las etiquetas de pantalla propietario",

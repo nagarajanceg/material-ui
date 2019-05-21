@@ -37,18 +37,20 @@ export const primaryTheme = createMuiTheme({
 });
 
 export const reportHeaders = [
-	'full_name',
-	'parking_lot',
-	'from_date',
-	'to_date',
-	'assigned_to',
-	'release_to',
-	'action',
+  'full_name',
+  'parking_lot',
+  'from_date',
+  'to_date',
+  'assigned_to',
+  'release_from',
+  'action'
 ];
 
 export const openFile = data => {
-	if (data) {
-		var blob = new Blob([data], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
-		saveAs(blob, 'Report.xlsx');
-	}
+  if (data) {
+    var blob = new Blob([data], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    });
+    saveAs(blob, 'Report.xlsx');
+  }
 };

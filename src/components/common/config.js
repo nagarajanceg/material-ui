@@ -117,4 +117,4 @@ export const statusMapper = {
   ASSIGN: 'Release',
   RELEASE: 'Busy'
 };
-export const reportTypes = ['User Data', 'Transactions'];
+export const reportTypes = ['user_data', 'transactions'];

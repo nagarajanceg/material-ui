@@ -60,12 +60,12 @@ class ParkingDialog extends React.Component {
         self.setState({
           disabled: false,
           notification: true,
-          infoMsg: response.ok ? 'Successfully Assigned' : 'Assign Error'
+          infoMsg: response.ok ? 'Successfully ' + self.state.status : 'Error'
         });
         //show success message and refresh tab only if response os ok , otherwise display error
         self.props.callback({ reload: response.ok });
         if (response.ok && self.props.onSuccess) {
-          self.props.onSuccess();
+          self.props.onSuccess(); 
         }
       })
       .catch(function(err) {
@@ -121,7 +121,7 @@ class ParkingDialog extends React.Component {
                   submitAlone: this.state.submitAlone,
                   disabled: this.state.disabled,
                   onSubmit: this.handleSubmit,
-                  buttonName: 'Assign'
+                  buttonName: t('assign')
                 }}
               />
             </DialogActions>
