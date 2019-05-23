@@ -38,6 +38,9 @@ class ParkingDialog extends React.Component {
     fromDate: new Date(),
     toDate: new Date()
   };
+  getStatusMessage() {
+    return this.state.status === 'busy' ? 'Assign' : this.state.status;
+  }
   handleSubmit = () => {
     const self = this;
     const { parkingData } = self.props;
@@ -60,19 +63,21 @@ class ParkingDialog extends React.Component {
         self.setState({
           disabled: false,
           notification: true,
-          infoMsg: response.ok ? 'Successfully ' + self.state.status : 'Error'
+          infoMsg: response.ok
+            ? 'Successfully ' + self.getStatusMessage()
+            : 'Error'
         });
         //show success message and refresh tab only if response os ok , otherwise display error
         self.props.callback({ reload: response.ok });
         if (response.ok && self.props.onSuccess) {
-          self.props.onSuccess(); 
+          self.props.onSuccess();
         }
       })
       .catch(function(err) {
         self.setState({
           disabled: false,
           notification: true,
-          infoMsg: 'Assign Error'
+          infoMsg: self.getStatusMessage() + 'Error'
         });
         console.log('error ==> ', err);
       });
