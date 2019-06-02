@@ -57,7 +57,7 @@ class PastBooking extends Component {
 		const self = this;
 		const { type, userId, parkingId } = self.state;
 		if (userId) {
-			let url = `${API.url}/getCurrentBooking/${userId}`;
+			let url = `${API.url}/getPastBooking/${userId}`;
 			if (type === 'owner') {
 				url = `${url}/${parkingId}`;
 			}
