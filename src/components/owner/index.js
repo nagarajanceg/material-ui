@@ -18,8 +18,8 @@ import get from 'lodash/get';
 import compose from 'recompose/compose';
 import { withNamespaces } from 'react-i18next';
 
-export const getData = ({ location }) => {
-  let data = {};
+export const getData = ({ location, userInfo }) => {
+  let data = userInfo || {};
   if (location && location.state && location.state.data) {
     data = location.state.data;
   }
