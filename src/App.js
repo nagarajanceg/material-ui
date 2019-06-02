@@ -19,6 +19,9 @@ import { I18n } from './i18n';
 import ContextProvider from './ContextProvider';
 
 const getComponent = props => {
+	if (!props.isLogin && !sessionStorage.getItem('userInfo')) {
+		props.history.push('signOut');
+	}
   switch (props.component) {
     case 'manageData':
       return (
@@ -100,7 +103,6 @@ class App extends Component {
     this.setState({ userInfo: data });
   };
   render() {
-    const { userInfo } = this.state;
 
     const headerProps = this.props.isLogin
       ? [defaultHeaderProps]
@@ -111,7 +113,7 @@ class App extends Component {
           <CookiesProvider>
             <NavBar navItems={headerProps} {...this.props} />
             {!this.props.isLogin ? (
-              getComponent({ ...this.props, userInfo })
+              getComponent({ ...this.props })
             ) : (
               <Login {...this.props} onLogin={this.setUserInfo} />
             )}

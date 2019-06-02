@@ -82,6 +82,7 @@ class RightNavBar extends Component {
     if (id === 'signOut') {
       cookies.remove('language');
       cookies.remove('user_email');
+			sessionStorage.removeItem('userInfo');
     }
     if (type === 'dropdown') {
       this.setState(state => ({ [`${id}_open`]: !state[`${id}_open`] }));

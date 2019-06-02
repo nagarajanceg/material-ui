@@ -4,7 +4,7 @@ import AppContext from './AppContext';
 class ContextProvider extends Component {
 
 	state = {
-		userInfo: {}
+		userInfo: JSON.parse(sessionStorage.getItem('userInfo')) || {}
 	};
 
 	render() {
@@ -12,7 +12,9 @@ class ContextProvider extends Component {
 			<AppContext.Provider
 				value={{
 					userInfo: this.state.userInfo,
-					setUserInfo: userInfo => { this.setState({ userInfo }) }
+					setUserInfo: userInfo => {
+						sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
+						this.setState({ userInfo }) }
 				}}
 			>
 				{this.props.children}
