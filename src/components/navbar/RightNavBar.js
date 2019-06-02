@@ -101,7 +101,7 @@ class RightNavBar extends Component {
             .then(data => data.json())
             .then(res => {
               console.log('Language Changed ', res);
-              window.location.reload();
+//               window.location.reload();
             });
         }
       } else {
