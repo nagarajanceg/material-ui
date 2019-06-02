@@ -16,11 +16,11 @@ import teal from '@material-ui/core/colors/teal';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import { API } from '../common/ApiPath';
 import { getMenu } from '../common/config';
-import get from 'lodash/get';
 import { I18n } from '../../i18n';
 import { withNamespaces } from 'react-i18next';
 import compose from 'recompose/compose';
 import { withCookies, Cookies } from 'react-cookie';
+import AppContext from '../../AppContext';
 
 const themes = createMuiTheme({
   palette: {
@@ -97,7 +97,7 @@ class SignIn extends Component {
     this.setState({ [name]: value });
   }
 
-  handleSubmit(e) {
+  handleSubmit(e, context) {
     e.preventDefault();
     const { cookies } = this.props;
     this.setState({ submitted: true });
@@ -139,6 +139,7 @@ class SignIn extends Component {
         if (res && res.user_vo) {
           cookies.set('language', res.user_vo.country_code);
           cookies.set('user_email', res.user_email);
+					context.setUserInfo(res);
           self.props.onLogin(res);
           self.routeChange(getRouteFromUser(res.user_vo.type), res);
         }
@@ -153,54 +154,58 @@ class SignIn extends Component {
   render() {
     const { classes, t } = this.props;
     return (
-      <MuiThemeProvider theme={themes}>
-        <main className={classes.main}>
-          <CssBaseline />
-          <Paper className={classes.paper}>
-            <Avatar className={classes.avatar}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              {t('login_screen')}
-            </Typography>
-            <form className={classes.form}>
-              <FormControl margin="normal" required fullWidth>
-                <InputLabel htmlFor="email">{t('email_id')}</InputLabel>
-                <Input
-                  id="email"
-                  name="email"
-                  autoComplete="email"
-                  autoFocus
-                  onChange={this.handleChange}
-                />
-              </FormControl>
-              <FormControl margin="normal" required fullWidth>
-                <InputLabel htmlFor="password">{t('password')}</InputLabel>
-                <Input
-                  name="password"
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                  onChange={this.handleChange}
-                />
-              </FormControl>
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label={t('remember_me')}
-              />
-              <Button
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-                onClick={this.handleSubmit}
-              >
-                {t('login')}
-              </Button>
-            </form>
-          </Paper>
-        </main>
-      </MuiThemeProvider>
+			<AppContext.Consumer>
+				{context => (
+          <MuiThemeProvider theme={themes}>
+            <main className={classes.main}>
+              <CssBaseline />
+              <Paper className={classes.paper}>
+                <Avatar className={classes.avatar}>
+                  <LockOutlinedIcon />
+                </Avatar>
+                <Typography component="h1" variant="h5">
+                  {t('login_screen')}
+                </Typography>
+                <form className={classes.form}>
+                  <FormControl margin="normal" required fullWidth>
+                    <InputLabel htmlFor="email">{t('email_id')}</InputLabel>
+                    <Input
+                      id="email"
+                      name="email"
+                      autoComplete="email"
+                      autoFocus
+                      onChange={this.handleChange}
+                    />
+                  </FormControl>
+                  <FormControl margin="normal" required fullWidth>
+                    <InputLabel htmlFor="password">{t('password')}</InputLabel>
+                    <Input
+                      name="password"
+                      type="password"
+                      id="password"
+                      autoComplete="current-password"
+                      onChange={this.handleChange}
+                    />
+                  </FormControl>
+                  <FormControlLabel
+                    control={<Checkbox value="remember" color="primary" />}
+                    label={t('remember_me')}
+                  />
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                    onClick={e => this.handleSubmit(e, context)}
+                  >
+                    {t('login')}
+                  </Button>
+                </form>
+              </Paper>
+            </main>
+          </MuiThemeProvider>
+				)}
+			</AppContext.Consumer>
     );
   }
 }

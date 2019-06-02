@@ -17,6 +17,7 @@ import Fade from '@material-ui/core/Fade';
 import get from 'lodash/get';
 import compose from 'recompose/compose';
 import { withNamespaces } from 'react-i18next';
+import AppContext from '../../AppContext';
 
 export const getData = ({ location, userInfo }) => {
   let data = userInfo || {};
@@ -90,113 +91,116 @@ class Owner extends Component {
   };
   render() {
     const { classes, t } = this.props;
-    const data = getData(this.props);
     return (
-      <div className={classNames(classes.marginLeft)}>
-        <MuiThemeProvider theme={theme}>
-          <Snackbar
-            open={this.state.notification}
-            onClose={this.handleNotificationClose}
-            TransitionComponent={Fade}
-            ContentProps={{
-              'aria-describedby': 'message-id'
-            }}
-            message={<span id="message-id">{this.state.infoMsg}</span>}
-          />
-          <DateGrid
-            val={this.state}
-            handlerFrom={this.handleFromDateChange}
-            handlerTo={this.handleToDateChange}
-          />
-          <Grid container spacing={24} alignItems="center" direction="row">
-            <Grid item xs={1} />
-            <Grid
-              item
-              xs={1}
-              className={classNames(classes.gridFlex, classes.flexEnd)}
-            >
-              <Icon color="primary">
-                <DirectionsCar />
-              </Icon>
-            </Grid>
-            <Grid item xs={4} className={classNames(classes.gridFlex)}>
-              <TextField
-                fullWidth
-                label={t('parking_gate')}
-                disabled
-                value={get(data, 'user_vo.parking.identifier1')}
-              />
-            </Grid>
-            <Grid
-              item
-              xs={1}
-              className={classNames(classes.gridFlex, classes.flexEnd)}
-            >
-              <Icon color="primary">
-                <DirectionsCar />
-              </Icon>
-            </Grid>
-            <Grid item xs={4} className={classNames(classes.gridFlex)}>
-              <TextField
-                fullWidth={true}
-                label={t('parking_phase')}
-                disabled
-                value={get(data, 'user_vo.parking.identifier2')}
-              />
-            </Grid>
-            <Grid item xs={1} />
-          </Grid>
-          <Grid container spacing={16} alignItems="center" direction="row">
-            <Grid item />
-            <Grid item />
-          </Grid>
-          <Grid container spacing={24} alignItems="center" direction="row">
-            <Grid item xs={1} />
-            <Grid
-              item
-              xs={1}
-              className={classNames(classes.gridFlex, classes.flexEnd)}
-            >
-              <Icon color="primary">
-                <DirectionsCar />
-              </Icon>
-            </Grid>
-            <Grid item xs={4} className={classNames(classes.gridFlex)}>
-              <TextField
-                fullWidth={true}
-                label={t('parking_slot')}
-                disabled
-                value={get(data, 'user_vo.parking.identifier3')}
-              />
-            </Grid>
-            <Grid
-              item
-              xs={1}
-              className={classNames(classes.gridFlex, classes.flexEnd)}
-            >
-              <Icon color="primary">
-                <Message />
-              </Icon>
-            </Grid>
-            <Grid item xs={4} className={classNames(classes.gridFlex)}>
-              <TextField
-                fullWidth
-                label={t('additional_information')}
-                value={this.state.additionalInfo}
-                onChange={this.handleChange('additionalInfo')}
-              />
-            </Grid>
-            {generateGrid(2)}
-          </Grid>
-          <FormActionUtil
-            data={{
-              disabled: this.state.disabled,
-              submitAlone: this.state.submitAlone,
-              onSubmit: this.handleSubmit
-            }}
-          />
-        </MuiThemeProvider>
-      </div>
+    	<AppContext.Consumer>
+				{context => (
+					<div className={classNames(classes.marginLeft)}>
+						<MuiThemeProvider theme={theme}>
+							<Snackbar
+								open={this.state.notification}
+								onClose={this.handleNotificationClose}
+								TransitionComponent={Fade}
+								ContentProps={{
+									'aria-describedby': 'message-id'
+								}}
+								message={<span id="message-id">{this.state.infoMsg}</span>}
+							/>
+							<DateGrid
+								val={this.state}
+								handlerFrom={this.handleFromDateChange}
+								handlerTo={this.handleToDateChange}
+							/>
+							<Grid container spacing={24} alignItems="center" direction="row">
+								<Grid item xs={1} />
+								<Grid
+									item
+									xs={1}
+									className={classNames(classes.gridFlex, classes.flexEnd)}
+								>
+									<Icon color="primary">
+										<DirectionsCar />
+									</Icon>
+								</Grid>
+								<Grid item xs={4} className={classNames(classes.gridFlex)}>
+									<TextField
+										fullWidth
+										label={t('parking_gate')}
+										disabled
+										value={get(context.userInfo, 'user_vo.parking.identifier1')}
+									/>
+								</Grid>
+								<Grid
+									item
+									xs={1}
+									className={classNames(classes.gridFlex, classes.flexEnd)}
+								>
+									<Icon color="primary">
+										<DirectionsCar />
+									</Icon>
+								</Grid>
+								<Grid item xs={4} className={classNames(classes.gridFlex)}>
+									<TextField
+										fullWidth={true}
+										label={t('parking_phase')}
+										disabled
+										value={get(context.userInfo, 'user_vo.parking.identifier2')}
+									/>
+								</Grid>
+								<Grid item xs={1} />
+							</Grid>
+							<Grid container spacing={16} alignItems="center" direction="row">
+								<Grid item />
+								<Grid item />
+							</Grid>
+							<Grid container spacing={24} alignItems="center" direction="row">
+								<Grid item xs={1} />
+								<Grid
+									item
+									xs={1}
+									className={classNames(classes.gridFlex, classes.flexEnd)}
+								>
+									<Icon color="primary">
+										<DirectionsCar />
+									</Icon>
+								</Grid>
+								<Grid item xs={4} className={classNames(classes.gridFlex)}>
+									<TextField
+										fullWidth={true}
+										label={t('parking_slot')}
+										disabled
+										value={get(context.userInfo, 'user_vo.parking.identifier3')}
+									/>
+								</Grid>
+								<Grid
+									item
+									xs={1}
+									className={classNames(classes.gridFlex, classes.flexEnd)}
+								>
+									<Icon color="primary">
+										<Message />
+									</Icon>
+								</Grid>
+								<Grid item xs={4} className={classNames(classes.gridFlex)}>
+									<TextField
+										fullWidth
+										label={t('additional_information')}
+										value={this.state.additionalInfo}
+										onChange={this.handleChange('additionalInfo')}
+									/>
+								</Grid>
+								{generateGrid(2)}
+							</Grid>
+							<FormActionUtil
+								data={{
+									disabled: this.state.disabled,
+									submitAlone: this.state.submitAlone,
+									onSubmit: this.handleSubmit
+								}}
+							/>
+						</MuiThemeProvider>
+					</div>
+				)}
+			</AppContext.Consumer>
     );
   }
 }

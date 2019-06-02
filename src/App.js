@@ -16,6 +16,7 @@ import PastBooking from './components/Report/PastBooking';
 import { CookiesProvider, withCookies, Cookies } from 'react-cookie';
 import compose from 'recompose/compose';
 import { I18n } from './i18n';
+import ContextProvider from './ContextProvider';
 
 const getComponent = props => {
   switch (props.component) {
@@ -105,16 +106,18 @@ class App extends Component {
       ? [defaultHeaderProps]
       : getMenu(this.props.component);
     return (
-      <div>
-        <CookiesProvider>
-          <NavBar navItems={headerProps} {...this.props} />
-          {!this.props.isLogin ? (
-            getComponent({ ...this.props, userInfo })
-          ) : (
-            <Login {...this.props} onLogin={this.setUserInfo} />
-          )}
-        </CookiesProvider>
-      </div>
+			<ContextProvider>
+        <div>
+          <CookiesProvider>
+            <NavBar navItems={headerProps} {...this.props} />
+            {!this.props.isLogin ? (
+              getComponent({ ...this.props, userInfo })
+            ) : (
+              <Login {...this.props} onLogin={this.setUserInfo} />
+            )}
+          </CookiesProvider>
+        </div>
+      </ContextProvider>
     );
   }
 }
