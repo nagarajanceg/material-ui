@@ -21,6 +21,7 @@ import { withNamespaces } from 'react-i18next';
 import compose from 'recompose/compose';
 import { withCookies, Cookies } from 'react-cookie';
 import AppContext from '../../AppContext';
+import get from 'lodash/get';
 
 const themes = createMuiTheme({
   palette: {
@@ -112,8 +113,14 @@ class SignIn extends Component {
     /*Getting user browser language by default and try to set it our database
       if they don't have any language preference. Any how we are providing two language support as of now. Suppose their browser language preference doesn't match load the site in en.
     */
+    console.log(
+      "get(context.userInfo, 'language') =>",
+      get(context.userInfo, 'language')
+    );
     var userLang =
-      cookies.get('language') || navigator.language || navigator.userLanguage;
+      get(context.userInfo, 'language') ||
+      navigator.language ||
+      navigator.userLanguage;
     fetch(`${API.url}/validateLogin?lang=${userLang}`, {
       method: 'post',
       headers: {
@@ -137,9 +144,10 @@ class SignIn extends Component {
             );
         });
         if (res && res.user_vo) {
-          cookies.set('language', res.user_vo.country_code);
-          cookies.set('user_email', res.user_email);
-					context.setUserInfo(res);
+          // cookies.set('language', res.user_vo.country_code);
+          // cookies.set('user_email', res.user_email);
+          res.language = res.user_vo.country_code;
+          context.setUserInfo(res);
           self.props.onLogin(res);
           self.routeChange(getRouteFromUser(res.user_vo.type), res);
         }
@@ -154,8 +162,8 @@ class SignIn extends Component {
   render() {
     const { classes, t } = this.props;
     return (
-			<AppContext.Consumer>
-				{context => (
+      <AppContext.Consumer>
+        {context => (
           <MuiThemeProvider theme={themes}>
             <main className={classes.main}>
               <CssBaseline />
@@ -204,8 +212,8 @@ class SignIn extends Component {
               </Paper>
             </main>
           </MuiThemeProvider>
-				)}
-			</AppContext.Consumer>
+        )}
+      </AppContext.Consumer>
     );
   }
 }

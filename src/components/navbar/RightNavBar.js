@@ -24,6 +24,9 @@ import { Popover } from '../common/Popover';
 import { withCookies, Cookies } from 'react-cookie';
 import { API } from '../common/ApiPath';
 import ReactCountryFlag from 'react-country-flag';
+import AppContext from '../../AppContext';
+import get from 'lodash/get';
+import { I18n } from '../../i18n';
 
 const styles = theme => ({
   menuActive: {
@@ -65,10 +68,12 @@ const languageIcon = val => {
   }
   return <ReactCountryFlag code={val} />;
 };
+const i18Instance = I18n();
 class RightNavBar extends Component {
   static propTypes = {
     cookies: instanceOf(Cookies).isRequired
   };
+
   constructor(props) {
     super(props);
     const { cookies } = this.props;
@@ -76,22 +81,27 @@ class RightNavBar extends Component {
   }
   state = { selectedId: '' };
 
-  handleMenuClick = (id, type) => {
+  handleMenuClick = (context, id, type) => {
     const { cookies } = this.props;
     this.setState({ selectedId: id === 'signOut' ? '' : id });
     if (id === 'signOut') {
-      cookies.remove('language');
-      cookies.remove('user_email');
-			sessionStorage.removeItem('userInfo');
+      // cookies.remove('language');
+      // cookies.remove('user_email');
+      sessionStorage.removeItem('userInfo');
     }
     if (type === 'dropdown') {
       this.setState(state => ({ [`${id}_open`]: !state[`${id}_open`] }));
     } else {
       if (this.state.language_open === true) {
-        console.log(cookies.get('language'));
-        if (cookies.get('language') !== id) {
-          cookies.set('language', id, [{ domain: getDomain(), path: '/' }]);
-          const email = cookies.get('user_email');
+        // console.log(cookies.get('language'));
+        console.log('context ==>', context);
+        console.log(get(context.userInfo, 'language'));
+        if (get(context.userInfo, 'language') !== id) {
+          // cookies.set('language', id, [{ domain: getDomain(), path: '/' }]);
+          console.log('changing context info ==>', id);
+          context.userInfo.language = id;
+          const email = get(context.userInfo, 'user_email');
+          // const email = cookies.get('user_email');
           fetch(`${API.url}/changeLanguage?lang=${id}&email=${email}`, {
             method: 'get',
             headers: {
@@ -102,7 +112,9 @@ class RightNavBar extends Component {
             .then(data => data.json())
             .then(res => {
               console.log('Language Changed ', res);
-//               window.location.reload();
+              res.language = res.user_vo.country_code;
+              context.setUserInfo(res);
+              window.location.reload();
             });
         }
       } else {
@@ -118,6 +130,16 @@ class RightNavBar extends Component {
   routeChange = path => {
     this.props.history.push(`/${path}`);
   };
+  componentWillMount() {
+    const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
+    console.log(userInfo);
+    userInfo &&
+      userInfo.language &&
+      i18Instance.changeLanguage(userInfo.language, (err, t) => {
+        if (err)
+          return console.log('something went wrong loading the language', err);
+      });
+  }
   render() {
     const { classes, t, cookies } = this.props;
     let selectedId = this.state.selectedId;
@@ -128,49 +150,59 @@ class RightNavBar extends Component {
       }
     }
     return (
-      <List component="nav">
-        <ListItem component="div" className={classes.navbar} align="right">
-          {this.props.navItems &&
-            this.props.navItems.map(item => (
-              <ListItemText inset>
-                <Typography color="inherit" variant={item.variant}>
-                  <IconButton
-                    color="inherit"
-                    buttonRef={node => {
-                      this[item.id] = node;
-                    }}
-                    onClick={() => this.handleMenuClick(item.id, item.type)}
-                    className={selectedId === item.id ? classes.menuActive : ''}
-                  >
-                    {item.id === 'language' ? (
-                      languageIcon(cookies.get('language'))
-                    ) : (
-                      getIcon(item.icon)
-                    )}
-                    <span style={{ fontSize: '0.8rem', paddingLeft: '3px' }}>
-                      {t(item.title)}
-                    </span>
-                    {item.type === 'dropdown' && (
-                      <React.Fragment>
-                        <Icon color="white">
-                          <ArrowDropDown />
-                        </Icon>
-                        <Popover
-                          id={item.id}
-                          menuOptions={item.options}
-                          isOpen={this.state[`${item.id}_open`]}
-                          anchor={this[item.id]}
-                          onClose={this.handlePopoverClose}
-                          onSelect={this.handleMenuClick}
-                        />
-                      </React.Fragment>
-                    )}
-                  </IconButton>
-                </Typography>
-              </ListItemText>
-            ))}
-        </ListItem>
-      </List>
+      <AppContext.Consumer>
+        {context => (
+          <List component="nav">
+            <ListItem component="div" className={classes.navbar} align="right">
+              {this.props.navItems &&
+                this.props.navItems.map(item => (
+                  <ListItemText inset>
+                    <Typography color="inherit" variant={item.variant}>
+                      <IconButton
+                        color="inherit"
+                        buttonRef={node => {
+                          this[item.id] = node;
+                        }}
+                        onClick={() =>
+                          this.handleMenuClick(context, item.id, item.type)}
+                        className={
+                          selectedId === item.id ? classes.menuActive : ''
+                        }
+                      >
+                        {/*languageIcon(cookies.get('language'))*/}
+                        {item.id === 'language' ? (
+                          languageIcon(get(context.userInfo, 'language'))
+                        ) : (
+                          getIcon(item.icon)
+                        )}
+                        <span
+                          style={{ fontSize: '0.8rem', paddingLeft: '3px' }}
+                        >
+                          {t(item.title)}
+                        </span>
+                        {item.type === 'dropdown' && (
+                          <React.Fragment>
+                            <Icon color="white">
+                              <ArrowDropDown />
+                            </Icon>
+                            <Popover
+                              id={item.id}
+                              menuOptions={item.options}
+                              isOpen={this.state[`${item.id}_open`]}
+                              anchor={this[item.id]}
+                              onClose={this.handlePopoverClose}
+                              onSelect={this.handleMenuClick}
+                            />
+                          </React.Fragment>
+                        )}
+                      </IconButton>
+                    </Typography>
+                  </ListItemText>
+                ))}
+            </ListItem>
+          </List>
+        )}
+      </AppContext.Consumer>
     );
   }
 }

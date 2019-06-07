@@ -15,13 +15,13 @@ import CurrentBooking from './components/Report/CurrentBooking';
 import PastBooking from './components/Report/PastBooking';
 import { CookiesProvider, withCookies, Cookies } from 'react-cookie';
 import compose from 'recompose/compose';
-import { I18n } from './i18n';
+// import { I18n } from './i18n';
 import ContextProvider from './ContextProvider';
 
 const getComponent = props => {
-	if (!props.isLogin && !sessionStorage.getItem('userInfo')) {
-		props.history.push('signOut');
-	}
+  if (!props.isLogin && !sessionStorage.getItem('userInfo')) {
+    props.history.push('signOut');
+  }
   switch (props.component) {
     case 'manageData':
       return (
@@ -88,27 +88,21 @@ class App extends Component {
   }
   componentWillMount() {
     const { cookies } = this.props;
-    // Change the language based on the response from server
-    // fetch('http://localhost:3100/getLanguage')
-    //   .then(data => data.json())
-    //   .then(res => {
-    const i18Instance = I18n();
-    i18Instance.changeLanguage(cookies.get('language'), (err, t) => {
-      if (err)
-        return console.log('something went wrong loading the language', err);
-    });
+    // const i18Instance = I18n();
+    // i18Instance.changeLanguage(cookies.get('language'), (err, t) => {
+    //   if (err)
+    //     return console.log('something went wrong loading the language', err);
     // });
   }
   setUserInfo = data => {
     this.setState({ userInfo: data });
   };
   render() {
-
     const headerProps = this.props.isLogin
       ? [defaultHeaderProps]
       : getMenu(this.props.component);
     return (
-			<ContextProvider>
+      <ContextProvider>
         <div>
           <CookiesProvider>
             <NavBar navItems={headerProps} {...this.props} />
